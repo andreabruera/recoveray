@@ -1,0 +1,13 @@
+target_type	predictor	target_time_point	avg_correlation	fdr_corrected_p_value	raw_p_value
+abilities	only age	T1	0.26098	0.0024	0.001
+abilities	only lesions	T1	0.51436	0.0024	0.001
+abilities	only age	T2	0.09985	0.07467	0.056
+abilities	only lesions	T2	0.2962	0.0024	0.001
+abilities	only age	T3	0.1578	0.004	0.002
+abilities	only lesions	T3	-0.01362	0.806	0.776
+improvements	only age	T2-T1	0.09947	0.06	0.04
+improvements	only lesions	T2-T1	0.2968	0.0024	0.001
+improvements	only age	T3-T1	0.15911	0.0024	0.001
+improvements	only lesions	T3-T1	-0.01178	0.806	0.806
+improvements	only age	T3-T2	0.15442	0.01029	0.006
+improvements	only lesions	T3-T2	-0.01395	0.806	0.764
