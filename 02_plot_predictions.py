@@ -17,8 +17,8 @@ def two_samples_permutation(one, two):
         fake_two = fake[len(one):]
         fake_diff = abs(numpy.nanmean(fake_one)-numpy.nanmean(fake_two))
         fakes.append(fake_diff)
-    p = (sum([1 for _ in fakes if _>real])+1)/1001
-    return p
+    p = sum([1 for _ in fakes if _>real])/1000
+    return p*2
 out_f = os.path.join('prediction_plots', 'main_text')
 os.makedirs(out_f, exist_ok=True)
 
@@ -481,3 +481,151 @@ with open(os.path.join(out_f, 'all_stats.tsv'), 'w') as o:
     for dets, corr_p, raw_p, y in zip(all_details, corr_ps, all_ps, all_ys):
         o.write('{}\t{}\t{}\t'.format(dets['case'], dets['key'], dets['target']))
         o.write('{}\t{}\t{}\n'.format(round(y, 5), round(corr_p, 5), round(raw_p, 5)))
+
+### individual predictors
+colours = {
+    'activations' : [
+           'lightpink',
+           'forestgreen',
+           'steelblue',
+           'khaki',
+           'paleturquoise',
+           'mediumvioletred',
+           ],
+    'connectivity' : [
+           'paleturquoise',
+           'mediumaquamarine',
+           'forestgreen',
+           'mediumblue',
+           'palegoldenrod',
+           'khaki',
+           'palevioletred',
+           'mediumorchid',
+           'silver',
+           ]
+    }
+
+n_folds = 50
+iter_null_hyp = 1000
+pred_fams = ['activations', 'connectivity']
+for case in all_res.keys():
+    for pov in all_res[case].keys():
+        for targ in all_res[case][pov].keys():
+            for fam in pred_fams:
+                curr_out_f = os.path.join(out_f, 'individual_predictors', case, targ, pov,)
+                os.makedirs(curr_out_f, exist_ok=True)
+                x_names = sorted([k for k in all_res[case][pov][targ].keys() if fam in k and ' and ' in k])
+                basic_corrs = numpy.nanmean(all_res[case][pov][targ]['only {} {}'.format(fam, pov)], axis=1)
+                basic_avg = numpy.nanmean(basic_corrs)
+
+                fig, ax = pyplot.subplots(figsize=(9, 10), constrained_layout=True)
+
+                xs = list()
+                ys = list()
+                ps = list()
+                scats = list()
+                label_set = set()
+                for x_i, x in enumerate(x_names):
+                    curr_corrs = all_res[case][pov][targ][x]
+                    ### p value
+                    p_container = numpy.average(curr_corrs, axis=1)
+                    #p_one = sum([1 for _ in p_container if _<=0])/iter_null_hyp
+                    #p_two = sum([1 for _ in p_container if _>=0])/iter_null_hyp
+                    #p_one = sum([1 for _,__ in zip(p_container, basic_corrs) if _<=__])/iter_null_hyp
+                    #p = two_samples_permutation(p_container.tolist(), basic_corrs.tolist())
+                    #p = scipy.stats.wilcoxon(p_container, basic_corrs).pvalue
+                    #p = min(p_one, p_two)*2
+                    ### one-tailed: in how many cases were correlations stronger for one as opposed to the other?
+                    p = sum([1 for _,__ in zip(p_container, basic_corrs) if _>=__])/iter_null_hyp
+                    if p == 0:
+                        p = 1/1001
+                    ### plotting impact
+                    scats.append(p_container-basic_corrs)
+                    assert p_container.shape == (iter_null_hyp, )
+                    ps.append(p)
+                    ### aggregate result
+                    t_avg = numpy.nanmean(p_container)
+                    impact = t_avg-basic_avg
+                    ys.append(impact)
+                    xs.append(x_i)
+                    for x, y, scat, x_name in zip(xs, ys, scats, x_names):
+                        label = x_name.split(' ')[-1][:-3].replace('_', ' ')
+                        ax.bar(
+                                x,
+                                y,
+                               color=colours[fam][x],
+                               alpha=0.3,
+                                )
+                        if label not in label_set:
+                            label_set.add(label)
+                            ax.scatter(
+                                       x,
+                                       y,
+                                       color=colours[fam][x],
+                                       s=300,
+                                       label=label,
+                                       marker='D',
+                                       edgecolors='white',
+                                       linewidth=2.,
+                                       zorder=3,
+                                       )
+                        else:
+                            ax.scatter(
+                                       x,
+                                       y,
+                                       s=300,
+                                       marker='D',
+                                       edgecolors='white',
+                                       linewidth=2.,
+                                       zorder=3,
+                                       color=colours[fam][x],
+                                       )
+                        ax.scatter([x+random.sample([corr*0.03 for corr in range(-10, 10)], k=1)[0] for _ in range(iter_null_hyp)],
+                                    scat,
+                                   s=50,
+                                   alpha=0.05,
+                                    color=colours[fam][x],
+                                   edgecolors='white'
+                                   )
+                ### correcting p values
+                corr_ps = scipy.stats.false_discovery_control(ps)
+                for x, p, y_avg in zip(xs, corr_ps, ys):
+                    if p < 0.05:
+                        #print([p, y_avg])
+                        if y_avg > 0.:
+                            p_y = 0.02
+                        else:
+                            p_y = -0.02
+                        ax.scatter(
+                                   x,
+                                   p_y,
+                                   s=300,
+                                   marker='*',
+                                   color='black',
+                                   edgecolors='white',
+                                   linewidth=1.,
+                                   zorder=3.
+                                   )
+                ax.legend(
+                          loc=9,
+                          fontsize=16,
+                          ncols=3,
+                          handletextpad=0.,
+                          borderpad=0.3,
+                          columnspacing=1.
+                          )
+                ax.hlines(y=[_*0.1 for _ in range(-3, 5)], xmin=-.5, xmax=2.5, linestyle='--',color='gray', alpha=0.2)
+                ax.hlines(y=0., xmin=-.5, xmax=2.5, color='gray')
+                ax.set_ylim(bottom=.35, top=-.45)
+                #pyplot.ylabel('Spearman correlation', fontsize=20, fontweight='bold')
+                pyplot.ylabel('Impact of predictor on predictions', fontsize=20, fontweight='bold')
+                pyplot.yticks(fontsize=15)
+                pyplot.savefig(os.path.join(curr_out_f, '{}_{}_{}_{}.jpg'.format(fam, case, targ, pov)), dpi=300)
+                pyplot.clf()
+                pyplot.close()
+                with open(os.path.join(curr_out_f, '{}_{}_{}_{}_stats.tsv'.format(fam, case, targ, pov)), 'w') as o:
+                    o.write('target_type\tpredictor\ttarget_time_point\tavg_correlation\tfdr_corrected_p_value\traw_p_value\n')
+                    for x_name, corr_p, raw_p, y in zip(x_names, corr_ps, ps, ys):
+                        o.write('{}\t{}\t{}\t'.format(fam, x_name, targ))
+                        o.write('{}\t{}\t{}\n'.format(round(y, 5), round(corr_p, 5), round(raw_p, 5)))
+
