@@ -536,9 +536,9 @@ for name, targets in [
 
                     ### storing after iter_null_hyp*folds iterations
                     last_key = '{} and {}'.format(pr, ind_pred)
-                    collector[key][point_of_view][dict_t]['confounds'][pr] = confounds_names
-                    collector[key][point_of_view][dict_t]['weights'][pr] = weights_container
-                    collector[key][point_of_view][dict_t]['correlations'][pr] = results_container
+                    collector[key][point_of_view][dict_t]['confounds'][last_key] = confounds_names
+                    collector[key][point_of_view][dict_t]['weights'][last_key] = weights_container
+                    collector[key][point_of_view][dict_t]['correlations'][last_key] = results_container
 
                     ### just a visual check
                     visual_check(results_container, weights_container, iter_null_hyp, point_of_view, dict_t)

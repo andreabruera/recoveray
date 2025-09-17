@@ -1,0 +1,10 @@
+target_type	predictor	target_time_point	avg_correlation	fdr_corrected_p_value	raw_p_value
+connectivity	connectivity T1 and lDLPFC_to_lIFG_T1	T3-T1	0.05035	0.74	0.733
+connectivity	connectivity T1 and lDLPFC_to_lPTL_T1	T3-T1	-0.06005	0.74	0.208
+connectivity	connectivity T1 and lIFG_to_lPTL_T1	T3-T1	0.01326	0.74	0.574
+connectivity	connectivity T1 and lPTL_to_lIFG_T1	T3-T1	0.01471	0.74	0.576
+connectivity	connectivity T1 and lSMA_to_lIFG_T1	T3-T1	0.02411	0.74	0.632
+connectivity	connectivity T1 and lSMA_to_lPTL_T1	T3-T1	0.04445	0.74	0.74
+connectivity	connectivity T1 and rDLPFC_to_lIFG_T1	T3-T1	-0.02409	0.74	0.378
+connectivity	connectivity T1 and rDLPFC_to_lPTL_T1	T3-T1	0.00194	0.74	0.516
+connectivity	connectivity T1 and rIFG_to_lIFG_T1	T3-T1	0.0046	0.74	0.519

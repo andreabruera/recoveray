@@ -1,6 +1,7 @@
 dataset/
 pkls/
 */.DS_Store
+rois_brains/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
