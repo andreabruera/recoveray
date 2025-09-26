@@ -127,11 +127,13 @@ def one_sample_bootstrap_p_value(one, side='both'):
 def visual_check(results_container, weights_container, iter_null_hyp, point_of_view, dict_t):
     ### just for visual check while running code
     p_container = numpy.average(results_container, axis=1)
+    #p_container = scipy.stats.trim_mean(results_container, 0.2, axis=1)
     assert p_container.shape == (iter_null_hyp, )
     p = (sum([1 for _ in p_container if _<0])+1)/(iter_null_hyp+1)
     #print(t_avg)
     ### aggregate result
     t_avg = numpy.nanmean(p_container)
+    #t_avg = scipy.stats.trim_mean(p_container, 0.2)
     print(['{} from {}'.format(dict_t, point_of_view), 'avg: {}'.format(round(t_avg, 3)), 'p: {}'.format(round(p, 3))])
     ### weights
     avg_weights_dict = {k : numpy.nanmean(v) for k, v in weights_container.items()}
@@ -274,7 +276,7 @@ confounds = [
 assert len(confounds) == 2
 
 n_folds = 50
-iter_null_hyp = 10000
+iter_null_hyp = 5000
 test_items = int(n_subjects*0.2)
 pred_model = 'ridge'
 
@@ -372,9 +374,10 @@ for name, targets in [
 
             ### just a visual check
             visual_check(results_container, weights_container, iter_null_hyp, point_of_view, dict_t)
-    del last_key
-    del weights_names
-    del confounds_names
+
+            del results_container
+            del weights_container
+            del confounds_names
 
     ### removing families of predictors
     for pr in predictors:
@@ -459,8 +462,11 @@ for name, targets in [
 
                 ### just a visual check
                 visual_check(results_container, weights_container, iter_null_hyp, point_of_view, dict_t)
-    del weights_names
-    del confounds_names
+
+                del results_container
+                del weights_container
+                del confounds_names
+
 
     ### removing individual predictor among families of predictors
     for pr in predictors:
@@ -496,6 +502,8 @@ for name, targets in [
                     it_predictors = numpy.array([full_data[k] for k in weights_names]).T
                     it_target = numpy.array(full_data[t])
                     results_container = numpy.zeros(shape=(iter_null_hyp, n_folds))
+                    ### we don't really use the weight container, but we need it...
+                    weights_container = {k : numpy.zeros(shape=(iter_null_hyp, n_folds)) for k in weights_names}
                     for null in tqdm(range(iter_null_hyp)):
                         assert it_target.shape[0] == it_predictors.shape[0]
                         subject_subsampling = random.choices(range(n_subjects), k=n_subjects)
@@ -537,11 +545,19 @@ for name, targets in [
                     ### storing after iter_null_hyp*folds iterations
                     last_key = '{} and {}'.format(pr, ind_pred)
                     collector[key][point_of_view][dict_t]['confounds'][last_key] = confounds_names
-                    collector[key][point_of_view][dict_t]['weights'][last_key] = weights_container
                     collector[key][point_of_view][dict_t]['correlations'][last_key] = results_container
+                    ### weights are not saved here
+                    try:
+                        del collector[key][point_of_view][dict_t]['weights']
+                    except KeyError:
+                        continue
 
                     ### just a visual check
                     visual_check(results_container, weights_container, iter_null_hyp, point_of_view, dict_t)
+
+                    del results_container
+                    del weights_container
+                    del confounds_names
 
 out_f = 'pkls'
 os.makedirs(out_f, exist_ok=True)

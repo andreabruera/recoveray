@@ -28,16 +28,114 @@ def read_dict_keys(name, t):
         dict_t = t
     return key, dict_t
 
+def check_collector(collector, key, dict_t, point_of_view='all'):
+    if key not in collector.keys():
+        collector[key] = {'all' : dict()}
+    if point_of_view not in collector[key].keys():
+        collector[key][point_of_view] = dict()
+    if dict_t not in collector[key][point_of_view].keys():
+        collector[key][point_of_view][dict_t] = {
+                                                 'correlations' : dict(),
+                                                 'weights' : dict(),
+                                                 'confounds' : dict(),
+                                                 }
+    return collector
+
+def generate_fold(n_subjects, test_items, it_predictors, it_target, it_confounds):
+    test_idxs = random.sample(range(n_subjects), k=test_items)
+    train_idxs = [k for k in range(n_subjects) if k not in test_idxs]
+    ### bootstrapping subjects
+    train_input = list()
+    train_target = list()
+    confound_train_input = list()
+    for _ in train_idxs:
+        train_input.append(it_predictors[_])
+        train_target.append(it_target[_])
+        confound_train_input.append(it_confounds[_])
+    test_input = list()
+    test_target = list()
+    confound_test_input = list()
+    for _ in test_idxs:
+        test_input.append(it_predictors[_])
+        test_target.append(it_target[_])
+        confound_test_input.append(it_confounds[_])
+    return train_input, train_target, confound_train_input, test_input, test_target, confound_test_input
+
 def rsa_encoding(train_input, train_target, test_input, test_target):
     ### prediction model
     preds = list()
+    coefs = numpy.zeros(shape=(len(train_input),))
     for ts, tg in zip(test_input, test_target):
         unweighted_pred = numpy.average([trg*-scipy.spatial.distance.euclidean(tr, ts) for tr, trg in zip(train_input, train_target)])
         denom_avg = numpy.average([-scipy.spatial.distance.euclidean(tr, ts) for tr, trg in zip(train_input, train_target)])
         norm_term = numpy.average([trg*denom_avg for trg in train_target])
         pred = unweighted_pred-norm_term
         preds.append(pred)
-    return preds
+
+    return preds, coefs
+
+def ridge_model(train_input, train_target, test_input, weights_names):
+    ### prediction model
+    model = linear_model.RidgeCV(alphas=(1e-3, 1e-2, 1e-1, 1, 1e1, 1e2, 1e3, 1e4))
+    #model = linear_model.LassoCV()
+    model.fit(train_input, train_target)
+    preds = model.predict(test_input)
+
+    return preds, model.coef_
+
+def cv_confound(confound_train_input, train_target, confound_test_input, test_target):
+    ### cv-confound residualization
+    # we remove confounds from targets based on training set
+    model = linear_model.LinearRegression()
+    model.fit(confound_train_input, train_target)
+
+    confound_train = model.predict(confound_train_input)
+    confound_test = model.predict(confound_test_input)
+
+    train_target = train_target-confound_train
+    test_target = test_target-confound_test
+
+    return train_target, test_target
+
+def one_sample_bootstrap_p_value(one, side='both'):
+    p_one = (sum([1 for _ in one if _<0]))/(iter_null_hyp)
+    p_two = (sum([1 for _ in one if _>0]))/(iter_null_hyp)
+    ### different hypotheses
+    if side == 'both':
+        p = min([p_one, p_two])*2
+    elif side == 'lower':
+        p = p_two
+    elif side == 'greater':
+        p = p_one
+    else:
+        raise RuntimeError('wrong direction')
+    ### correcting if p==0
+    if p == 0:
+        p = 1/(iter_null_hyp+1)
+    return p
+
+def visual_check(results_container, weights_container, iter_null_hyp, point_of_view, dict_t):
+    ### just for visual check while running code
+    p_container = numpy.average(results_container, axis=1)
+    assert p_container.shape == (iter_null_hyp, )
+    p = (sum([1 for _ in p_container if _<0])+1)/(iter_null_hyp+1)
+    #print(t_avg)
+    ### aggregate result
+    t_avg = numpy.nanmean(p_container)
+    print(['{} from {}'.format(dict_t, point_of_view), 'avg: {}'.format(round(t_avg, 3)), 'p: {}'.format(round(p, 3))])
+    ### weights
+    avg_weights_dict = {k : numpy.nanmean(v) for k, v in weights_container.items()}
+    sorted_weights = sorted(avg_weights_dict.items(), key=lambda item : item[1], reverse=True)
+    # weights p values
+    weights_p = dict()
+    for w, v in weights_container.items():
+        current_weight = numpy.nanmean(v, axis=1)
+        assert current_weight.shape == (iter_null_hyp, )
+        weight_p = one_sample_bootstrap_p_value(current_weight)
+        weights_p[w] = weight_p
+    sorted_weights_ps = [(k, round(float(v), 3), round(weights_p[k], 5)) for k, v in sorted_weights]
+    print(sorted_weights_ps)
+    print('\n')
 
 n_subjects = 41
 ### start
@@ -64,14 +162,13 @@ with open(os.path.join('dataset', 'data_41.tsv')) as i:
                 #raw_data[d].append(float(val))
                 raw_data[d][l_i-1] = float(val)
 assert l_i == n_subjects
+
 abilities = [
              'T1',
              'T2',
              'T3',
              ]
-### z-score aka 0 centering
-#full_data = {k : (v-numpy.nanmean(v))/numpy.nanstd(v) if k not in abilities else v for k, v in raw_data.items() if len(v)>0}
-### no z-score
+
 full_data = {k : v for k, v in raw_data.items() if len(v)>0}
 
 improvements = [
@@ -93,7 +190,6 @@ lesions = [
 ### setting up data names
 labels = dict()
 labels['lesions'] = lesions
-#assert len(labels['lesions']) == 3
 assert len(labels['lesions']) == 4
 labels['abilities'] = abilities
 assert len(labels['abilities']) == 3
@@ -155,7 +251,10 @@ assert len(labels['connectivity T3']) == 9
 predictors = [
              'age',
              'lesions',
+              'T1',
+              'T2',
               ]
+assert len(predictors) == 4
 confounds = [
               'activations T1',
               'activations T2',
@@ -164,10 +263,12 @@ confounds = [
               'connectivity T2',
               'connectivity T3',
              ]
+assert len(confounds) == 6
 
 n_folds = 50
 iter_null_hyp = 1000
 test_items = int(n_subjects*0.2)
+pred_model = 'ridge'
 
 collector = dict()
 for name, targets in [
@@ -179,6 +280,7 @@ for name, targets in [
         print('\n\nimprovement over T1\n\n')
         if 'T1' not in confounds:
             confounds.append('T1')
+        del predictors[predictors.index('T1')]
     elif name == 'late improvements':
         print('\n\nlate improvement\n\n')
         if 'T1' in confounds:
@@ -186,19 +288,25 @@ for name, targets in [
             assert 'T1' not in confounds
         if 'T2' not in confounds:
             confounds.append('T2')
+        del predictors[predictors.index('T2')]
+        predictors.append('T1')
     else:
         print('\n\nlanguage ability\n\n')
 
+    ### both
+    last_key = 'all_confounds'
+    point_of_view = 'all'
     for t in targets:
         key, dict_t = read_dict_keys(name, t)
-        if key not in collector.keys():
-            collector[key] = {'all' : dict()}
-        if dict_t not in collector[key]['all'].keys():
-            collector[key]['all'][dict_t] = dict()
+        ### updating collector dict
+        collector = check_collector(collector, key, dict_t)
+
         ### full case
         confounds_names = [k for l in confounds for k in labels[l] if int(l[-1])==int(t[-1])]
-        weights_names = [k for l in predictors for k in labels[l]]
-        print('target: {}'.format(dict_t))
+        ### predictors only from the present
+        weights_names = [k for l in predictors for k in labels[l] if l in ['age', 'lesions'] or int(l[-1])<=int(t[-1])]
+
+        print('target: {}'.format(dict_t, ))
         print('\n')
         print('predictors: {}'.format(weights_names))
         print('confounds: {}'.format(confounds_names))
@@ -206,280 +314,225 @@ for name, targets in [
         it_confounds = numpy.array([full_data[k] for k in confounds_names]).T
         it_target = numpy.array(full_data[t])
         assert it_target.shape[0] == it_predictors.shape[0]
-        iters = list()
         results_container = numpy.zeros(shape=(iter_null_hyp, n_folds))
-        weights_container = numpy.zeros(shape=(iter_null_hyp, n_folds, it_predictors.shape[1]))
+        weights_container = {k : numpy.zeros(shape=(iter_null_hyp, n_folds)) for k in weights_names}
         for null in tqdm(range(iter_null_hyp)):
             subject_subsampling = random.choices(range(n_subjects), k=n_subjects)
-            reals = list()
-            fakes = list()
             all_preds = list()
             all_targs = list()
             for fold in range(n_folds):
-                test_idxs = random.sample(range(n_subjects), k=test_items)
-                train_idxs = [k for k in range(n_subjects) if k not in test_idxs]
-                ### bootstrapping subjects
-                train_input = list()
-                train_target = list()
-                confound_train_input = list()
-                for _ in train_idxs:
-                    train_input.append(it_predictors[_])
-                    train_target.append(it_target[_])
-                    confound_train_input.append(it_confounds[_])
-                test_input = list()
-                test_target = list()
-                confound_test_input = list()
-                for _ in test_idxs:
-                    test_input.append(it_predictors[_])
-                    test_target.append(it_target[_])
-                    confound_test_input.append(it_confounds[_])
+                train_input, train_target, confound_train_input, \
+                        test_input, test_target, confound_test_input = generate_fold(
+                                                                                     n_subjects,
+                                                                                     test_items,
+                                                                                     it_predictors,
+                                                                                     it_target,
+                                                                                     it_confounds,
+                                                                                     )
 
-                ### start
-                ### not bootstrapping subjects
-                #train_input = it_predictors[train_idxs]
-                #confound_train_input = it_confounds[train_idxs]
-                #train_target = it_target[train_idxs]
-                #test_input = it_predictors[test_idxs]
-                #confound_test_input = it_confounds[test_idxs]
-                #test_target = it_target[test_idxs]
-                ### end
+                ### removing confounds
+                train_target, test_target = cv_confound(confound_train_input, train_target, confound_test_input, test_target)
+                ### training/predicting
+                if pred_model == 'ridge':
+                    preds, coefs = ridge_model(train_input, train_target, test_input, weights_names)
+                elif pred_model == 'rsa_encoding':
+                    preds, coefs = rsa_encoding(train_input, train_target, test_input, test_target)
 
-                ### cv-confound residualization
-                model = linear_model.LinearRegression()
-                # residualizing target
-                model.fit(confound_train_input, train_target)
-                confound_train = model.predict(confound_train_input)
-                train_target = train_target-confound_train
-                confound_test = model.predict(confound_test_input)
-                test_target = test_target-confound_test
-                ### prediction model
-                model = linear_model.RidgeCV(alphas=(1e-3, 1e-2, 1e-1, 1, 1e1, 1e2, 1e3, 1e4))
-                #model = linear_model.LassoCV()
-                model.fit(train_input, train_target)
-                assert model.coef_.shape == (weights_container.shape[-1],)
-                weights_container[null, fold] = model.coef_
-                preds = model.predict(test_input)
-                #preds = rsa_encoding(train_input, train_target, test_input, test_target)
+                ### storing
+
+                # weights
+                assert coefs.shape == (len(weights_container.keys()),)
+                for weight_i, weight in enumerate(weights_names):
+                    weights_container[weight][null, fold] = coefs[weight_i]
+                # true values
                 all_targs.append(test_target)
+                # predictions
                 all_preds.append(preds)
+                # correlation
                 corr = scipy.stats.spearmanr(test_target, preds).statistic
-                #corr = scipy.stats.pearsonr(test_target, preds).statistic
                 results_container[null, fold] = corr
-                reals.append(corr)
+
+            ### r-squared
             #r2 = sklearn.metrics.r2_score(all_targs, all_preds)
             #print(r2)
-            t_avg = numpy.nanmean(reals)
-            iters.append(t_avg)
-        collector[key]['all'][dict_t]['correlations'] = results_container
-        ### p value
-        p_container = numpy.average(results_container, axis=1)
-        assert p_container.shape == (iter_null_hyp, )
-        p = (sum([1 for _ in p_container if _<0])+1)/(iter_null_hyp+1)
-        #print(t_avg)
-        ### aggregate result
-        t_avg = numpy.nanmean(p_container)
-        print([dict_t, 'avg: {}'.format(round(t_avg, 3)), 'p: {}'.format(round(p, 3))])
-        ### weights
-        collector[key]['all'][dict_t]['weights'] = weights_container
-        collector[key]['all'][dict_t]['weights_names'] = weights_names
-        #weights_z_mean = numpy.nanmean(weights_container, axis=2).reshape(weights_container.shape[0], weights_container.shape[1], 1)
-        #weights_z_std = numpy.std(weights_container, axis=2).reshape(weights_container.shape[0], weights_container.shape[1], 1)
-        #weights_z = (weights_container-weights_z_mean) / weights_z_std
-        #assert weights_z.shape == weights_container.shape
-        #avg_weights = numpy.nanmean(weights_z, axis=(0, 1))
-        avg_weights = numpy.nanmean(weights_container, axis=(0, 1))
-        assert avg_weights.shape == (it_predictors.shape[1],)
-        assert (len(weights_names),) == avg_weights.shape
-        avg_weights_dict = {k : v for k, v in zip(weights_names, avg_weights)}
-        sorted_weights = sorted(avg_weights_dict.items(), key=lambda item : item[1], reverse=True)
-        # weights p values
-        weights_p = dict()
-        for w_idx in range(weights_container.shape[-1]):
-            current_weight = numpy.nanmean(weights_container[:, :, w_idx], axis=1)
-            assert current_weight.shape == (iter_null_hyp, )
-            weight_p_one = (sum([1 for _ in current_weight if _<0])+1)/(iter_null_hyp+1)
-            weight_p_two = (sum([1 for _ in current_weight if _>0])+1)/(iter_null_hyp+1)
-            weight_p = min([weight_p_one, weight_p_two])*2
-            weights_p[weights_names[w_idx]] = weight_p
-        #print(sorted(weights_p.items(), key=lambda item : item[1],))
-        sorted_weights_ps = [(k, round(float(v), 3), round(weights_p[k], 5)) for k, v in sorted_weights]
-        print(sorted_weights_ps)
-        print('\n')
+
+        ### storing after iter_null_hyp*folds iterations
+        collector[key][point_of_view][dict_t]['confounds'][last_key] = confounds_names
+        collector[key][point_of_view][dict_t]['weights'][last_key] = weights_container
+        collector[key][point_of_view][dict_t]['correlations'][last_key] = results_container
+
+        ### just a visual check
+        visual_check(results_container, weights_container, iter_null_hyp, point_of_view, dict_t)
+    del last_key
+    del weights_names
+    del confounds_names
 
     ### removing families of predictors
+    point_of_view = 'all'
     for pr in predictors:
         for t in targets:
+            if pr not in ['age', 'lesions'] and int(pr[-1]) >= int(t[-1]):
+                continue
             key, dict_t = read_dict_keys(name, t)
-            if key not in collector.keys():
-                collector[key] = {'all' : dict()}
-            if dict_t not in collector[key]['all'].keys():
-                collector[key]['all'][dict_t] = dict()
-            ### the other predictor
-            other_predictors = [l for l in predictors if l!=pr]
-            assert len(other_predictors) == 1
-            other_pr = other_predictors[0]
-            ### full case
+            ### updating collector dict
+            collector = check_collector(collector, key, dict_t)
+            ### the other predictor, from the present
+            other_predictors = [l for l in predictors if (l in ['age', 'lesions'] and l!=pr) or (l not in ['age', 'lesions'] and int(l[-1])<=int(t[-1]) and l!=pr)]
+            assert len(other_predictors) in [2, 3]
+            #other_pr = other_predictors[0]
+
+            ### confounds
             orig_confounds_names = [k for l in confounds for k in labels[l] if int(l[-1])==int(t[-1])]
-            other_confounds_names = [k for l in predictors for k in labels[l] if l==other_pr]
+            # predictors from the other family become confounds too
+            other_confounds_names = [k for l in predictors for k in labels[l] if (l in ['age', 'lesions'] and l in other_predictors) or (l not in ['age', 'lesions'] and int(l[-1])<=int(t[-1]) and l in other_predictors)]
             confounds_names = orig_confounds_names+other_confounds_names
-            weights_names = [k for l in predictors for k in labels[l] if l==pr]
-            print('target: {} only {}'.format(dict_t, pr))
+
+            ### weights from present & family
+            weights_names = [k for l in predictors for k in labels[l] if (l in ['age', 'lesions'] and l==pr) or (l not in ['age', 'lesions'] and int(l[-1])<=int(t[-1]) and l==pr)]
+
+
+            ### just printing
+            print('target: {} only {}, from {}'.format(dict_t, pr, point_of_view))
             print('\n')
             print('predictors: {}'.format(weights_names))
             print('confounds: {}'.format(confounds_names))
-            ### not removing, random sampling with replacement
+
             it_predictors = numpy.array([full_data[k] for k in weights_names]).T
             it_confounds = numpy.array([full_data[k] for k in confounds_names]).T
             it_target = numpy.array(full_data[t])
-            iters = list()
             results_container = numpy.zeros(shape=(iter_null_hyp, n_folds))
+            weights_container = {k : numpy.zeros(shape=(iter_null_hyp, n_folds)) for k in weights_names}
             for null in tqdm(range(iter_null_hyp)):
-                #it_predictors = numpy.array([full_data[k] if l!=pr else random.sample(full_data[k].tolist(), k=len(full_data[k])) for l in predictors for k in labels[l]]).T
                 assert it_target.shape[0] == it_predictors.shape[0]
+                ### resampling with replacement for bootstrap
                 subject_subsampling = random.choices(range(n_subjects), k=n_subjects)
-                reals = list()
-                fakes = list()
                 all_preds = list()
                 all_targs = list()
                 for fold in range(n_folds):
-                    test_idxs = random.sample(range(n_subjects), k=test_items)
-                    train_idxs = [k for k in range(n_subjects) if k not in test_idxs]
-                    ### bootstrapping subjects
-                    train_input = list()
-                    train_target = list()
-                    confound_train_input = list()
-                    for _ in train_idxs:
-                        train_input.append(it_predictors[_])
-                        train_target.append(it_target[_])
-                        confound_train_input.append(it_confounds[_])
-                    test_input = list()
-                    test_target = list()
-                    confound_test_input = list()
-                    for _ in test_idxs:
-                        test_input.append(it_predictors[_])
-                        test_target.append(it_target[_])
-                        confound_test_input.append(it_confounds[_])
-                    ### cv-confound residualization
-                    model = linear_model.LinearRegression()
-                    # residualizing target
-                    model.fit(confound_train_input, train_target)
-                    confound_train = model.predict(confound_train_input)
-                    train_target = train_target-confound_train
-                    confound_test = model.predict(confound_test_input)
-                    test_target = test_target-confound_test
-                    ### prediction model
-                    model = linear_model.RidgeCV(alphas=(1e-3, 1e-2, 1e-1, 1, 1e1, 1e2, 1e3, 1e4))
-                    #model = linear_model.LassoCV(eps=1e-5)
-                    model.fit(train_input, train_target)
-                    preds = model.predict(test_input)
-                    #preds = rsa_encoding(train_input, train_target, test_input, test_target)
+                    train_input, train_target, confound_train_input, \
+                            test_input, test_target, confound_test_input = generate_fold(
+                                                                                         n_subjects,
+                                                                                         test_items,
+                                                                                         it_predictors,
+                                                                                         it_target,
+                                                                                         it_confounds,
+                                                                                         )
+
+                    ### removing confounds
+                    train_target, test_target = cv_confound(confound_train_input, train_target, confound_test_input, test_target)
+                    ### training/predicting
+                    if pred_model == 'ridge':
+                        preds, coefs = ridge_model(train_input, train_target, test_input, weights_names)
+                    elif pred_model == 'rsa_encoding':
+                        preds, coefs = rsa_encoding(train_input, train_target, test_input, test_target)
+
+                    ### storing
+
+                    # weights
+                    assert coefs.shape == (len(weights_container.keys()),)
+                    for weight_i, weight in enumerate(weights_names):
+                        weights_container[weight][null, fold] = coefs[weight_i]
+                    # true values
                     all_targs.append(test_target)
+                    # predictions
                     all_preds.append(preds)
+                    # correlation
                     corr = scipy.stats.spearmanr(test_target, preds).statistic
                     results_container[null, fold] = corr
-                    reals.append(corr)
+
+                ### r-squared
                 #r2 = sklearn.metrics.r2_score(all_targs, all_preds)
                 #print(r2)
-                t_avg = numpy.nanmean(reals)
-                iters.append(t_avg)
-            collector[key]['all'][dict_t]['only {}'.format(pr)] = results_container
-            ### p value
-            p_container = numpy.average(results_container, axis=1)
-            assert p_container.shape == (iter_null_hyp, )
-            p = (sum([1 for _ in p_container if _<0])+1)/(iter_null_hyp+1)
-            #print(t_avg)
-            ### aggregate result
-            t_avg = numpy.nanmean(p_container)
-            print(['{} only {}'.format(dict_t, pr), 'avg: {}'.format(round(t_avg, 3)), 'p: {}'.format(round(p, 3))])
-            print('\n')
+
+            ### storing after iter_null_hyp*folds iterations
+            collector[key][point_of_view][dict_t]['confounds'][pr] = confounds_names
+            collector[key][point_of_view][dict_t]['weights'][pr] = weights_container
+            collector[key][point_of_view][dict_t]['correlations'][pr] = results_container
+
+            ### just a visual check
+            visual_check(results_container, weights_container, iter_null_hyp, point_of_view, dict_t)
+    del weights_names
+    del confounds_names
+
     ### removing individual predictor among families of predictors
+    point_of_view = 'all'
     for pr in predictors:
-        if pr == 'age':
+        if pr != 'lesions':
             continue
         for t in targets:
             key, dict_t = read_dict_keys(name, t)
-            if key not in collector.keys():
-                collector[key] = {'all' : dict()}
-            if dict_t not in collector[key]['all'].keys():
-                collector[key]['all'][dict_t] = dict()
+            ### updating collector dict
+            collector = check_collector(collector, key, dict_t)
             ### the other predictor
-            other_predictors = [l for l in predictors if l!=pr]
-            assert len(other_predictors) == 1
-            other_pr = other_predictors[0]
-            orig_confounds_names = [k for l in confounds for k in labels[l] if int(l[-1])==int(t[-1])]
-            other_confounds_names = [k for l in predictors for k in labels[l] if l==other_pr]
-            confounds_names = orig_confounds_names+other_confounds_names
-            it_confounds = numpy.array([full_data[k] for k in confounds_names]).T
+            other_predictors = [l for l in predictors if (l in ['age', 'lesions'] and l!=pr) or (l not in ['age', 'lesions'] and int(l[-1])<=int(t[-1]) and l!=pr)]
+            assert len(other_predictors) in [2, 3]
             for ind_pred in labels[pr]:
-                ### full case
-                weights_names = [k for l in predictors for k in labels[l] if l==pr and k!=ind_pred]
-                print('target: {} only {} w/o {}'.format(dict_t, pr, ind_pred,))
+
+                orig_confounds_names = [k for l in confounds for k in labels[l] if int(l[-1])==int(t[-1])]
+                other_confounds_names = [k for l in predictors for k in labels[l] if (l in ['age', 'lesions'] and l in other_predictors) or (l not in ['age', 'lesions'] and int(l[-1])<=int(t[-1]) and l in other_predictors)]
+                confounds_names = orig_confounds_names+other_confounds_names
+
+                ### weights from present & family
+                weights_names = [k for l in predictors for k in labels[l] if (l in ['age', 'lesions'] and l==pr and k!=ind_pred) or (l not in ['age', 'lesions'] and int(l[-1])<=int(t[-1]) and l==pr and k!=ind_pred)]
+                weights_container = {k : numpy.zeros(shape=(iter_null_hyp, n_folds)) for k in weights_names}
+
+                ### just printing
+                print('target: {} only {} w/o {}, from {}'.format(dict_t, pr, ind_pred, point_of_view))
                 print('\n')
                 print('predictors: {}'.format(weights_names))
                 print('confounds: {}'.format(confounds_names))
+
+                it_confounds = numpy.array([full_data[k] for k in confounds_names]).T
                 it_predictors = numpy.array([full_data[k] for k in weights_names]).T
-                #it_confounds = numpy.array([full_data[k] for l in confounds for k in labels[l]]).T
                 it_target = numpy.array(full_data[t])
-                iters = list()
                 results_container = numpy.zeros(shape=(iter_null_hyp, n_folds))
                 for null in tqdm(range(iter_null_hyp)):
-                    #it_predictors = numpy.array([full_data[k] if l!=pr else random.sample(full_data[k].tolist(), k=len(full_data[k])) for l in predictors for k in labels[l]]).T
                     assert it_target.shape[0] == it_predictors.shape[0]
                     subject_subsampling = random.choices(range(n_subjects), k=n_subjects)
-                    reals = list()
-                    fakes = list()
                     all_preds = list()
                     all_targs = list()
+
                     for fold in range(n_folds):
-                        test_idxs = random.sample(range(n_subjects), k=test_items)
-                        train_idxs = [k for k in range(n_subjects) if k not in test_idxs]
-                        ### bootstrapping subjects
-                        train_input = list()
-                        train_target = list()
-                        confound_train_input = list()
-                        for _ in train_idxs:
-                            train_input.append(it_predictors[_])
-                            train_target.append(it_target[_])
-                            confound_train_input.append(it_confounds[_])
-                        test_input = list()
-                        test_target = list()
-                        confound_test_input = list()
-                        for _ in test_idxs:
-                            test_input.append(it_predictors[_])
-                            test_target.append(it_target[_])
-                            confound_test_input.append(it_confounds[_])
-                        ### cv-confound residualization
-                        model = linear_model.LinearRegression()
-                        # residualizing target
-                        model.fit(confound_train_input, train_target)
-                        confound_train = model.predict(confound_train_input)
-                        train_target = train_target-confound_train
-                        confound_test = model.predict(confound_test_input)
-                        test_target = test_target-confound_test
-                        ### prediction model
-                        model = linear_model.RidgeCV(alphas=(1e-3, 1e-2, 1e-1, 1, 1e1, 1e2, 1e3, 1e4))
-                        #model = linear_model.LassoCV(eps=1e-5)
-                        model.fit(train_input, train_target)
-                        preds = model.predict(test_input)
-                        #preds = rsa_encoding(train_input, train_target, test_input, test_target)
+                        train_input, train_target, confound_train_input, \
+                                test_input, test_target, confound_test_input = generate_fold(
+                                                                                             n_subjects,
+                                                                                             test_items,
+                                                                                             it_predictors,
+                                                                                             it_target,
+                                                                                             it_confounds,
+                                                                                             )
+
+                        ### removing confounds
+                        train_target, test_target = cv_confound(confound_train_input, train_target, confound_test_input, test_target)
+                        ### training/predicting
+                        if pred_model == 'ridge':
+                            preds, coefs = ridge_model(train_input, train_target, test_input, weights_names)
+                        elif pred_model == 'rsa_encoding':
+                            preds, coefs = rsa_encoding(train_input, train_target, test_input, test_target)
+
+                        ### storing
+
+                        # here we don't do weights
+                        # true values
                         all_targs.append(test_target)
+                        # predictions
                         all_preds.append(preds)
+                        # correlation
                         corr = scipy.stats.spearmanr(test_target, preds).statistic
                         results_container[null, fold] = corr
-                        reals.append(corr)
+
                     #r2 = sklearn.metrics.r2_score(all_targs, all_preds)
                     #print(r2)
-                    t_avg = numpy.nanmean(reals)
-                    iters.append(t_avg)
-                collector[key]['all'][dict_t]['only {} and {}'.format(pr, ind_pred)] = results_container
-                ### p value
-                p_container = numpy.average(results_container, axis=1)
-                assert p_container.shape == (iter_null_hyp, )
-                p = (sum([1 for _ in p_container if _<0])+1)/(iter_null_hyp+1)
-                #print(t_avg)
-                ### aggregate result
-                t_avg = numpy.nanmean(p_container)
-                print(['{} only {} w/o {}'.format(dict_t, pr, ind_pred), 'avg: {}'.format(round(t_avg, 3)), 'p: {}'.format(round(p, 3))])
-                print('\n')
-with open('ridge_predictions_si.pkl', 'wb') as o:
+
+                ### storing after iter_null_hyp*folds iterations
+                last_key = '{} and {}'.format(pr, ind_pred)
+                collector[key][point_of_view][dict_t]['confounds'][last_key] = confounds_names
+                collector[key][point_of_view][dict_t]['correlations'][last_key] = results_container
+
+                ### just a visual check
+                visual_check(results_container, weights_container, iter_null_hyp, point_of_view, dict_t)
+
+out_f = 'pkls'
+os.makedirs(out_f, exist_ok=True)
+with open(os.path.join(out_f, 'si_{}_predictions.pkl'.format(pred_model)), 'wb') as o:
     pickle.dump(collector, o)

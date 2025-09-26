@@ -1,0 +1,9 @@
+target	predictor	average_spearman_rho	95%_CI	FDR_p	raw_p
+improvements T2-T1	activations T1	-0.22934	(-0.2619, -0.1357)	0.002	0.001
+improvements T3-T1	activations T1	0.10007	(0.06286, 0.20524)	0.08533	0.064
+improvements T3-T2	activations T1	0.18646	(0.15238, 0.28857)	0.002	0.0008
+improvements T2-T1	activations T2	-0.06174	(-0.09619, 0.0381)	0.256	0.224
+improvements T3-T1	activations T2	-0.01065	(-0.04429, 0.08762)	0.8344	0.8344
+improvements T3-T2	activations T2	0.11862	(0.08619, 0.21238)	0.02624	0.0164
+improvements T3-T1	activations T3	0.24308	(0.21, 0.3419)	0.0016	0.0002
+improvements T3-T2	activations T3	0.29797	(0.26619, 0.38905)	0.002	0.001

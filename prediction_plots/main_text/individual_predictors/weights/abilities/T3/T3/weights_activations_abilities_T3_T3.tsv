@@ -1,0 +1,7 @@
+target	predictor	average_regression_weights	95%_CI	FDR_p	raw_p
+weights T3	L_SMA_T3 T3	-0.12396	(-0.28938, -0.15451)	0.001	0.001
+weights T3	L_DLPFC_T3 T3	-0.06234	(-0.22673, -0.09463)	0.001	0.001
+weights T3	L_IFGorb_T3 T3	-0.02231	(-0.18618, -0.05635)	0.001	0.0004
+weights T3	L_PTL_T3 T3	0.0286	(-0.13492, -0.00597)	0.001	0.001
+weights T3	R_DLPFC_T3 T3	0.052	(-0.112, 0.01675)	0.001	0.001
+weights T3	R_IFGorb_T3 T3	0.1404	(-0.02455, 0.10851)	0.001	0.001

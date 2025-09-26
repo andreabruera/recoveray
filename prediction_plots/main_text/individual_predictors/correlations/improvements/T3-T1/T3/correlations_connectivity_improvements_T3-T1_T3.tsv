@@ -1,0 +1,10 @@
+target	predictor	average_removal_impact_on_spearman_rho	95%_CI	FDR_p	raw_p
+correlations T3-T1	connectivity T3 and lDLPFC_to_lIFG_T3 T3	0.00829	(-0.03619, 0.13905)	0.043	0.5501
+correlations T3-T1	connectivity T3 and lDLPFC_to_lPTL_T3 T3	0.06155	(0.01762, 0.18906)	0.8844	0.829
+correlations T3-T1	connectivity T3 and lSMA_to_lIFG_T3 T3	-0.07528	(-0.12, 0.05238)	0.001	0.1295
+correlations T3-T1	connectivity T3 and lSMA_to_lPTL_T3 T3	0.01533	(-0.02905, 0.14143)	0.001	0.594
+correlations T3-T1	connectivity T3 and lIFG_to_lPTL_T3 T3	-0.02737	(-0.07143, 0.10049)	0.001	0.3361
+correlations T3-T1	connectivity T3 and lPTL_to_lIFG_T3 T3	-0.00297	(-0.0481, 0.12762)	0.001	0.4809
+correlations T3-T1	connectivity T3 and rIFG_to_lIFG_T3 T3	-0.12129	(-0.16667, 0.01192)	0.001	0.037
+correlations T3-T1	connectivity T3 and rDLPFC_to_lIFG_T3 T3	0.02923	(-0.01476, 0.15762)	0.001	0.674
+correlations T3-T1	connectivity T3 and rDLPFC_to_lPTL_T3 T3	0.01169	(-0.03286, 0.13952)	0.0028	0.5687

@@ -1,0 +1,7 @@
+target	predictor	average_spearman_rho	95%_CI	FDR_p	raw_p
+abilities T1	activations T1	0.04426	(0.00714, 0.15048)	0.8404	0.4202
+abilities T2	activations T1	0.00414	(-0.03238, 0.10524)	0.9404	0.9322
+abilities T3	activations T1	0.02106	(-0.01524, 0.12714)	0.9404	0.6974
+abilities T2	activations T2	0.00416	(-0.02952, 0.10429)	0.9404	0.9404
+abilities T3	activations T2	-0.16656	(-0.1981, -0.07286)	0.0012	0.0004
+abilities T3	activations T3	0.20674	(0.17238, 0.30476)	0.0012	0.0002

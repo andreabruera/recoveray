@@ -1,7 +1,0 @@
-target_type	predictor	target_time_point	avg_correlation	fdr_corrected_p_value	raw_p_value
-activations	activations T3 and L_DLPFC_T3	T3-T2	0.00164	0.608	0.503
-activations	activations T3 and L_IFGorb_T3	T3-T2	0.0169	0.608	0.608
-activations	activations T3 and L_PTL_T3	T3-T2	-0.00713	0.608	0.467
-activations	activations T3 and L_SMA_T3	T3-T2	-0.00748	0.608	0.462
-activations	activations T3 and R_DLPFC_T3	T3-T2	-0.00933	0.608	0.452
-activations	activations T3 and R_IFGorb_T3	T3-T2	0.004	0.608	0.518

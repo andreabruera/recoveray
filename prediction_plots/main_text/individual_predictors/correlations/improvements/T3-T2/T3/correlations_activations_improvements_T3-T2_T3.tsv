@@ -1,0 +1,7 @@
+target	predictor	average_removal_impact_on_spearman_rho	95%_CI	FDR_p	raw_p
+correlations T3-T2	activations T3 and L_SMA_T3 T3	-0.00734	(-0.05238, 0.12382)	0.8734	0.4576
+correlations T3-T2	activations T3 and L_DLPFC_T3 T3	-9e-05	(-0.04524, 0.13)	0.0048	0.4999
+correlations T3-T2	activations T3 and L_IFGorb_T3 T3	0.01642	(-0.02857, 0.14763)	0.8878	0.5964
+correlations T3-T2	activations T3 and L_PTL_T3 T3	-0.01107	(-0.05571, 0.11954)	0.001	0.4277
+correlations T3-T2	activations T3 and R_DLPFC_T3 T3	-0.00983	(-0.05476, 0.12287)	0.001	0.4384
+correlations T3-T2	activations T3 and R_IFGorb_T3 T3	0.00585	(-0.0381, 0.13619)	0.001	0.5333

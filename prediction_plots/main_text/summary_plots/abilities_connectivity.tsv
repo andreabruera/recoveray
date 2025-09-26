@@ -1,0 +1,7 @@
+target	predictor	average_spearman_rho	95%_CI	FDR_p	raw_p
+abilities T1	connectivity T1	0.02371	(-0.01, 0.1219)	0.6326	0.6326
+abilities T2	connectivity T1	-0.12618	(-0.16048, -0.02667)	0.0588	0.014
+abilities T3	connectivity T1	-0.06296	(-0.09571, 0.03333)	0.3984	0.1992
+abilities T2	connectivity T2	0.04321	(0.0075, 0.14714)	0.49968	0.4164
+abilities T3	connectivity T2	-0.05211	(-0.08667, 0.04952)	0.4641	0.3094
+abilities T3	connectivity T3	0.11672	(0.08429, 0.20954)	0.0588	0.0196
