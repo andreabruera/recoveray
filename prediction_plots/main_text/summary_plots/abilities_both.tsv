@@ -1,6 +1,6 @@
 target	predictor	average_spearman_rho	95%_CI	FDR_p	raw_p
 abilities T1	both T1	0.05726	(0.02429, 0.15239)	0.28704	0.2392
-abilities T2	both T1	-0.18245	(-0.21476, -0.08808)	0.003	0.001
+abilities T2	both T1	-0.18245	(-0.21476, -0.08808)	0.0006	0.0001
 abilities T3	both T1	-0.07887	(-0.11429, 0.02571)	0.2061	0.1374
 abilities T2	both T2	-0.03483	(-0.0681, 0.06)	0.4748	0.4748
 abilities T3	both T2	0.1334	(0.10048, 0.22667)	0.0144	0.0072

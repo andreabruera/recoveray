@@ -266,7 +266,8 @@ confounds = [
 assert len(confounds) == 6
 
 n_folds = 50
-iter_null_hyp = 1000
+iter_null_hyp = 10000
+#iter_null_hyp = 599
 test_items = int(n_subjects*0.2)
 pred_model = 'ridge'
 
@@ -304,7 +305,7 @@ for name, targets in [
         ### full case
         confounds_names = [k for l in confounds for k in labels[l] if int(l[-1])==int(t[-1])]
         ### predictors only from the present
-        weights_names = [k for l in predictors for k in labels[l] if l in ['age', 'lesions'] or int(l[-1])<=int(t[-1])]
+        weights_names = [k for l in predictors for k in labels[l] if (l in ['age', 'lesions'] or int(l[-1])<=int(t[-1])) and k!=t]
 
         print('target: {}'.format(dict_t, ))
         print('\n')
@@ -384,7 +385,7 @@ for name, targets in [
             ### confounds
             orig_confounds_names = [k for l in confounds for k in labels[l] if int(l[-1])==int(t[-1])]
             # predictors from the other family become confounds too
-            other_confounds_names = [k for l in predictors for k in labels[l] if (l in ['age', 'lesions'] and l in other_predictors) or (l not in ['age', 'lesions'] and int(l[-1])<=int(t[-1]) and l in other_predictors)]
+            other_confounds_names = [k for l in predictors for k in labels[l] if (l in ['age', 'lesions'] and l in other_predictors and k!=t) or (l not in ['age', 'lesions'] and int(l[-1])<=int(t[-1]) and l in other_predictors and k!=t)]
             confounds_names = orig_confounds_names+other_confounds_names
 
             ### weights from present & family
@@ -469,7 +470,7 @@ for name, targets in [
             for ind_pred in labels[pr]:
 
                 orig_confounds_names = [k for l in confounds for k in labels[l] if int(l[-1])==int(t[-1])]
-                other_confounds_names = [k for l in predictors for k in labels[l] if (l in ['age', 'lesions'] and l in other_predictors) or (l not in ['age', 'lesions'] and int(l[-1])<=int(t[-1]) and l in other_predictors)]
+                other_confounds_names = [k for l in predictors for k in labels[l] if (l in ['age', 'lesions'] and l in other_predictors and k!=t) or (l not in ['age', 'lesions'] and int(l[-1])<=int(t[-1] and k!=t) and l in other_predictors)]
                 confounds_names = orig_confounds_names+other_confounds_names
 
                 ### weights from present & family

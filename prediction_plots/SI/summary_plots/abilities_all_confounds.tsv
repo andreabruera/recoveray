@@ -1,0 +1,4 @@
+target	predictor	average_spearman_rho	95%_CI	FDR_p	raw_p
+abilities T1	all_confounds all	0.58429	(0.55952, 0.65381)	0.0001	0.0001
+abilities T2	all_confounds all	0.39106	(0.36143, 0.47476)	0.0001	0.0001
+abilities T3	all_confounds all	0.24198	(0.20952, 0.33762)	0.0001	0.0001

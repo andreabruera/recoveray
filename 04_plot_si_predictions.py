@@ -6,29 +6,14 @@ import random
 import scipy
 
 from matplotlib import font_manager, pyplot
-from tqdm import tqdm
+from matplotlib.transforms import Affine2D
+from matplotlib.markers import MarkerStyle
+from scipy import stats
 
-def two_samples_permutation(one, two, side='both'):
-    real = numpy.nanmean(one)-numpy.nanmean(two)
-    fakes = list()
-    for _ in range(1000):
-        fake = random.sample(one+two, k=len(one)+len(two))
-        fake_one = fake[:len(one)]
-        fake_two = fake[len(one):]
-        fake_diff = abs(numpy.nanmean(fake_one)-numpy.nanmean(fake_two))
-        fakes.append(fake_diff)
-    if side == 'both':
-        p_one = sum([1 for _ in fakes if _>real])/1000
-        p_two = sum([1 for _ in fakes if _<real])/1000
-        p = min([p_one, p_two])*2
-    elif side == 'greater':
-        p = sum([1 for _ in fakes if _>real])/1000
-    elif side == 'smaller':
-        p = sum([1 for _ in fakes if _<real])/1000
-    else:
-        raise RuntimeError()
-    return p
-out_f = os.path.join('prediction_plots', 'SI')
+def cis(scores):
+    lower = numpy.quantile(scores, 0.25)
+    upper = numpy.quantile(scores, 0.975)
+    return (round(float(lower), 5), round(float(upper), 5))
 
 # Using Helvetica as a font
 font_folder = '../fonts/'
@@ -42,6 +27,15 @@ if os.path.exists(font_folder):
 with open(os.path.join('pkls', 'si_ridge_predictions.pkl'), 'rb') as i:
     all_res = pickle.load(i)
 
+time_mapper = {
+               'T1' : 'Acute',
+               'T2' : 'Subacute',
+               'T3' : 'Chronic',
+               'T2-T1' : 'Early',
+               'T3-T1' : 'Long-term',
+               'T3-T2' : 'Late',
+               }
+
 ### abilities & improvements
 
 mapper = {
@@ -49,10 +43,11 @@ mapper = {
           'improvements' : 'improvement'
           }
 
+out_f = os.path.join('prediction_plots', 'SI')
 curr_out_f = os.path.join(out_f, 'summary_plots')
 os.makedirs(curr_out_f, exist_ok=True)
 n_folds = 50
-iter_null_hyp = 1000
+iter_null_hyp = 10000
 
 for general_case in ['abilities', 'improvements']:
     for key in [
@@ -71,7 +66,7 @@ for general_case in ['abilities', 'improvements']:
 
         if general_case == 'abilities':
             targets = ['T1', 'T2', 'T3']
-            xticks = ['Acute','Subacute','Chronic']
+            xticks = [time_mapper[t] for t in targets]
             pov_positions = {
                      'T1' : -.31,
                      'T2' : 0,
@@ -91,7 +86,6 @@ for general_case in ['abilities', 'improvements']:
             width = 0.3
         elif general_case == 'improvements':
             targets = ['T2-T1', 'T3-T1', 'T3-T2']
-            xticks = ['Early','Long-term','Late']
             pov_positions = {
                      'T1' : -.25,
                      'T2' : 0,
@@ -109,25 +103,28 @@ for general_case in ['abilities', 'improvements']:
                 'all' : 'magenta',
                  }
             width = 0.24
-        if key == 'both':
-            case = 'activity\n& connectivity'
-        else:
-            case = key
+        xticks = [time_mapper[t] for t in targets]
+        case = key
         legend_mapper = {
                          'T1' : 'Acute {}'.format(case),
                          'T2' : 'Subacute {}'.format(case),
                          'T3' : 'Chronic {}'.format(case),
-        'all' : 'all confounds',
-        'age' : 'Age',
-        'lesions': 'Lesion affection',
-        'T1' : 'Acute language ability',
-        'T2' : 'Subacute language ability',
+                        'all' : 'all confounds',
+                        'age' : 'Age',
+                        'lesions': 'Lesion affection',
+                        'T1' : 'Acute language ability',
+                        'T2' : 'Subacute language ability',
                          }
         fig, ax = pyplot.subplots(figsize=(9, 10), constrained_layout=True)
+        txt = list()
 
         all_xs = list()
         all_ps = list()
         all_ys = list()
+        all_cis = list()
+        curr_povs = list()
+        curr_targs = list()
+        #for pov in legend_mapper.keys():
         for pov in ['all']:
             curr_key = key
             pov_xs = list()
@@ -145,20 +142,22 @@ for general_case in ['abilities', 'improvements']:
                 p_two = sum([1 for _ in p_container if _>=0])/iter_null_hyp
                 p = min(p_one, p_two)*2
                 if p == 0:
-                    p = 1/1001
+                    p = 1/(iter_null_hyp+1)
                 scatters.append(p_container)
                 assert p_container.shape == (iter_null_hyp, )
                 pov_ps.append(p)
                 ### aggregate result
                 t_avg = numpy.nanmean(p_container)
                 pov_ys.append(t_avg)
+                all_cis.append(cis(p_container))
+                curr_povs.append(pov)
+                curr_targs.append(target)
                 pov_xs.append(target_positions[target]+pov_positions[pov])
             all_ys.append(pov_ys)
             all_xs.append(pov_xs)
             all_ps.append(pov_ps)
             ax.plot(pov_xs, pov_ys, color=colors[pov], linewidth=5,)
             ax.bar(pov_xs, pov_ys, width=width,alpha=0.4,  color=colors[pov])
-            #ax.errorbar(pov_xs, pov_ys, yerr=numpy.nanstd(p_container), color='gray', capsize=2)
             ax.scatter(pov_xs, pov_ys, s=300,label=legend_mapper[pov], marker='D', color=colors[pov], edgecolors='white', linewidth=2.,zorder=3)
             for x, scats in zip(pov_xs, scatters):
                 ax.scatter([x+random.sample([corr*0.01 for corr in range(-10, 10)], k=1)[0] for _ in range(1000)],
@@ -170,38 +169,50 @@ for general_case in ['abilities', 'improvements']:
 ### correcting p values
         all_ps_flat = [p for _ in all_ps for p in _]
         all_xs_flat = [x for _ in all_xs for x in _]
+        assert len(all_cis) == len(all_xs_flat)
         all_ys_flat = [numpy.nanmean(y) for _ in all_ys for y in _]
         corr_ps = scipy.stats.false_discovery_control(all_ps_flat)
-        for x, p, y_avg in zip(all_xs_flat, corr_ps, all_ys_flat):
+        for x, p, y_avg, pov, targ, ci, raw_p in zip(all_xs_flat, corr_ps, all_ys_flat, curr_povs, curr_targs, all_cis, all_ps_flat):
+            txt.append((pov, targ, y_avg, p, raw_p, ci))
             if p < 0.05:
                 if y_avg > 0.:
                     p_y = 0.02
                 else:
                     p_y = -0.02
                 ax.scatter(x, p_y, s=300, marker='*', color='black', edgecolors='white', linewidth=1.)
+            #elif p < 0.11:
+            #    if y_avg > 0.:
+            #        p_y = 0.02
+            #    else:
+            #        p_y = -0.02
+            #    ax.scatter(x, p_y, s=200, marker='P', color='black', edgecolors='white', linewidth=1.)
 
         ax.legend(
                   loc=9,
                   fontsize=16,
-                  ncols=3,
+                  ncols=2,
                   handletextpad=0.,
                   borderpad=0.3,
                   columnspacing=1.
                   )
-        ax.hlines(y=[_*0.1 for _ in range(-3, 5)], xmin=-.5, xmax=2.5, linestyle='--',color='gray', alpha=0.2)
+        ax.hlines(y=[_*0.1 for _ in range(-1, 8)], xmin=-.5, xmax=2.5, linestyle='--',color='gray', alpha=0.2)
         ax.hlines(y=0., xmin=-.5, xmax=2.5, color='gray')
-        ax.set_ylim(bottom=-.35, top=0.45)
+        ax.set_ylim(bottom=-.1, top=0.75)
         ax.text(s='Language {}'.format(mapper[general_case]), x=1, y=-.3, fontsize=25, fontweight='bold', fontstyle='italic', va='center', ha='center')
         pyplot.ylabel('Spearman correlation', fontsize=20, fontweight='bold')
         pyplot.xticks(ticks=[0, 1, 2], labels=xticks, fontsize=23, fontweight='bold')
         pyplot.yticks(fontsize=15)
         pyplot.savefig(os.path.join(curr_out_f, '{}_{}.jpg'.format(general_case, key)), dpi=300)
+        with open(os.path.join(curr_out_f, '{}_{}.tsv'.format(general_case, key)), 'w') as o:
+            o.write('target\tpredictor\taverage_spearman_rho\t95%_CI\tFDR_p\traw_p\n')
+            for pov, targ, y_avg, p, raw_p, ci in txt:
+                o.write('{} {}\t{} {}\t{}\t{}\t{}\t{}\n'.format(general_case, targ, key, pov, round(y_avg, 5), str(ci), round(p, 5), round(raw_p, 5)))
         pyplot.clf()
         pyplot.close()
 
 ### both
 xtimes = ['T1', 'T2', 'T3', 'T2-T1', 'T3-T1', 'T3-T2']
-xticks = ['Acute', 'Subacute', 'Chronic', 'Early','Long-term','Late']
+xticks = [time_mapper[t] for t in xtimes]
 widths = {
           'T1' : .14,
           'T2' : .26,
@@ -211,8 +222,6 @@ widths = {
           'T3-T1' : .38
           }
 pred_fams = [
-             #'activations',
-             #'connectivity',
              'age',
              'lesions',
              'T1',
@@ -239,9 +248,16 @@ fig, ax = pyplot.subplots(
                           constrained_layout=True,
                           figsize=(20, 10),
                           )
+pov = 'all'
+txt = list()
 all_ps = list()
 all_xs = list()
 all_ys = list()
+all_cis = list()
+curr_povs = list()
+curr_fams = list()
+curr_targs = list()
+curr_cases = list()
 all_details = list()
 for case in cases:
     for targ in xtimes:
@@ -261,12 +277,17 @@ for case in cases:
                 p_two = sum([1 for _ in p_container if _>0])/iter_null_hyp
                 p = min(p_one, p_two)*2
                 if p == 0:
-                    p = 1/1001
+                    p = 1/(iter_null_hyp+1)
                 targ_scats.append(p_container)
                 assert p_container.shape == (iter_null_hyp, )
                 targ_ps.append(p)
                 ### aggregate result
                 t_avg = numpy.nanmean(p_container)
+                all_cis.append(cis(p_container))
+                curr_fams.append(pred_fam)
+                curr_cases.append(case)
+                curr_povs.append(pov)
+                curr_targs.append(targ)
                 targ_ys.append(t_avg)
                 targ_details.append({'pov' : pov, 'pred_fam' : pred_fam, 'target': targ, 'case' : case, 'key' : key})
         all_details.extend(targ_details)
@@ -291,9 +312,9 @@ for case in cases:
         for i, x, y, scats, details in zip(range(len(targ_ys)), targ_xs, targ_ys, targ_scats, targ_details):
             curr_key = '{} {}'.format(details['pred_fam'], details['pov'])
             ax.bar(x, y, width=0.12, alpha=0.6,  color=pred_colours[curr_key])
-            if curr_key[:-4] not in label_set:
+            if curr_key[5:] not in label_set:
                 ax.scatter(x, y, s=100, label=legend_mapper[curr_key], marker='D', edgecolors='white', linewidth=2.,zorder=3, color=pred_colours[curr_key],)
-                label_set.add(curr_key[:-4])
+                label_set.add(curr_key[5:])
             else:
                 ax.scatter(x, y, s=100, edgecolors='white', marker='D', linewidth=2.,zorder=3, color=pred_colours[curr_key],)
             ax.scatter([x+random.sample([corr*0.005 for corr in range(-10, 10)], k=1)[0] for _ in range(1000)],
@@ -304,16 +325,30 @@ for case in cases:
                        edgecolors='white',
                        )
 corr_ps = scipy.stats.false_discovery_control(all_ps)
-for x, p, y in zip(all_xs, corr_ps, all_ys):
+for x, p, y, ci, pov, targ, raw_p, fam, case in zip(all_xs, corr_ps, all_ys, all_cis, curr_povs, curr_targs, all_ps, curr_fams, curr_cases):
+    txt.append((pov, targ, y, p, raw_p, ci, fam, case))
     if p < 0.05:
         if y > 0.:
             p_y = 0.02
         else:
             p_y = -0.02
         ax.scatter(x, p_y, s=300, marker='*', color='black', edgecolors='white', linewidth=1.)
+    #elif p < 0.11:
+    #    if y > 0.:
+    #        p_y = 0.02
+    #    else:
+    #        p_y = -0.02
+    #    ax.scatter(x, p_y, s=200, marker='P', color='black', edgecolors='white', linewidth=1.)
 ax.text(
         x=5.2,
-        y=0.425,
+        y=0.725,
+        s='p<0.05',
+        fontsize=20,
+        va='center',
+        )
+ax.text(
+        x=5.2,
+        y=0.725,
         s='p<0.05',
         fontsize=20,
         va='center',
@@ -346,8 +381,6 @@ ax.text(
         fontweight='bold'
         )
 ax.vlines(
-          #x=[_+0.5 for _ in range(3)],
-          #x=[_+2+0.5 for _ in range(len(xs))],
           x = [0.5, 1.45],
           ymin=-.25,
           ymax=.38,
@@ -357,7 +390,6 @@ ax.vlines(
           )
 ax.vlines(
           x=[2.6],
-          #x=[_+2+0.5 for _ in range(len(xs))],
           ymin=-.32,
           ymax=.38,
           linestyles='dotted',
@@ -365,8 +397,6 @@ ax.vlines(
           linewidth=5,
           )
 ax.vlines(
-          #x=[_+0.5 for _ in range(3, 5)],
-          #x=[_+2+0.5 for _ in range(len(xs))],
           x = [3.4, 4.5],
           ymin=-.25,
           ymax=.38,
@@ -379,9 +409,9 @@ ax.margins(x=.01, y=0.)
 pyplot.ylabel('Spearman correlation', fontsize=20, fontweight='bold')
 pyplot.xticks(ticks=[0, 1, 2, 3, 4, 5], labels=xticks, fontsize=23, fontweight='bold')
 pyplot.yticks(fontsize=15)
-ax.hlines(y=[_*0.1 for _ in range(-3, 5)], xmin=-.2, xmax=5.45, linestyle='--',color='gray', alpha=0.2)
+ax.hlines(y=[_*0.1 for _ in range(-3, 8)], xmin=-.2, xmax=5.45, linestyle='--',color='gray', alpha=0.2)
 ax.hlines(y=0., xmin=-.2, xmax=5.45, color='gray')
-ax.set_ylim(bottom=-.35, top=0.45)
+ax.set_ylim(bottom=-.35, top=0.75)
 ax.legend(
           loc=9,
           fontsize=18,
@@ -395,10 +425,9 @@ pyplot.savefig(os.path.join(curr_out_f, 'all.jpg'), dpi=300)
 pyplot.clf()
 pyplot.close()
 with open(os.path.join(curr_out_f, 'all_stats.tsv'), 'w') as o:
-    o.write('target_type\tpredictor\ttarget_time_point\tavg_correlation\tfdr_corrected_p_value\traw_p_value\n')
-    for dets, corr_p, raw_p, y in zip(all_details, corr_ps, all_ps, all_ys):
-        o.write('{}\t{}\t{}\t'.format(dets['case'], dets['key'], dets['target']))
-        o.write('{}\t{}\t{}\n'.format(round(y, 5), round(corr_p, 5), round(raw_p, 5)))
+    o.write('target\tpredictor\taverage_spearman_rho\t95%_CI\tFDR_p\traw_p\n')
+    for pov, targ, y_avg, p, raw_p, ci, fam, case in txt:
+        o.write('{} {}\t{} {}\t{}\t{}\t{}\t{}\n'.format(case, targ, fam, pov, round(y_avg, 5), str(ci), round(p, 5), round(raw_p, 5)))
 
 ### individual predictors
 colours = {
@@ -458,26 +487,24 @@ orders = {
            ]
            }
 
-time_mapper = {
-               'T1' : 'acute',
-               'T2' : 'subacute',
-               'T3' : 'chronic',
-               'T2-T1' : 'early',
-               'T3-T1' : 'long-term',
-               'T3-T2' : 'late',
-               }
 
+### correcting p values
+hard_ps = dict()
 pred_fams = ['lesions']
 for general_case in ['correlations', 'weights']:
+    if general_case == 'correlations':
+        hard_ps['{}_chance'.format(general_case)] = list()
+        hard_ps['{}_comparisons'.format(general_case)] = list()
+    else:
+        hard_ps[general_case] = list()
     for case in all_res.keys():
+        #for pov in all_res[case].keys():
         for pov in ['all']:
             for targ in all_res[case][pov].keys():
                 for fam in pred_fams:
-                    curr_out_f = os.path.join(out_f, 'individual_predictors', general_case, case, targ, pov,)
-                    os.makedirs(curr_out_f, exist_ok=True)
+                    p_check = (fam, pov, case, targ)
                     if general_case == 'correlations':
                         all_ks = [k for k in all_res[case][pov][targ][general_case].keys() if fam in k and ' and ' in k]
-                        print(all_ks)
                         assert len(all_ks) == len(orders[fam])
                         x_names = list()
                         for k in orders[fam]:
@@ -486,12 +513,10 @@ for general_case in ['correlations', 'weights']:
                                     x_names.append(a_k)
                         assert len(x_names) == len(orders[fam])
 
-                        #x_names = [k for k in all_res[case][pov][targ][general_case].keys() if fam in k and ' and ' in k]
-                        basic_corrs = numpy.nanmean(all_res[case][pov][targ][general_case]['{}'.format(fam, pov)], axis=1)
+                        basic_corrs = numpy.nanmean(all_res[case][pov][targ][general_case]['{}'.format(fam)], axis=1)
                         basic_avg = numpy.nanmean(basic_corrs)
                     else:
-                        all_ks = sorted([k for k in all_res[case][pov][targ][general_case]['{}'.format(fam, pov)].keys()])
-                        #all_ks = all_res[case][pov][targ][general_case]['{} {}'.format(fam, pov)].keys()
+                        all_ks = sorted([k for k in all_res[case][pov][targ][general_case]['{}'.format(fam)].keys()])
                         assert len(all_ks) == len(orders[fam])
                         x_names = list()
                         for k in orders[fam]:
@@ -500,67 +525,128 @@ for general_case in ['correlations', 'weights']:
                                     x_names.append(a_k)
                         assert len(x_names) == len(orders[fam])
 
-                    fig, ax = pyplot.subplots(figsize=(9, 10), constrained_layout=True)
-
-                    xs = list()
-                    ys = list()
-                    ps = list()
-                    scats = list()
-                    label_set = set()
-                    p_keys = list()
-                    p_avgs = list()
-                    x_colors =list()
                     for x_i, x in enumerate(x_names):
                         if general_case == 'correlations':
                             curr_corrs = all_res[case][pov][targ][general_case][x]
                         else:
-                            curr_corrs = all_res[case][pov][targ][general_case]['{}'.format(fam, pov)][x]
+                            curr_corrs = all_res[case][pov][targ][general_case][fam][x]
 
-                        ### p value
                         p_container = numpy.average(curr_corrs, axis=1)
                         t_avg = numpy.nanmean(p_container)
-                        #p_one = sum([1 for _,__ in zip(p_container, basic_corrs) if _<=__])/iter_null_hyp
-                        #p = scipy.stats.wilcoxon(p_container, basic_corrs).pvalue
                         if general_case == 'correlations':
-                            ### one-tailed: in how many cases were correlations stronger for one as opposed to the other?
-                            for x_i_two, x_two in tqdm(enumerate(x_names)):
-                                #if x_i_two <= x_i:
-                                #    continue
-                                other_container = numpy.nanmean(all_res[case][pov][targ][general_case][x_two], axis=1)-basic_corrs
-                                other_avg = numpy.nanmean(other_container)
-                                diff_container = p_container-basic_corrs
-                                diff_avg = numpy.nanmean(diff_container)
-                                #if diff_avg > 0.:
-                                #    continue
-                                ### first one determines who's bigger
-                                p_key = (x, x_two)
-                                p_key_two = (x_two, x)
-                                '''
-                                if diff_avg < other_avg:
-                                    p_key = (x, x_two)
-                                else:
-                                    p_key = (x_two, x)
-                                '''
-                                if p_key in p_keys:
+                            ### p value
+                            ### against chance
+                            p = sum([1 for _ in p_container-basic_corrs if _>0])/iter_null_hyp
+                            if p == 0:
+                                p = 1/(iter_null_hyp+1)
+                            key = (case, pov, targ, fam, x)
+                            hard_ps['{}_chance'.format(general_case)].append((key, p))
+                            ### against the other values
+                            for x_i_two, x_two in enumerate(x_names):
+                                if x_i_two <= x_i:
                                     continue
-                                p_keys.append(p_key)
-                                p_keys.append(p_key_two)
-                                p_avgs.append((diff_avg, other_avg))
-                                p_avgs.append((other_avg, diff_avg))
-                                p = two_samples_permutation(
-                                                            diff_container.tolist(),
-                                                            other_container.tolist(),
-                                                            )
-                                ps.append(p)
-                                ps.append(p)
-                            #p = sum([1 for _,__ in zip(p_container, basic_corrs) if _>=__])/iter_null_hyp
+                                other_container = numpy.nanmean(all_res[case][pov][targ][general_case][x_two], axis=1)-basic_corrs
+                                diff_container = p_container-basic_corrs
+                                p_one = sum([1 for _ in diff_container-other_container if _<0])/iter_null_hyp
+                                p_two = sum([1 for _ in diff_container-other_container if _>0])/iter_null_hyp
+                                p = min(p_one, p_two)*2
+                                if p == 0:
+                                    p = 1/(iter_null_hyp+1)
+                                key = (case, pov, targ, fam, tuple(sorted((x, x_two))))
+                                hard_ps['{}_comparisons'.format(general_case)].append((key, p))
                         else:
                             p_one = sum([1 for _ in p_container if _<0])/iter_null_hyp
                             p_two = sum([1 for _ in p_container if _>0])/iter_null_hyp
                             p = min(p_one, p_two)*2
                             if p == 0:
-                                p = 1/1001
-                            ps.append(p)
+                                p = 1/(iter_null_hyp+1)
+                            key = (case, pov, targ, fam, x)
+                            hard_ps[general_case].append((key, p))
+hard_corr_ps = {k : list() for k in hard_ps.keys()}
+for k, v in hard_ps.items():
+    corr_ps = scipy.stats.false_discovery_control([c[1] for c in v])
+    hard_corr_ps[k] = [(key[0], val) for key, val in zip(v, corr_ps)]
+
+n_folds = 50
+iter_null_hyp = 10000
+pred_fams = ['lesions']
+for general_case in [
+                     'correlations',
+                     #'weights',
+                     ]:
+    for case in all_res.keys():
+        #for pov in all_res[case].keys():
+        for pov in ['all']:
+            for targ in all_res[case][pov].keys():
+                for fam in pred_fams:
+                    p_check = (fam, pov, case, targ)
+                    curr_out_f = os.path.join(out_f, 'individual_predictors', general_case, case, targ, pov,)
+                    os.makedirs(curr_out_f, exist_ok=True)
+                    if general_case == 'correlations':
+                        all_ks = [k for k in all_res[case][pov][targ][general_case].keys() if fam in k and ' and ' in k]
+                        assert len(all_ks) == len(orders[fam])
+                        x_names = list()
+                        for k in orders[fam]:
+                            for a_k in all_ks:
+                                if k in a_k:
+                                    x_names.append(a_k)
+                        assert len(x_names) == len(orders[fam])
+
+                        basic_corrs = numpy.nanmean(all_res[case][pov][targ][general_case][fam], axis=1)
+                        basic_avg = numpy.nanmean(basic_corrs)
+                    else:
+                        all_ks = sorted([k for k in all_res[case][pov][targ][general_case][fam].keys()])
+                        assert len(all_ks) == len(orders[fam])
+                        x_names = list()
+                        for k in orders[fam]:
+                            for a_k in all_ks:
+                                if k in a_k:
+                                    x_names.append(a_k)
+                        assert len(x_names) == len(orders[fam])
+
+                    fig, ax = pyplot.subplots(figsize=(5, 10), constrained_layout=True)
+
+                    xs = list()
+                    ys = list()
+                    ps = list()
+                    raw_ps = list()
+                    curr_cis = list()
+                    scats = list()
+                    label_set = set()
+                    p_keys = list()
+                    p_avgs = list()
+                    x_colors =list()
+                    txt = list()
+                    for x_i, x in enumerate(x_names):
+                        ### retrieving pre-corrected p against chance
+                        key = (case, pov, targ, fam, x)
+                        weight_key = (case, pov, targ, fam, x.split(' ')[-1])
+                        if general_case == 'correlations':
+                            chance_p = [k[1] for k in hard_corr_ps['{}_chance'.format(general_case)] if k[0]==key]
+                            raw_chance_p = [k[1] for k in hard_ps['{}_chance'.format(general_case)] if k[0]==key]
+                            raw_weight_p = [k[1] for k in hard_ps['weights'] if k[0]==weight_key]
+                            weight_p = [k[1] for k in hard_corr_ps['weights'] if k[0]==weight_key]
+                            assert len(raw_weight_p) == 1
+                            assert len(weight_p) == 1
+                            weight_p = weight_p[0]
+                        else:
+                            weight_p = [k[1] for k in hard_corr_ps['weights'] if k[0]==key]
+                            assert len(weight_p) == 1
+                            weight_p = weight_p[0]
+                            raw_weight_p = [k[1] for k in hard_ps[general_case] if k[0]==key]
+                        assert len(chance_p) == 1
+                        raw_chance_p = raw_weight_p[0]
+                        ### we consider only the p for weights
+                        ps.append(weight_p)
+                        raw_ps.append(raw_chance_p)
+                        if general_case == 'correlations':
+                            curr_corrs = all_res[case][pov][targ][general_case][x]
+                        else:
+                            curr_corrs = all_res[case][pov][targ][general_case]['{} {}'.format(fam, pov)][x]
+
+                        ### p value
+                        p_container = numpy.average(curr_corrs, axis=1)
+                        t_avg = numpy.nanmean(p_container)
                         if general_case == 'correlations':
                             ### plotting impact
                             scats.append(p_container-basic_corrs)
@@ -571,6 +657,7 @@ for general_case in ['correlations', 'weights']:
                             scats.append(p_container)
                             ys.append(t_avg)
                         assert p_container.shape == (iter_null_hyp, )
+                        curr_cis.append(cis(p_container-basic_corrs))
                         if fam == 'activations':
                             if x_i > 1 and x_i < 4:
                                 xs.append(x_i+1)
@@ -587,105 +674,72 @@ for general_case in ['correlations', 'weights']:
                                 xs.append(x_i)
                         color = colours[fam][orders[fam][x_i]]
                         x_colors.append(color)
-                        for x, y, scat, x_name, color in zip(xs, ys, scats, x_names, x_colors):
-                            label = x_name.split(' ')[-1].replace('_', ' ').strip().replace('orb', '').replace('L ', 'left ').replace('R ', 'right ').replace('PTleft', 'PTL')
-                            label = 'lesion in '+label
-                            ax.bar(
-                                    x,
-                                    y,
-                                   #color=colours[fam][x],
-                                   color = color,
-                                   alpha=0.3,
-                                    )
-                            if label not in label_set:
-                                label_set.add(label)
-                                ax.scatter(
-                                           x,
-                                           y,
-                                           #color=colours[fam][x],
-                                           color=color,
-                                           s=300,
-                                           label=label,
-                                           marker='D',
-                                           edgecolors='white',
-                                           linewidth=2.,
-                                           zorder=3,
-                                           )
-                            else:
-                                ax.scatter(
-                                           x,
-                                           y,
-                                           s=300,
-                                           marker='D',
-                                           edgecolors='white',
-                                           linewidth=2.,
-                                           zorder=3,
-                                           #color=colours[fam][x],
-                                           color=color,
-                                           )
-                            ax.scatter([x+random.sample([corr*0.03 for corr in range(-10, 10)], k=1)[0] for _ in range(1000)],
-                                        random.sample(scat.tolist(), k=1000),
-                                       s=50,
-                                       alpha=0.025,
-                                        #color=colours[fam][x],
-                                       color=color,
-                                       edgecolors='white'
-                                       )
-                    ### correcting p values
-                    corr_ps = scipy.stats.false_discovery_control(ps)
-                    if general_case == 'correlations':
-                        for x_one in x_names:
-                            for x_two in x_names:
-                                if x_one == x_two:
-                                    continue
-                                p_key = (x_one, x_two)
-                                #if p_key in p_keys:
-                                p_idx = p_keys.index(p_key)
-                                p = corr_ps[p_idx]
-                                p_avg = p_avgs[p_idx]
-                                #if p_avg > 0.:
-                                #    continue
-                                if p_avg[0] > p_avg[1]:
-                                    continue
-                                if p_avg[0] > 0.:
-                                    continue
-                                if p < 0.05:
-                                    colour_p = x_colors[x_names.index(x_two)]
-                                    x = xs[x_names.index(x_one)]
-                                    if fam == 'connectivity':
-                                        p_y_corr = 0.15
-                                    else:
-                                        p_y_corr = 0.2
-                                    p_y = p_y_corr+(xs[x_names.index(x_two)]*0.02)
-                                    ax.scatter(
+                    for x, y, scat, x_name, color, p, raw_p, curr_ci in zip(xs, ys, scats, x_names, x_colors, ps, raw_ps, curr_cis):
+                        weight_y = numpy.nanmean(numpy.nanmean(all_res[case][pov][targ]['weights'][fam][x_name.split(' ')[-1]], axis=1))
+                        txt.append((pov, targ, y, p, raw_p, curr_ci, x_name, weight_y))
+                        label = x_name.replace('lSMA', 'SMA').replace('L_SMA', 'SMA').split(' ')[-1].replace('_', ' ').strip().replace('orb', '').replace('L ', 'left ').replace('R ', 'right ').replace('PTleft', 'PTL')
+                        ax.bar(
+                                x,
+                                y,
+                               color = color,
+                               alpha=0.3,
+                                )
+                        if label not in label_set:
+                            label_set.add(label)
+                            ax.scatter(
                                        x,
-                                       p_y,
+                                       y,
+                                       color=color,
                                        s=300,
-                                       marker='*',
-                                       #color=colours[fam][colour_x],
-                                       color=colour_p,
-                                       edgecolors='gray',
-                                       linewidth=1.,
-                                       zorder=3.
+                                       label=label,
+                                       marker='D',
+                                       edgecolors='white',
+                                       linewidth=2.,
+                                       zorder=3,
                                        )
-                    else:
-                        for x, p, y_avg in zip(xs, corr_ps, ys):
-                            if p < 0.05:
-                                #print([p, y_avg])
-                                if y_avg > 0.:
-                                    p_y = 0.02
-                                else:
-                                    p_y = -0.02
-                                ax.scatter(
-                                           x,
-                                           p_y,
-                                           s=300,
-                                           marker='*',
-                                           color='black',
-                                           edgecolors='white',
-                                           linewidth=1.,
-                                           zorder=3.
-                                           )
+                        else:
+                            ax.scatter(
+                                       x,
+                                       y,
+                                       s=300,
+                                       marker='D',
+                                       edgecolors='white',
+                                       linewidth=2.,
+                                       zorder=3,
+                                       color=color,
+                                       )
+                        if p < 0.05:
+                            if y >= -0.01:
+                                continue
+                            if weight_y > 0.:
+                                p_x = x+0.25
+                                p_y = 0.086
+                                p_line = 0.1
+                                marker = 6
+                                color = 'red'
+                                direction = 'left'
+                                degrees = 315
+                            else:
+                                p_x = x+0.25
+                                p_y = 0.114
+                                p_line = 0.1
+                                marker = 7
+                                color = 'blue'
+                                direction = 'right'
+                                degrees = 45
+                            rotation = Affine2D().rotate_deg(degrees)
+                            ax.scatter(p_x,
+                                       p_y-0.15+y,
+                                       s=400,
+                                       marker=MarkerStyle(marker, direction, rotation),
+                                       color=color,
+                                       linewidth=1.)
+                            ax.scatter(x,
+                                       p_line-0.15+y,
+                                       s=400,
+                                       marker=MarkerStyle('|', direction, rotation),
+                                       color=color,
+                                       linewidth=5.)
                     ax.legend(
                               loc=9,
                               fontsize=16,
@@ -695,28 +749,27 @@ for general_case in ['correlations', 'weights']:
                               framealpha=1.,
                               columnspacing=1.
                               )
-                    ax.hlines(y=0., xmin=-.5, xmax=2.5, color='gray')
+                    ax.hlines(y=0., xmin=-.5, xmax=3.5, color='gray')
                     if general_case == 'correlations':
-                        #pyplot.ylabel('Spearman correlation', fontsize=20, fontweight='bold')
                         pyplot.ylabel('Impact of individual predictor \nremoval on Spearman correlation', fontsize=20, fontweight='bold')
-                        ax.set_ylim(bottom=.36, top=-.45)
+                        ax.set_ylim(bottom=.11, top=-.45)
                         ax.hlines(y=[_*0.1 for _ in range(-4, 6)], xmin=-.5, xmax=max(xs)+.5, linestyle='--',color='gray', alpha=0.2)
-                        pyplot.yticks(ticks=[.3, .2, .1, 0., -.1, -.2, -.3], fontsize=15)
-                        ax.set_title('Impact of individual lesions on predictions of\n{} language {}'.format(time_mapper[targ], case), fontweight='bold', fontsize=23)
+                        pyplot.yticks(ticks=[.1, 0., -.1, -.2, -.3], fontsize=15)
                     else:
                         pyplot.ylabel('Ridge regression weights', fontsize=20, fontweight='bold')
-                        ax.set_ylim(bottom=-.001, top=.001)
+                        ax.set_ylim(bottom=-.1, top=.1)
                         ax.hlines(y=[_*0.01 for _ in range(-10, 10)], xmin=-.5, xmax=max(xs)+.5, linestyle='--',color='gray', alpha=0.2)
-                        ax.set_title('Weights of individual lesions for predictions of\n{} language {}'.format(time_mapper[targ], case), fontweight='bold', fontsize=23)
                     ax.spines[['right', 'bottom', 'top']].set_visible(False)
+                    ax.set_title('{} {}'.format(time_mapper[targ], case).capitalize(), fontweight='bold', fontsize=25)
                     pyplot.xticks(ticks=[])
                     pyplot.savefig(os.path.join(curr_out_f, '{}_{}_{}_{}_{}.jpg'.format(general_case,fam, case, targ, pov)), dpi=300)
                     pyplot.clf()
                     pyplot.close()
-                    '''
-                    with open(os.path.join(curr_out_f, '{}_{}_{}_{}_{}_stats.tsv'.format(general_case, fam, case, targ, pov)), 'w') as o:
-                        o.write('target_type\tpredictor\ttarget_time_point\tavg_correlation\tfdr_corrected_p_value\traw_p_value\n')
-                        for x_name, corr_p, raw_p, y in zip(x_names, corr_ps, ps, ys):
-                            o.write('{}\t{}\t{}\t'.format(fam, x_name, targ))
-                            o.write('{}\t{}\t{}\n'.format(round(y, 5), round(corr_p, 5), round(raw_p, 5)))
-                    '''
+                    if general_case == 'correlations':
+                        txt_marker = 'impact_on_spearman_rho'
+                    else:
+                        txt_marker = 'regression_weights'
+                    with open(os.path.join(curr_out_f, '{}_{}_{}_{}_{}.tsv'.format(general_case,fam, case, targ, pov)), 'w') as o:
+                        o.write('target\tpredictor\t{}\tregression_weights\tFDR_p\traw_p\n'.format(txt_marker))
+                        for pov, targ, y_avg, p, raw_p, ci, key, y_weight in txt:
+                            o.write('{} {}\t{}\t{}\t{}\t{}\t{}\n'.format(case, targ, key.replace(' and ', ' w/o '), round(y_avg, 5), round(y_weight, 5), round(p, 5), round(raw_p, 5)))
