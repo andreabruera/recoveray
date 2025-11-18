@@ -1,0 +1,7 @@
+target	predictor	impact_on_spearman_rho	regression_weights	FDR_p	raw_p
+abilities T3	activations T3 w/o L_SMA_T3	-0.00882	0.0	1.0	1.0
+abilities T3	activations T3 w/o L_DLPFC_T3	-0.00294	0.0	1.0	1.0
+abilities T3	activations T3 w/o L_IFGorb_T3	0.00249	0.0	1.0	1.0
+abilities T3	activations T3 w/o L_PTL_T3	0.00476	0.0	1.0	1.0
+abilities T3	activations T3 w/o R_DLPFC_T3	-0.00029	0.0	1.0	1.0
+abilities T3	activations T3 w/o R_IFGorb_T3	-0.02138	0.0	1.0	1.0

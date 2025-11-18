@@ -1,0 +1,5 @@
+target	predictor	impact_on_spearman_rho	regression_weights	FDR_p	raw_p
+abilities T2	lesions w/o L_SMA	-0.0072	0.00542	1.0	1.0
+abilities T2	lesions w/o L_DLPFC	0.01705	-0.00039	1.0	1.0
+abilities T2	lesions w/o L_IFGorb	0.01237	-0.00015	1.0	1.0
+abilities T2	lesions w/o L_PTL	-0.02539	-0.00064	1.0	1.0

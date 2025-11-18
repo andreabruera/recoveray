@@ -1,0 +1,4 @@
+target	predictor	average_spearman_rho	95%_CI	FDR_p	raw_p
+improvements T2-T1	all_confounds all	0.03685	(0.02665, 0.0661)	0.08013	0.02671
+improvements T3-T1	all_confounds all	-0.77748	(-1.11802, 0.00925)	0.11018	0.07346
+improvements T3-T2	all_confounds all	-0.03706	(-0.03413, 0.0176)	0.38731	0.38731

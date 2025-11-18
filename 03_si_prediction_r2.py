@@ -35,7 +35,7 @@ def check_collector(collector, key, dict_t, point_of_view='all'):
         collector[key][point_of_view] = dict()
     if dict_t not in collector[key][point_of_view].keys():
         collector[key][point_of_view][dict_t] = {
-                                                 'correlations' : dict(),
+                                                 'r2' : dict(),
                                                  'weights' : dict(),
                                                  'confounds' : dict(),
                                                  }
@@ -116,7 +116,8 @@ def one_sample_bootstrap_p_value(one, side='both'):
 
 def visual_check(results_container, weights_container, iter_null_hyp, point_of_view, dict_t):
     ### just for visual check while running code
-    p_container = numpy.average(results_container, axis=1)
+    #p_container = numpy.average(results_container, axis=1)
+    p_container = results_container
     assert p_container.shape == (iter_null_hyp, )
     p = (sum([1 for _ in p_container if _<0])+1)/(iter_null_hyp+1)
     #print(t_avg)
@@ -266,8 +267,8 @@ confounds = [
 assert len(confounds) == 6
 
 n_folds = 50
-iter_null_hyp = 10000
-#iter_null_hyp = 599
+#iter_null_hyp = 10000
+iter_null_hyp = 599
 test_items = int(n_subjects*0.2)
 pred_model = 'ridge'
 
@@ -315,7 +316,7 @@ for name, targets in [
         it_confounds = numpy.array([full_data[k] for k in confounds_names]).T
         it_target = numpy.array(full_data[t])
         assert it_target.shape[0] == it_predictors.shape[0]
-        results_container = numpy.zeros(shape=(iter_null_hyp, n_folds))
+        results_container = numpy.zeros(shape=(iter_null_hyp, ))
         weights_container = {k : numpy.zeros(shape=(iter_null_hyp, n_folds)) for k in weights_names}
         for null in tqdm(range(iter_null_hyp)):
             subject_subsampling = random.choices(range(n_subjects), k=n_subjects)
@@ -350,18 +351,19 @@ for name, targets in [
                 # predictions
                 all_preds.append(preds)
                 # correlation
-                corr = scipy.stats.spearmanr(test_target, preds).statistic
-                results_container[null, fold] = corr
+                #corr = scipy.stats.spearmanr(test_target, preds).statistic
+                #results_container[null, fold] = corr
 
             ### r-squared
-            #r2 = sklearn.metrics.r2_score(all_targs, all_preds)
+            r2 = sklearn.metrics.r2_score(all_targs, all_preds)
+            results_container[null, ] = r2
             #if r2 > 0.:
             #    print(r2)
 
         ### storing after iter_null_hyp*folds iterations
         collector[key][point_of_view][dict_t]['confounds'][last_key] = confounds_names
         collector[key][point_of_view][dict_t]['weights'][last_key] = weights_container
-        collector[key][point_of_view][dict_t]['correlations'][last_key] = results_container
+        collector[key][point_of_view][dict_t]['r2'][last_key] = results_container
 
         ### just a visual check
         visual_check(results_container, weights_container, iter_null_hyp, point_of_view, dict_t)
@@ -402,7 +404,7 @@ for name, targets in [
             it_predictors = numpy.array([full_data[k] for k in weights_names]).T
             it_confounds = numpy.array([full_data[k] for k in confounds_names]).T
             it_target = numpy.array(full_data[t])
-            results_container = numpy.zeros(shape=(iter_null_hyp, n_folds))
+            results_container = numpy.zeros(shape=(iter_null_hyp, ))
             weights_container = {k : numpy.zeros(shape=(iter_null_hyp, n_folds)) for k in weights_names}
             for null in tqdm(range(iter_null_hyp)):
                 assert it_target.shape[0] == it_predictors.shape[0]
@@ -439,18 +441,19 @@ for name, targets in [
                     # predictions
                     all_preds.append(preds)
                     # correlation
-                    corr = scipy.stats.spearmanr(test_target, preds).statistic
-                    results_container[null, fold] = corr
+                    #corr = scipy.stats.spearmanr(test_target, preds).statistic
+                    #results_container[null, fold] = corr
 
                 ### r-squared
                 r2 = sklearn.metrics.r2_score(all_targs, all_preds)
-                if r2 > 0.:
-                    print(r2)
+                results_container[null, ] = r2
+                #if r2 > 0.:
+                #    print(r2)
 
             ### storing after iter_null_hyp*folds iterations
             collector[key][point_of_view][dict_t]['confounds'][pr] = confounds_names
             collector[key][point_of_view][dict_t]['weights'][pr] = weights_container
-            collector[key][point_of_view][dict_t]['correlations'][pr] = results_container
+            collector[key][point_of_view][dict_t]['r2'][pr] = results_container
 
             ### just a visual check
             visual_check(results_container, weights_container, iter_null_hyp, point_of_view, dict_t)
@@ -488,7 +491,7 @@ for name, targets in [
                 it_confounds = numpy.array([full_data[k] for k in confounds_names]).T
                 it_predictors = numpy.array([full_data[k] for k in weights_names]).T
                 it_target = numpy.array(full_data[t])
-                results_container = numpy.zeros(shape=(iter_null_hyp, n_folds))
+                results_container = numpy.zeros(shape=(iter_null_hyp, ))
                 for null in tqdm(range(iter_null_hyp)):
                     assert it_target.shape[0] == it_predictors.shape[0]
                     subject_subsampling = random.choices(range(n_subjects), k=n_subjects)
@@ -521,21 +524,22 @@ for name, targets in [
                         # predictions
                         all_preds.append(preds)
                         # correlation
-                        corr = scipy.stats.spearmanr(test_target, preds).statistic
-                        results_container[null, fold] = corr
+                        #corr = scipy.stats.spearmanr(test_target, preds).statistic
+                        #results_container[null, fold] = corr
 
-                    #r2 = sklearn.metrics.r2_score(all_targs, all_preds)
+                    r2 = sklearn.metrics.r2_score(all_targs, all_preds)
+                    results_container[null,] = r2
                     #print(r2)
 
                 ### storing after iter_null_hyp*folds iterations
                 last_key = '{} and {}'.format(pr, ind_pred)
                 collector[key][point_of_view][dict_t]['confounds'][last_key] = confounds_names
-                collector[key][point_of_view][dict_t]['correlations'][last_key] = results_container
+                collector[key][point_of_view][dict_t]['r2'][last_key] = results_container
 
                 ### just a visual check
                 visual_check(results_container, weights_container, iter_null_hyp, point_of_view, dict_t)
 
-out_f = 'pkls'
+out_f = 'pkls_r2'
 os.makedirs(out_f, exist_ok=True)
 with open(os.path.join(out_f, 'si_{}_predictions.pkl'.format(pred_model)), 'wb') as o:
     pickle.dump(collector, o)

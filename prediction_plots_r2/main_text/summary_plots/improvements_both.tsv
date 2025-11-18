@@ -1,0 +1,9 @@
+target	predictor	average_spearman_rho	95%_CI	FDR_p	raw_p
+improvements T2-T1	both T1	-0.03058	(-0.03461, -0.01784)	0.00444	0.00167
+improvements T3-T1	both T1	-0.04022	(-0.04702, -0.0212)	0.00444	0.00167
+improvements T3-T2	both T1	-0.03084	(-0.03777, -0.00761)	0.00534	0.00334
+improvements T2-T1	both T2	-0.02239	(-0.02994, 0.00305)	0.08777	0.07679
+improvements T3-T1	both T2	-0.0293	(-0.03793, -0.00523)	0.02671	0.02003
+improvements T3-T2	both T2	-0.0225	(-0.03256, 0.00892)	0.14691	0.14691
+improvements T3-T1	both T3	-0.02988	(-0.03659, -0.01031)	0.00534	0.00334
+improvements T3-T2	both T3	-0.0358	(-0.04316, -0.01284)	0.00444	0.00167

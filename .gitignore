@@ -1,5 +1,6 @@
 dataset/
 pkls/
+pkls*
 *.DS_Store
 rois_brains/
 

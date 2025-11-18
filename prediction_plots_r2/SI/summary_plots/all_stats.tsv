@@ -1,0 +1,18 @@
+target	predictor	average_spearman_rho	95%_CI	FDR_p	raw_p
+abilities T1	age all	-0.01873	(-0.02439, -0.00152)	0.06811	0.04007
+abilities T1	lesions all	0.05411	(0.04168, 0.09219)	0.00567	0.00167
+abilities T2	age all	-0.02339	(-0.02805, -0.01106)	0.00567	0.00167
+abilities T2	lesions all	-0.02708	(-0.03573, 0.00221)	0.09606	0.07346
+abilities T2	T1 all	0.00779	(-0.00543, 0.04439)	0.77337	0.72788
+abilities T3	age all	-0.02161	(-0.02868, -0.00022)	0.07224	0.04674
+abilities T3	lesions all	-0.02112	(-0.02587, 0.00995)	0.29597	0.24374
+abilities T3	T1 all	-0.02641	(-0.03142, -0.01334)	0.00567	0.00167
+abilities T3	T2 all	-0.02557	(-0.03041, -0.01019)	0.00567	0.00167
+improvements T2-T1	age all	-0.02247	(-0.02767, -0.00676)	0.00946	0.00334
+improvements T2-T1	lesions all	0.01195	(0.00229, 0.03955)	0.46544	0.41068
+improvements T3-T1	age all	-0.02546	(-0.03285, -0.00245)	0.06386	0.03005
+improvements T3-T1	lesions all	-0.04392	(-0.05569, -0.003)	0.06386	0.02671
+improvements T3-T1	T2 all	0.00238	(-0.00939, 0.03857)	0.88815	0.88815
+improvements T3-T2	age all	-0.02187	(-0.02949, 0.00103)	0.08987	0.06344
+improvements T3-T2	lesions all	-0.08831	(-0.09882, -0.04715)	0.00567	0.00167
+improvements T3-T2	T1 all	-0.02041	(-0.02743, -0.0019)	0.06811	0.03673

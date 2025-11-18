@@ -1,0 +1,10 @@
+target	predictor	impact_on_spearman_rho	regression_weights	FDR_p	raw_p
+abilities T3	connectivity T3 w/o lDLPFC_to_lIFG_T3	0.00102	0.0	1.0	1.0
+abilities T3	connectivity T3 w/o lDLPFC_to_lPTL_T3	0.00727	0.0	1.0	1.0
+abilities T3	connectivity T3 w/o lSMA_to_lIFG_T3	0.00196	0.0	1.0	1.0
+abilities T3	connectivity T3 w/o lSMA_to_lPTL_T3	-0.00016	0.0	1.0	1.0
+abilities T3	connectivity T3 w/o lIFG_to_lPTL_T3	0.00236	0.0	1.0	1.0
+abilities T3	connectivity T3 w/o lPTL_to_lIFG_T3	1e-05	0.0	1.0	1.0
+abilities T3	connectivity T3 w/o rIFG_to_lIFG_T3	0.01028	0.0	1.0	1.0
+abilities T3	connectivity T3 w/o rDLPFC_to_lIFG_T3	-0.00092	0.0	1.0	1.0
+abilities T3	connectivity T3 w/o rDLPFC_to_lPTL_T3	-0.00073	0.0	1.0	1.0

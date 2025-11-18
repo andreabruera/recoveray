@@ -1,0 +1,10 @@
+target	predictor	impact_on_spearman_rho	regression_weights	FDR_p	raw_p
+improvements T3-T2	connectivity T3 w/o lDLPFC_to_lIFG_T3	0.00182	0.0	1.0	1.0
+improvements T3-T2	connectivity T3 w/o lDLPFC_to_lPTL_T3	0.00528	0.0	1.0	1.0
+improvements T3-T2	connectivity T3 w/o lSMA_to_lIFG_T3	-0.00258	0.0	1.0	1.0
+improvements T3-T2	connectivity T3 w/o lSMA_to_lPTL_T3	-0.00075	0.0	1.0	1.0
+improvements T3-T2	connectivity T3 w/o lIFG_to_lPTL_T3	0.00195	0.0	1.0	1.0
+improvements T3-T2	connectivity T3 w/o lPTL_to_lIFG_T3	0.00107	0.0	1.0	1.0
+improvements T3-T2	connectivity T3 w/o rIFG_to_lIFG_T3	-0.00274	0.0	1.0	1.0
+improvements T3-T2	connectivity T3 w/o rDLPFC_to_lIFG_T3	0.00388	0.0	1.0	1.0
+improvements T3-T2	connectivity T3 w/o rDLPFC_to_lPTL_T3	0.0019	0.0	1.0	1.0

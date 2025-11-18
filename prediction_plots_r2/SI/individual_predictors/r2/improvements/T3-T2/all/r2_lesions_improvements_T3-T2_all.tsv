@@ -1,0 +1,5 @@
+target	predictor	impact_on_spearman_rho	regression_weights	FDR_p	raw_p
+improvements T3-T2	lesions w/o L_SMA	0.00414	0.00036	1.0	1.0
+improvements T3-T2	lesions w/o L_DLPFC	0.02872	0.0003	1.0	1.0
+improvements T3-T2	lesions w/o L_IFGorb	-0.00365	-0.00038	1.0	1.0
+improvements T3-T2	lesions w/o L_PTL	-0.08395	0.0001	1.0	1.0
