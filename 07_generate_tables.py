@@ -37,6 +37,8 @@ for root, direc, fz in os.walk('prediction_plots'):
                 line = l.strip().split('\t')
                 lines.append(line)
         n_cols = set([len(l) for l in lines])
+        print(f)
+        print(n_cols)
         assert len(n_cols) == 1
         n_cols = list(n_cols)[0]
         latex_lines = [start,]
@@ -51,7 +53,7 @@ for root, direc, fz in os.walk('prediction_plots'):
                 header += '||}\n\hline\n'
                 subheader = ''
                 for _, h in enumerate(l):
-                    l = h.replace('_', ' ').replace('%', '\%').replace('spe', 'Spe').replace('rho', '$\\rho$')
+                    l = h.replace('_', ' ').replace('%', '\%').replace('spe', 'Spe').replace('rho', '$\\rho$').replace('(percent)', '').strip()
                     subheader += l[0].upper()+l[1:].replace(' on Spearman', ' on ')
                     if _ < n_cols-1:
                         subheader += ' & '
@@ -65,8 +67,8 @@ for root, direc, fz in os.walk('prediction_plots'):
                 for _, h in enumerate(l):
                     ### check significance
                     if float(l[-2].replace(',', '.')) < 0.05:
-                        if 'mpact' in lines[0][-4]:
-                            if float(l[-4].replace(',', '.')) < 0.:
+                        if 'mpact' in lines[0][-5]:
+                            if float(l[-5].replace(',', '.')) < 0.:
                                 sig = True
                             else:
                                 sig = False
@@ -84,13 +86,15 @@ for root, direc, fz in os.walk('prediction_plots'):
                                 subline += '\\textbf{'+str(round(float(h.replace(',',  '.')), lim))+'}'
                             else:
                                 subline += str(round(float(h.replace(',',  '.')), lim))
+                            if 'percent' in lines[0][_]:
+                                subline += '\%'
                         else:
                             first = round(float(h[1:-1].split(',')[0]), 3)
                             second = round(float(h[1:-1].split(',')[1]), 3)
                             subline += '( {}, {} )'.format(first, second)
                     #except (TypeError, ValueError):
                     except ValueError:
-                        new_l = h[0].upper()+h[1:].replace('_', ' ').replace(' all', '').replace('lSMA', 'SMA').replace('L SMA',  'SMA').replace('w/o l', 'w/o L ').replace('w/o r', 'w/o R ').replace('to l', 'to L ').replace('to r', 'to R ').replace('mprovements',  'mprov.').replace('bilities', 'bility').replace('ivations', 'ivity').replace('esions', 'esion')
+                        new_l = h[0].upper()+h[1:].replace('_', ' ').replace(' all', '').replace('lSMA', 'SMA').replace('L SMA',  'SMA').replace('w/o l', 'w/o L ').replace('w/o r', 'w/o R ').replace('to l', 'to L ').replace('to r', 'to R ').replace('mprovements',  'mprov.').replace('bilities', 'bility').replace('ivations', 'ivity').replace('esions', 'esion').replace('nnectivity', 'nn.').replace('Gorb', 'G')
                         if 'w/o' in new_l and 'esion' not in new_l:
                             new_l = new_l[:-3]
                         if len(new_l) == 2:

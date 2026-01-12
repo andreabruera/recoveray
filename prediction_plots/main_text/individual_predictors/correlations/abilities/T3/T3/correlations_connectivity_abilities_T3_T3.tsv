@@ -1,10 +1,10 @@
-target	predictor	impact_on_spearman_rho	regression_weights	FDR_p	raw_p
-abilities T3	connectivity T3 w/o lDLPFC_to_lIFG_T3	0.03806	0.00263	0.00201	0.0014
-abilities T3	connectivity T3 w/o lDLPFC_to_lPTL_T3	0.03426	-0.00471	0.00088	0.0006
-abilities T3	connectivity T3 w/o lSMA_to_lIFG_T3	0.00117	-0.00577	0.00016	0.0001
-abilities T3	connectivity T3 w/o lSMA_to_lPTL_T3	0.03738	-5e-05	0.92258	0.9086
-abilities T3	connectivity T3 w/o lIFG_to_lPTL_T3	0.0059	-0.00333	0.00377	0.0028
-abilities T3	connectivity T3 w/o lPTL_to_lIFG_T3	-0.03331	-0.00512	0.00016	0.0001
-abilities T3	connectivity T3 w/o rIFG_to_lIFG_T3	-0.25431	0.0146	0.00016	0.0001
-abilities T3	connectivity T3 w/o rDLPFC_to_lIFG_T3	0.02599	0.0046	0.00016	0.0001
-abilities T3	connectivity T3 w/o rDLPFC_to_lPTL_T3	0.01803	-0.00189	0.04145	0.0358
+target	predictor	ablation_impact (percent)	ablation_rho	weight	FDR_p	raw_p
+abilities T3	connectivity T3 w/o lDLPFC_to_lIFG_T3	32.6	0.155	0.00263	0.00201	0.0014
+abilities T3	connectivity T3 w/o lDLPFC_to_lPTL_T3	29.4	0.151	-0.00471	0.00088	0.0006
+abilities T3	connectivity T3 w/o lSMA_to_lIFG_T3	1.0	0.118	-0.00577	0.00016	0.0001
+abilities T3	connectivity T3 w/o lSMA_to_lPTL_T3	32.0	0.154	-5e-05	0.92258	0.9086
+abilities T3	connectivity T3 w/o lIFG_to_lPTL_T3	5.1	0.123	-0.00333	0.00377	0.0028
+abilities T3	connectivity T3 w/o lPTL_to_lIFG_T3	-28.5	0.083	-0.00512	0.00016	0.0001
+abilities T3	connectivity T3 w/o rIFG_to_lIFG_T3	-217.9	-0.138	0.0146	0.00016	0.0001
+abilities T3	connectivity T3 w/o rDLPFC_to_lIFG_T3	22.3	0.143	0.0046	0.00016	0.0001
+abilities T3	connectivity T3 w/o rDLPFC_to_lPTL_T3	15.4	0.135	-0.00189	0.04145	0.0358

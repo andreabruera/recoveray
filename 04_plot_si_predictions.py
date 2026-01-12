@@ -649,9 +649,11 @@ for general_case in [
                         t_avg = numpy.nanmean(p_container)
                         if general_case == 'correlations':
                             ### plotting impact
-                            scats.append(p_container-basic_corrs)
+                            #scats.append(p_container-basic_corrs)
+                            scats.append((p_container/basic_corrs)*100))
                             ### aggregate result
-                            impact = t_avg-basic_avg
+                            #impact = t_avg-basic_avg
+                            impact = (t_avg/basic_avg)*100
                             ys.append(impact)
                         else:
                             scats.append(p_container)
@@ -752,7 +754,8 @@ for general_case in [
                     ax.hlines(y=0., xmin=-.5, xmax=3.5, color='gray')
                     if general_case == 'correlations':
                         pyplot.ylabel('Impact of individual predictor \nremoval on Spearman correlation', fontsize=20, fontweight='bold')
-                        ax.set_ylim(bottom=.11, top=-.45)
+                        #ax.set_ylim(bottom=.11, top=-.45)
+                        ax.set_ylim(bottom=-10, top=100)
                         ax.hlines(y=[_*0.1 for _ in range(-4, 6)], xmin=-.5, xmax=max(xs)+.5, linestyle='--',color='gray', alpha=0.2)
                         pyplot.yticks(ticks=[.1, 0., -.1, -.2, -.3], fontsize=15)
                     else:

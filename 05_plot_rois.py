@@ -14,6 +14,7 @@ dataset = nilearn.datasets.fetch_atlas_harvard_oxford('cort-maxprob-thr25-2mm')
 maps = dataset['maps']
 maps_data = maps.get_fdata()
 labels = dataset['labels']
+import pdb; pdb.set_trace()
 collector = {l : numpy.array([], dtype=numpy.float64) for l in labels}
 
 rel_names = {

@@ -1,7 +1,7 @@
-target	predictor	impact_on_spearman_rho	regression_weights	FDR_p	raw_p
-improvements T3-T2	activations T3 w/o L_SMA_T3	-0.00734	-0.00069	0.91554	0.8734
-improvements T3-T2	activations T3 w/o L_DLPFC_T3	-9e-05	0.00649	0.00634	0.0048
-improvements T3-T2	activations T3 w/o L_IFGorb_T3	0.01642	-0.00093	0.91554	0.8878
-improvements T3-T2	activations T3 w/o L_PTL_T3	-0.01107	0.01314	0.00016	0.0001
-improvements T3-T2	activations T3 w/o R_DLPFC_T3	-0.00983	0.02495	0.00016	0.0001
-improvements T3-T2	activations T3 w/o R_IFGorb_T3	0.00585	0.02769	0.00016	0.0001
+target	predictor	ablation_impact (percent)	ablation_rho	weight	FDR_p	raw_p
+improvements T3-T2	activations T3 w/o L_SMA_T3	-2.5	0.291	-0.00069	0.91554	0.8734
+improvements T3-T2	activations T3 w/o L_DLPFC_T3	-0.0	0.298	0.00649	0.00634	0.0048
+improvements T3-T2	activations T3 w/o L_IFGorb_T3	5.5	0.314	-0.00093	0.91554	0.8878
+improvements T3-T2	activations T3 w/o L_PTL_T3	-3.7	0.287	0.01314	0.00016	0.0001
+improvements T3-T2	activations T3 w/o R_DLPFC_T3	-3.3	0.288	0.02495	0.00016	0.0001
+improvements T3-T2	activations T3 w/o R_IFGorb_T3	2.0	0.304	0.02769	0.00016	0.0001

@@ -634,6 +634,7 @@ for general_case in [
 
                     xs = list()
                     ys = list()
+                    orig_ys = list()
                     ps = list()
                     raw_ps = list()
                     curr_cis = list()
@@ -675,10 +676,18 @@ for general_case in [
                         t_avg = numpy.nanmean(p_container)
                         if general_case == 'correlations':
                             ### plotting impact
-                            scats.append(p_container-basic_corrs)
+                            #scats.append(p_container-basic_corrs)
+                            percs = ((p_container/basic_corrs)*100)
+                            if t_avg > basic_avg:
+                                percs = -(percs-100)
+                            scats.append(percs)
                             ### aggregate result
-                            impact = t_avg-basic_avg
+                            #impact = t_avg-basic_avg
+                            impact = ((t_avg-basic_avg)/basic_avg)*100
+                            #if t_avg >= basic_avg:
+                            #    impact = -(impact-100)
                             ys.append(impact)
+                            orig_ys.append(t_avg)
                         else:
                             scats.append(p_container)
                             ys.append(t_avg)
@@ -700,9 +709,9 @@ for general_case in [
                                 xs.append(x_i)
                         color = colours[fam][orders[fam][x_i]]
                         x_colors.append(color)
-                    for x, y, scat, x_name, color, p, raw_p, curr_ci in zip(xs, ys, scats, x_names, x_colors, ps, raw_ps, curr_cis):
+                    for x, y, orig_y, scat, x_name, color, p, raw_p, curr_ci in zip(xs, ys, orig_ys, scats, x_names, x_colors, ps, raw_ps, curr_cis):
                         weight_y = numpy.nanmean(numpy.nanmean(all_res[case][pov][targ]['weights']['{} {}'.format(fam, pov)][x_name.split(' ')[-1]], axis=1))
-                        txt.append((pov, targ, y, p, raw_p, curr_ci, x_name, weight_y))
+                        txt.append((pov, targ, y, orig_y, p, raw_p, curr_ci, x_name, weight_y))
                         label = x_name.replace('lSMA', 'SMA').replace('L_SMA', 'SMA').split(' ')[-1][:-3].replace('_', ' ').strip().replace('orb', '').replace('l', 'left ').replace('r', 'right ').replace('L ', 'left ').replace('R ', 'right ').replace('PTleft', 'PTL')
                         ax.bar(
                                 x,
@@ -735,36 +744,56 @@ for general_case in [
                                        color=color,
                                        )
                         if p < 0.05:
-                            if y >= -0.01:
+                            #if y >= -0.01:
+                            if y >= -1:
                                 continue
                             if weight_y > 0.:
                                 if fam == 'connectivity':
                                     p_x = x+0.4
                                 else:
                                     p_x = x+0.275
-                                p_y = 0.086
+                                #p_y = 0.086
+                                if case == 'abilities' and 'act' in fam:
+                                    p_y = 3.5
+                                else:
+                                    p_y = 4
                                 p_line = 0.1
                                 marker = 6
                                 color = 'red'
                                 direction = 'left'
                                 degrees = 315
                             else:
-                                p_x = x+0.4
-                                p_y = 0.114
+                                #p_y = 0.114
+                                if case == 'abilities' and 'act' in fam:
+                                    p_x = x+0.3
+                                else:
+                                    p_x = x+0.4
+                                p_y = -4
                                 p_line = 0.1
                                 marker = 7
                                 color = 'blue'
                                 direction = 'right'
                                 degrees = 45
+                            if y < -200:
+                                y_corr = -130
+                            elif y < -80:
+                                y_corr = -10
+                            else:
+                                y_corr = 10
+
                             rotation = Affine2D().rotate_deg(degrees)
                             ax.scatter(p_x,
-                                       p_y-0.15+y,
+                                       #p_y-0.15+y,
+                                       #p_y-1.5+y,
+                                       y-p_y-y_corr,
                                        s=400,
                                        marker=MarkerStyle(marker, direction, rotation),
                                        color=color,
                                        linewidth=1.)
                             ax.scatter(x,
-                                       p_line-0.15+y,
+                                       #p_line-0.15+y,
+                                       #p_line-1.5+y,
+                                       y-y_corr,
                                        s=400,
                                        marker=MarkerStyle('|', direction, rotation),
                                        color=color,
@@ -778,12 +807,16 @@ for general_case in [
                               framealpha=1.,
                               columnspacing=1.
                               )
-                    ax.hlines(y=0., xmin=-.5, xmax=2.5, color='gray')
+                    ax.hlines(y=0., xmin=-.5, xmax=max(xs)+.5, color='gray')
                     if general_case == 'correlations':
-                        pyplot.ylabel('Impact of individual predictor \nremoval on Spearman correlation', fontsize=20, fontweight='bold')
-                        ax.set_ylim(bottom=.11, top=-.45)
-                        ax.hlines(y=[_*0.1 for _ in range(-4, 6)], xmin=-.5, xmax=max(xs)+.5, linestyle='--',color='gray', alpha=0.2)
-                        pyplot.yticks(ticks=[.1, 0., -.1, -.2, -.3], fontsize=15)
+                        pyplot.ylabel('Impact of individual predictor \nremoval on Spearman correlation\n(percentage)', fontsize=20, fontweight='bold')
+                        #ax.set_ylim(bottom=.11, top=-.45)
+                        ax.set_ylim(bottom=40, top=-120)
+                        #ax.hlines(y=[_*0.1 for _ in range(-4, 6)], xmin=-.5, xmax=max(xs)+.5, linestyle='--',color='gray', alpha=0.2)
+                        ax.hlines(y=[_*-10 for _ in range(-4, 12, 2)], xmin=-.5, xmax=max(xs)+.5, linestyle='--',color='gray', alpha=0.2)
+                        #pyplot.yticks(ticks=[.1, 0., -.1, -.2, -.3], fontsize=15)
+                        pyplot.yticks(ticks=[20, 0, -20, -40, -60, -80, -100], fontsize=20)
+                        ax.hlines(y=-100, xmin=-.5, xmax=max(xs)+.5, color='gray',)
                     else:
                         pyplot.ylabel('Ridge regression weights', fontsize=20, fontweight='bold')
                         ax.set_ylim(bottom=-.1, top=.1)
@@ -794,10 +827,10 @@ for general_case in [
                     pyplot.clf()
                     pyplot.close()
                     if general_case == 'correlations':
-                        txt_marker = 'impact_on_spearman_rho'
+                        txt_marker = 'ablation_impact'
                     else:
                         txt_marker = 'regression_weights'
                     with open(os.path.join(curr_out_f, '{}_{}_{}_{}_{}.tsv'.format(general_case,fam, case, targ, pov)), 'w') as o:
-                        o.write('target\tpredictor\t{}\tregression_weights\tFDR_p\traw_p\n'.format(txt_marker))
-                        for pov, targ, y_avg, p, raw_p, ci, key, y_weight in txt:
-                            o.write('{} {}\t{}\t{}\t{}\t{}\t{}\n'.format(case, targ, key.replace(' and ', ' w/o '), round(y_avg, 5), round(y_weight, 5), round(p, 5), round(raw_p, 5)))
+                        o.write('target\tpredictor\t{} (percent)\tablation_rho\tweight\tFDR_p\traw_p\n'.format(txt_marker))
+                        for pov, targ, y_avg, orig_y, p, raw_p, ci, key, y_weight in txt:
+                            o.write('{} {}\t{}\t{}\t{}\t{}\t{}\t{}\n'.format(case, targ, key.replace(' and ', ' w/o '), round(y_avg, 1), round(orig_y, 3), round(y_weight, 5), round(p, 5), round(raw_p, 5)))
