@@ -1,0 +1,10 @@
+target	predictor	ablation_impact (percent)	ablation_rho	weight	FDR_p	raw_p
+abilities T2	connectivity T1 w/o lDLPFC_to_lIFG_T1	-7.7	-0.104	1.0	1.0	1.0
+abilities T2	connectivity T1 w/o lDLPFC_to_lPTL_T1	0.6	-0.113	1.0	1.0	1.0
+abilities T2	connectivity T1 w/o lSMA_to_lIFG_T1	5.8	-0.119	1.0	1.0	1.0
+abilities T2	connectivity T1 w/o lSMA_to_lPTL_T1	13.0	-0.127	1.0	1.0	1.0
+abilities T2	connectivity T1 w/o lIFG_to_lPTL_T1	-14.5	-0.096	1.0	1.0	1.0
+abilities T2	connectivity T1 w/o lPTL_to_lIFG_T1	9.1	-0.123	1.0	1.0	1.0
+abilities T2	connectivity T1 w/o rIFG_to_lIFG_T1	-75.4	-0.028	1.0	1.0	1.0
+abilities T2	connectivity T1 w/o rDLPFC_to_lIFG_T1	18.2	-0.133	1.0	1.0	1.0
+abilities T2	connectivity T1 w/o rDLPFC_to_lPTL_T1	-5.7	-0.106	1.0	1.0	1.0

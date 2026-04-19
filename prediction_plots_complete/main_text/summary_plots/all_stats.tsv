@@ -1,0 +1,23 @@
+target	predictor	average_spearman_rho	95%_CI	FDR_p	raw_p
+abilities T1	activations T1	0.25056	(0.2156, 0.35145)	0.00275	0.001
+abilities T2	activations T1	0.1975	(0.16381, 0.29476)	0.00275	0.001
+abilities T2	activations T2	0.00967	(-0.02524, 0.11095)	0.858	0.858
+abilities T2	connectivity T2	-0.14811	(-0.18286, -0.0414)	0.016	0.008
+abilities T3	activations T1	0.06094	(0.02893, 0.16239)	0.308	0.21
+abilities T3	activations T2	-0.0588	(-0.09571, 0.04526)	0.363	0.264
+abilities T3	activations T3	0.16501	(0.13036, 0.26289)	0.00489	0.002
+abilities T3	connectivity T2	-0.09537	(-0.13, 0.00383)	0.11169	0.066
+abilities T3	connectivity T3	0.15189	(0.12, 0.24143)	0.00275	0.001
+improvements T2-T1	activations T1	-0.09113	(-0.12631, 0.00239)	0.10633	0.058
+improvements T2-T1	activations T2	0.01396	(-0.02333, 0.11905)	0.84648	0.808
+improvements T2-T1	connectivity T2	0.03099	(-0.00429, 0.13195)	0.6292	0.558
+improvements T3-T1	activations T1	0.15015	(0.11476, 0.24192)	0.0088	0.004
+improvements T3-T1	activations T2	-0.02943	(-0.06667, 0.08055)	0.6292	0.572
+improvements T3-T1	activations T3	0.21723	(0.18571, 0.31287)	0.00275	0.001
+improvements T3-T1	connectivity T2	0.0464	(0.01238, 0.14481)	0.45812	0.354
+improvements T3-T1	connectivity T3	0.21631	(0.18667, 0.29907)	0.00275	0.001
+improvements T3-T2	activations T1	0.24546	(0.21131, 0.34479)	0.00275	0.001
+improvements T3-T2	activations T2	-0.04423	(-0.08095, 0.06431)	0.46444	0.38
+improvements T3-T2	activations T3	0.29413	(0.26571, 0.3819)	0.00275	0.001
+improvements T3-T2	connectivity T2	0.08817	(0.0556, 0.18432)	0.13829	0.088
+improvements T3-T2	connectivity T3	0.2032	(0.17262, 0.30144)	0.00275	0.001

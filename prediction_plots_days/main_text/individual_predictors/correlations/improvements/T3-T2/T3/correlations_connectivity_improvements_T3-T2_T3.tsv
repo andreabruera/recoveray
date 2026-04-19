@@ -1,0 +1,10 @@
+target	predictor	ablation_impact (percent)	ablation_rho	weight	FDR_p	raw_p
+improvements T3-T2	connectivity T3 w/o lDLPFC_to_lIFG_T3	10.4	0.236	-0.00624	0.00132	0.001
+improvements T3-T2	connectivity T3 w/o lDLPFC_to_lPTL_T3	22.1	0.262	0.00603	0.00132	0.001
+improvements T3-T2	connectivity T3 w/o lSMA_to_lIFG_T3	-80.6	0.042	-0.01659	0.00132	0.001
+improvements T3-T2	connectivity T3 w/o lSMA_to_lPTL_T3	3.3	0.221	-0.00523	0.00132	0.001
+improvements T3-T2	connectivity T3 w/o lIFG_to_lPTL_T3	-18.7	0.174	-0.00978	0.00132	0.001
+improvements T3-T2	connectivity T3 w/o lPTL_to_lIFG_T3	8.5	0.232	-0.00544	0.00132	0.001
+improvements T3-T2	connectivity T3 w/o rIFG_to_lIFG_T3	-14.2	0.184	0.0077	0.00132	0.001
+improvements T3-T2	connectivity T3 w/o rDLPFC_to_lIFG_T3	6.0	0.227	0.0057	0.00132	0.001
+improvements T3-T2	connectivity T3 w/o rDLPFC_to_lPTL_T3	5.9	0.227	-0.003	0.00132	0.001

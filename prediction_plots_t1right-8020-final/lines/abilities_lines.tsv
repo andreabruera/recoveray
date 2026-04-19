@@ -1,0 +1,4 @@
+func_neuro_pred	func_neuro_pred_avg	func_neuro_pred_std	trad_pred	trad_pred_avg	trad_pred_std	raw_p	
+activations T1	0.2093	0.0503	lesions	0.5384	0.0375	0.001	
+activations T1	0.1008	0.0515	T1	0.3777	0.0488	0.001	
+activations T3	0.2077	0.0501	age	0.2074	0.0479	0.986	

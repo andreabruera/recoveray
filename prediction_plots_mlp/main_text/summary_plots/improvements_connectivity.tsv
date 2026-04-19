@@ -1,0 +1,9 @@
+target	predictor	average_spearman_rho	95%_CI	FDR_p	raw_p
+improvements T2-T1	connectivity T1	-0.18413	(-0.2144, -0.09429)	0.004	0.001
+improvements T3-T1	connectivity T1	-0.10391	(-0.13714, 0.00288)	0.116	0.058
+improvements T3-T2	connectivity T1	-0.06343	(-0.09762, 0.03333)	0.248	0.186
+improvements T2-T1	connectivity T2	0.15024	(0.1175, 0.24907)	0.004	0.001
+improvements T3-T1	connectivity T2	0.02674	(-0.0081, 0.12764)	0.69714	0.61
+improvements T3-T2	connectivity T2	-0.01389	(-0.04905, 0.08764)	0.796	0.796
+improvements T3-T1	connectivity T3	0.13537	(0.10143, 0.23857)	0.04267	0.016
+improvements T3-T2	connectivity T3	0.09147	(0.05607, 0.1905)	0.128	0.08

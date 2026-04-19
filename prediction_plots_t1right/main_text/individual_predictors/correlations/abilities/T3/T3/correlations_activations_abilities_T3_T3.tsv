@@ -1,0 +1,7 @@
+target	predictor	ablation_impact (percent)	ablation_rho	weight	FDR_p	raw_p
+abilities T3	activations T3 w/o L_SMA_T3	-4.6	0.195	-0.12401	0.0014	0.001
+abilities T3	activations T3 w/o L_DLPFC_T3	8.1	0.221	-0.0624	0.0014	0.001
+abilities T3	activations T3 w/o L_IFGorb_T3	17.3	0.24	-0.02214	0.0014	0.001
+abilities T3	activations T3 w/o L_PTL_T3	16.3	0.238	0.0286	0.0014	0.001
+abilities T3	activations T3 w/o R_DLPFC_T3	13.3	0.232	0.05181	0.0014	0.001
+abilities T3	activations T3 w/o R_IFGorb_T3	-56.9	0.088	0.14032	0.0014	0.001

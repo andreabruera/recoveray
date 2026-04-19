@@ -71,7 +71,7 @@ for general_case in ['abilities', 'improvements']:
               'improvements' : 'improvement'
               }
 
-    curr_out_f = os.path.join('prediction_plots', 'lines')
+    curr_out_f = os.path.join('prediction_plots_t1right-6733', 'lines')
     os.makedirs(curr_out_f, exist_ok=True)
     n_folds = 50
     iter_null_hyp = 10000
@@ -81,7 +81,7 @@ for general_case in ['abilities', 'improvements']:
     for pred_fam, corr in [('main_text',-.1), ('si', .1)]:
         corr = 0.
 
-        with open(os.path.join('pkls', '{}_ridge_predictions.pkl'.format(pred_fam)), 'rb') as i:
+        with open(os.path.join('pkls', '{}_ridge_predictions_t1right-6733.pkl'.format(pred_fam)), 'rb') as i:
             all_res = pickle.load(i)
 
         if pred_fam == 'main_text':

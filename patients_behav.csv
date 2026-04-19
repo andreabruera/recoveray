@@ -1,0 +1,2984 @@
+[
+    {
+        "paradigm": "FB_FB",
+        "patientId": "01_HM",
+        "age": 69.0,
+        "sex": "m",
+        "handedness": [],
+        "onset": "15.04.2007",
+        "lesion": "freiburg_patienten_alle_01_hm.nii",
+        "experiments": [
+            {
+                "name1": "acu",
+                "name2": "Ex1",
+                "has": 1.0,
+                "timepoint": "2",
+                "fileBeta": "acu_FB_FB_01_HM_2_con_0011.nii",
+                "LRS": 0.15714285714285714,
+                "LRSComp": 0.5117647058823529,
+                "LRSProd": 0.0
+            },
+            {
+                "name1": "sub",
+                "name2": "Ex2",
+                "has": 1.0,
+                "timepoint": "8",
+                "fileBeta": "sub_FB_FB_01_HM_8_con_0017.nii",
+                "LRS": 0.22678571428571428,
+                "LRSComp": 0.5823529411764706,
+                "LRSProd": 0.09259259259259259
+            },
+            {
+                "name1": "chr",
+                "name2": "Ex3",
+                "has": 1.0,
+                "timepoint": "129",
+                "fileBeta": "chr_FB_FB_01_HM_129_con_0029.nii",
+                "LRS": 0.8339285714285715,
+                "LRSComp": 0.9647058823529412,
+                "LRSProd": 0.825925925925926
+            }
+        ],
+        "distanceMap": "freiburg_patienten_alle_01_hm-distMap.nii"
+    },
+    {
+        "paradigm": "FB_FB",
+        "patientId": "02_GG",
+        "age": 71.0,
+        "sex": "m",
+        "handedness": [],
+        "onset": "13.08.2007",
+        "lesion": "diaschisis_patienten_alle_02_gg.nii",
+        "experiments": [
+            {
+                "name1": "acu",
+                "name2": "Ex1",
+                "has": 1.0,
+                "timepoint": "2",
+                "fileBeta": "acu_FB_FB_02_GG_2_con_0010.nii",
+                "LRS": 0.2125,
+                "LRSComp": 0.17058823529411765,
+                "LRSProd": 0.26666666666666666
+            },
+            {
+                "name1": "sub",
+                "name2": "Ex2",
+                "has": 1.0,
+                "timepoint": "14",
+                "fileBeta": "sub_FB_FB_02_GG_14_con_0022.nii",
+                "LRS": 0.6160714285714286,
+                "LRSComp": 0.5529411764705883,
+                "LRSProd": 0.7185185185185186
+            },
+            {
+                "name1": "chr",
+                "name2": "Ex3",
+                "has": 1.0,
+                "timepoint": "203",
+                "fileBeta": "chr_FB_FB_02_GG_203_con_0028.nii",
+                "LRS": 0.8446428571428571,
+                "LRSComp": 0.8470588235294118,
+                "LRSProd": 0.8777777777777778
+            }
+        ],
+        "distanceMap": "diaschisis_patienten_alle_02_gg-distMap.nii"
+    },
+    {
+        "paradigm": "FB_FB",
+        "patientId": "02_GH",
+        "age": 66.0,
+        "sex": "m",
+        "handedness": [],
+        "onset": "15.04.2007",
+        "lesion": "freiburg_patienten_alle_02_gh.nii",
+        "experiments": [
+            {
+                "name1": "acu",
+                "name2": "Ex1",
+                "has": 1.0,
+                "timepoint": "2",
+                "fileBeta": "acu_FB_FB_02_GH_2_con_0006.nii",
+                "LRS": 0.625,
+                "LRSComp": 0.7058823529411765,
+                "LRSProd": 0.6592592592592592
+            },
+            {
+                "name1": "sub",
+                "name2": "Ex2",
+                "has": 0.0,
+                "timepoint": [],
+                "fileBeta": [],
+                "LRS": NaN,
+                "LRSComp": NaN,
+                "LRSProd": NaN
+            },
+            {
+                "name1": "chr",
+                "name2": "Ex3",
+                "has": 0.0,
+                "timepoint": [],
+                "fileBeta": [],
+                "LRS": NaN,
+                "LRSComp": NaN,
+                "LRSProd": NaN
+            }
+        ],
+        "distanceMap": "freiburg_patienten_alle_02_gh-distMap.nii"
+    },
+    {
+        "paradigm": "FB_FB",
+        "patientId": "03_HG",
+        "age": 66.0,
+        "sex": "m",
+        "handedness": [],
+        "onset": "07.05.2007",
+        "lesion": "freiburg_patienten_alle_03_hg.nii",
+        "experiments": [
+            {
+                "name1": "acu",
+                "name2": "Ex1",
+                "has": 1.0,
+                "timepoint": "2",
+                "fileBeta": "acu_FB_FB_03_HG_2_con_0007.nii",
+                "LRS": 0.29642857142857143,
+                "LRSComp": 0.22941176470588234,
+                "LRSProd": 0.44074074074074077
+            },
+            {
+                "name1": "sub",
+                "name2": "Ex2",
+                "has": 1.0,
+                "timepoint": "5",
+                "fileBeta": "sub_FB_FB_03_HG_5_con_0013.nii",
+                "LRS": 0.5142857142857142,
+                "LRSComp": 0.5764705882352941,
+                "LRSProd": 0.6148148148148148
+            },
+            {
+                "name1": "chr",
+                "name2": "Ex3",
+                "has": 0.0,
+                "timepoint": [],
+                "fileBeta": [],
+                "LRS": NaN,
+                "LRSComp": NaN,
+                "LRSProd": NaN
+            }
+        ],
+        "distanceMap": "freiburg_patienten_alle_03_hg-distMap.nii"
+    },
+    {
+        "paradigm": "FB_FB",
+        "patientId": "04_HB",
+        "age": 63.0,
+        "sex": "m",
+        "handedness": [],
+        "onset": "24.06.2007",
+        "lesion": "freiburg_patienten_alle_04_hb.nii",
+        "experiments": [
+            {
+                "name1": "acu",
+                "name2": "Ex1",
+                "has": 1.0,
+                "timepoint": "2",
+                "fileBeta": "acu_FB_FB_04_HB_2_con_0011.nii",
+                "LRS": 0.37142857142857144,
+                "LRSComp": 0.9411764705882353,
+                "LRSProd": 0.11481481481481481
+            },
+            {
+                "name1": "sub",
+                "name2": "Ex2",
+                "has": 1.0,
+                "timepoint": "12",
+                "fileBeta": "sub_FB_FB_04_HB_12_con_0023.nii",
+                "LRS": 0.7803571428571429,
+                "LRSComp": 0.9705882352941176,
+                "LRSProd": 0.7037037037037037
+            },
+            {
+                "name1": "chr",
+                "name2": "Ex3",
+                "has": 1.0,
+                "timepoint": "109",
+                "fileBeta": "chr_FB_FB_04_HB_109_con_0029.nii",
+                "LRS": 0.9107142857142857,
+                "LRSComp": 0.9823529411764705,
+                "LRSProd": 0.8666666666666667
+            }
+        ],
+        "distanceMap": "freiburg_patienten_alle_04_hb-distMap.nii"
+    },
+    {
+        "paradigm": "FB_FB",
+        "patientId": "04_JZ",
+        "age": 61.0,
+        "sex": "f",
+        "handedness": [],
+        "onset": "18.12.2007",
+        "lesion": "diaschisis_patienten_alle_04_jz.nii",
+        "experiments": [
+            {
+                "name1": "acu",
+                "name2": "Ex1",
+                "has": 1.0,
+                "timepoint": "1",
+                "fileBeta": "acu_FB_FB_04_JZ_1_con_0010.nii",
+                "LRS": 0.007142857142857143,
+                "LRSComp": 0.023529411764705882,
+                "LRSProd": 0.0
+            },
+            {
+                "name1": "sub",
+                "name2": "Ex2",
+                "has": 1.0,
+                "timepoint": "13",
+                "fileBeta": "sub_FB_FB_04_JZ_13_con_0022.nii",
+                "LRS": 0.37142857142857144,
+                "LRSComp": 0.4117647058823529,
+                "LRSProd": 0.43703703703703706
+            },
+            {
+                "name1": "chr",
+                "name2": "Ex3",
+                "has": 1.0,
+                "timepoint": "173",
+                "fileBeta": "chr_FB_FB_04_JZ_173_con_0028.nii",
+                "LRS": 0.6553571428571429,
+                "LRSComp": 0.6882352941176471,
+                "LRSProd": 0.6666666666666666
+            }
+        ],
+        "distanceMap": "diaschisis_patienten_alle_04_jz-distMap.nii"
+    },
+    {
+        "paradigm": "FB_FB",
+        "patientId": "05_TM",
+        "age": 76.0,
+        "sex": "m",
+        "handedness": [],
+        "onset": "20.09.2007",
+        "lesion": "freiburg_patienten_alle_05_tm.nii",
+        "experiments": [
+            {
+                "name1": "acu",
+                "name2": "Ex1",
+                "has": 0.0,
+                "timepoint": [],
+                "fileBeta": [],
+                "LRS": NaN,
+                "LRSComp": NaN,
+                "LRSProd": NaN
+            },
+            {
+                "name1": "sub",
+                "name2": "Ex2",
+                "has": 1.0,
+                "timepoint": "8",
+                "fileBeta": "sub_FB_FB_05_TM_8_con_0006.nii",
+                "LRS": 0.6035714285714285,
+                "LRSComp": 0.6058823529411764,
+                "LRSProd": 0.674074074074074
+            },
+            {
+                "name1": "chr",
+                "name2": "Ex3",
+                "has": 0.0,
+                "timepoint": [],
+                "fileBeta": [],
+                "LRS": NaN,
+                "LRSComp": NaN,
+                "LRSProd": NaN
+            }
+        ],
+        "distanceMap": "freiburg_patienten_alle_05_tm-distMap.nii"
+    },
+    {
+        "paradigm": "FB_FB",
+        "patientId": "06_GE",
+        "age": 80.0,
+        "sex": "m",
+        "handedness": [],
+        "onset": NaN,
+        "lesion": "freiburg_patienten_alle_06_ge.nii",
+        "experiments": [
+            {
+                "name1": "acu",
+                "name2": "Ex1",
+                "has": 0.0,
+                "timepoint": [],
+                "fileBeta": [],
+                "LRS": NaN,
+                "LRSComp": NaN,
+                "LRSProd": NaN
+            },
+            {
+                "name1": "sub",
+                "name2": "Ex2",
+                "has": 1.0,
+                "timepoint": "22",
+                "fileBeta": "sub_FB_FB_06_GE_22_con_0006.nii",
+                "LRS": 0.3607142857142857,
+                "LRSComp": 0.18235294117647058,
+                "LRSProd": 0.6
+            },
+            {
+                "name1": "chr",
+                "name2": "Ex3",
+                "has": 0.0,
+                "timepoint": [],
+                "fileBeta": [],
+                "LRS": NaN,
+                "LRSComp": NaN,
+                "LRSProd": NaN
+            }
+        ],
+        "distanceMap": "freiburg_patienten_alle_06_ge-distMap.nii"
+    },
+    {
+        "paradigm": "FB_FB",
+        "patientId": "07_HS",
+        "age": 69.0,
+        "sex": "m",
+        "handedness": [],
+        "onset": "24.11.2007",
+        "lesion": "freiburg_patienten_alle_07_hs.nii",
+        "experiments": [
+            {
+                "name1": "acu",
+                "name2": "Ex1",
+                "has": 1.0,
+                "timepoint": "2",
+                "fileBeta": "acu_FB_FB_07_HS_2_con_0010.nii",
+                "LRS": 0.8660714285714286,
+                "LRSComp": 0.8352941176470589,
+                "LRSProd": 0.9
+            },
+            {
+                "name1": "sub",
+                "name2": "Ex2",
+                "has": 1.0,
+                "timepoint": "10",
+                "fileBeta": "sub_FB_FB_07_HS_10_con_0016.nii",
+                "LRS": 0.9642857142857143,
+                "LRSComp": 0.9411764705882353,
+                "LRSProd": 0.9777777777777777
+            },
+            {
+                "name1": "chr",
+                "name2": "Ex3",
+                "has": 1.0,
+                "timepoint": "103",
+                "fileBeta": "chr_FB_FB_07_HS_103_con_0022.nii",
+                "LRS": 0.9464285714285714,
+                "LRSComp": 0.9705882352941176,
+                "LRSProd": 0.9407407407407408
+            }
+        ],
+        "distanceMap": "freiburg_patienten_alle_07_hs-distMap.nii"
+    },
+    {
+        "paradigm": "FB_FB",
+        "patientId": "08_MM",
+        "age": 34.0,
+        "sex": "m",
+        "handedness": [],
+        "onset": "19.02.2008",
+        "lesion": "diaschisis_patienten_alle_08_mm.nii",
+        "experiments": [
+            {
+                "name1": "acu",
+                "name2": "Ex1",
+                "has": 1.0,
+                "timepoint": "1",
+                "fileBeta": "acu_FB_FB_08_MM_1_con_0011.nii",
+                "LRS": 0.9232142857142858,
+                "LRSComp": 0.9764705882352941,
+                "LRSProd": 0.9074074074074074
+            },
+            {
+                "name1": "sub",
+                "name2": "Ex2",
+                "has": 1.0,
+                "timepoint": "13",
+                "fileBeta": "sub_FB_FB_08_MM_13_con_0023.nii",
+                "LRS": 0.9767857142857143,
+                "LRSComp": 0.9764705882352941,
+                "LRSProd": 0.9777777777777777
+            },
+            {
+                "name1": "chr",
+                "name2": "Ex3",
+                "has": 1.0,
+                "timepoint": "93",
+                "fileBeta": "chr_FB_FB_08_MM_93_con_0029.nii",
+                "LRS": 0.9892857142857143,
+                "LRSComp": 0.9882352941176471,
+                "LRSProd": 0.9888888888888889
+            }
+        ],
+        "distanceMap": "diaschisis_patienten_alle_08_mm-distMap.nii"
+    },
+    {
+        "paradigm": "FB_FB",
+        "patientId": "08_RS",
+        "age": 55.0,
+        "sex": "m",
+        "handedness": [],
+        "onset": "08.12.2007",
+        "lesion": "freiburg_patienten_alle_08_rs.nii",
+        "experiments": [
+            {
+                "name1": "acu",
+                "name2": "Ex1",
+                "has": 1.0,
+                "timepoint": "2",
+                "fileBeta": "acu_FB_FB_08_RS_2_con_0010.nii",
+                "LRS": 0.7035714285714286,
+                "LRSComp": 0.8294117647058824,
+                "LRSProd": 0.6814814814814815
+            },
+            {
+                "name1": "sub",
+                "name2": "Ex2",
+                "has": 1.0,
+                "timepoint": "9",
+                "fileBeta": "sub_FB_FB_08_RS_9_con_0016.nii",
+                "LRS": 0.8571428571428571,
+                "LRSComp": 0.9176470588235294,
+                "LRSProd": 0.8222222222222222
+            },
+            {
+                "name1": "chr",
+                "name2": "Ex3",
+                "has": 1.0,
+                "timepoint": "89",
+                "fileBeta": "chr_FB_FB_08_RS_89_con_0022.nii",
+                "LRS": 0.9339285714285714,
+                "LRSComp": 0.9647058823529412,
+                "LRSProd": 0.9185185185185185
+            }
+        ],
+        "distanceMap": "freiburg_patienten_alle_08_rs-distMap.nii"
+    },
+    {
+        "paradigm": "FB_FB",
+        "patientId": "09_EK",
+        "age": 72.0,
+        "sex": "f",
+        "handedness": [],
+        "onset": "31.01.2008",
+        "lesion": "freiburg_patienten_alle_09_ek.nii",
+        "experiments": [
+            {
+                "name1": "acu",
+                "name2": "Ex1",
+                "has": 0.0,
+                "timepoint": [],
+                "fileBeta": [],
+                "LRS": NaN,
+                "LRSComp": NaN,
+                "LRSProd": NaN
+            },
+            {
+                "name1": "sub",
+                "name2": "Ex2",
+                "has": 1.0,
+                "timepoint": "12",
+                "fileBeta": "sub_FB_FB_09_EK_12_con_0016.nii",
+                "LRS": 0.43392857142857144,
+                "LRSComp": 0.40588235294117647,
+                "LRSProd": 0.4962962962962963
+            },
+            {
+                "name1": "chr",
+                "name2": "Ex3",
+                "has": 1.0,
+                "timepoint": "132",
+                "fileBeta": "chr_FB_FB_09_EK_132_con_0022.nii",
+                "LRS": 0.7982142857142858,
+                "LRSComp": 0.7529411764705882,
+                "LRSProd": 0.8074074074074075
+            }
+        ],
+        "distanceMap": "freiburg_patienten_alle_09_ek-distMap.nii"
+    },
+    {
+        "paradigm": "FB_FB",
+        "patientId": "10_DS",
+        "age": 40.0,
+        "sex": "f",
+        "handedness": [],
+        "onset": "18.02.2008",
+        "lesion": "freiburg_patienten_alle_10_ds.nii",
+        "experiments": [
+            {
+                "name1": "acu",
+                "name2": "Ex1",
+                "has": 1.0,
+                "timepoint": "2",
+                "fileBeta": "acu_FB_FB_10_DS_2_con_0010.nii",
+                "LRS": 0.11428571428571428,
+                "LRSComp": 0.27058823529411763,
+                "LRSProd": 0.06296296296296296
+            },
+            {
+                "name1": "sub",
+                "name2": "Ex2",
+                "has": 1.0,
+                "timepoint": "10",
+                "fileBeta": "sub_FB_FB_10_DS_10_con_0022.nii",
+                "LRS": 0.4375,
+                "LRSComp": 0.43529411764705883,
+                "LRSProd": 0.5481481481481482
+            },
+            {
+                "name1": "chr",
+                "name2": "Ex3",
+                "has": 1.0,
+                "timepoint": "163",
+                "fileBeta": "chr_FB_FB_10_DS_163_con_0028.nii",
+                "LRS": 0.8892857142857142,
+                "LRSComp": 0.8705882352941177,
+                "LRSProd": 0.8925925925925926
+            }
+        ],
+        "distanceMap": "freiburg_patienten_alle_10_ds-distMap.nii"
+    },
+    {
+        "paradigm": "FB_FB",
+        "patientId": "11_IH",
+        "age": 78.0,
+        "sex": "f",
+        "handedness": [],
+        "onset": "17.02.2008",
+        "lesion": "freiburg_patienten_alle_11_ih.nii",
+        "experiments": [
+            {
+                "name1": "acu",
+                "name2": "Ex1",
+                "has": 1.0,
+                "timepoint": "3",
+                "fileBeta": "acu_FB_FB_11_IH_3_con_0007.nii",
+                "LRS": 0.28214285714285714,
+                "LRSComp": 0.24705882352941178,
+                "LRSProd": 0.35185185185185186
+            },
+            {
+                "name1": "sub",
+                "name2": "Ex2",
+                "has": 1.0,
+                "timepoint": "10",
+                "fileBeta": "sub_FB_FB_11_IH_10_con_0013.nii",
+                "LRS": 0.5321428571428571,
+                "LRSComp": 0.3411764705882353,
+                "LRSProd": 0.6703703703703704
+            },
+            {
+                "name1": "chr",
+                "name2": "Ex3",
+                "has": 0.0,
+                "timepoint": [],
+                "fileBeta": [],
+                "LRS": NaN,
+                "LRSComp": NaN,
+                "LRSProd": NaN
+            }
+        ],
+        "distanceMap": "freiburg_patienten_alle_11_ih-distMap.nii"
+    },
+    {
+        "paradigm": "FB_FB",
+        "patientId": "11_RK",
+        "age": 66.0,
+        "sex": "f",
+        "handedness": [],
+        "onset": NaN,
+        "lesion": "diaschisis_patienten_alle_11_rk.nii",
+        "experiments": [
+            {
+                "name1": "acu",
+                "name2": "Ex1",
+                "has": 1.0,
+                "timepoint": "3",
+                "fileBeta": "acu_FB_FB_11_RK_3_con_0011.nii",
+                "LRS": 0.008928571428571428,
+                "LRSComp": 0.029411764705882353,
+                "LRSProd": 0.0
+            },
+            {
+                "name1": "sub",
+                "name2": "Ex2",
+                "has": 1.0,
+                "timepoint": "13",
+                "fileBeta": "sub_FB_FB_11_RK_13_con_0023.nii",
+                "LRS": 0.6303571428571428,
+                "LRSComp": 0.6705882352941176,
+                "LRSProd": 0.725925925925926
+            },
+            {
+                "name1": "chr",
+                "name2": "Ex3",
+                "has": 1.0,
+                "timepoint": "100",
+                "fileBeta": "chr_FB_FB_11_RK_100_con_0029.nii",
+                "LRS": 0.8660714285714286,
+                "LRSComp": 0.9529411764705882,
+                "LRSProd": 0.8777777777777778
+            }
+        ],
+        "distanceMap": "diaschisis_patienten_alle_11_rk-distMap.nii"
+    },
+    {
+        "paradigm": "FB_FB",
+        "patientId": "12_HG",
+        "age": 64.0,
+        "sex": "m",
+        "handedness": [],
+        "onset": "25.02.2008",
+        "lesion": "freiburg_patienten_alle_12_hg.nii",
+        "experiments": [
+            {
+                "name1": "acu",
+                "name2": "Ex1",
+                "has": 1.0,
+                "timepoint": "2",
+                "fileBeta": "acu_FB_FB_12_HG_2_con_0010.nii",
+                "LRS": 0.8964285714285715,
+                "LRSComp": 0.9764705882352941,
+                "LRSProd": 0.8962962962962963
+            },
+            {
+                "name1": "sub",
+                "name2": "Ex2",
+                "has": 1.0,
+                "timepoint": "8",
+                "fileBeta": "sub_FB_FB_12_HG_8_con_0016.nii",
+                "LRS": 0.9446428571428571,
+                "LRSComp": 1.0,
+                "LRSProd": 0.937037037037037
+            },
+            {
+                "name1": "chr",
+                "name2": "Ex3",
+                "has": 1.0,
+                "timepoint": "105",
+                "fileBeta": "chr_FB_FB_12_HG_105_con_0022.nii",
+                "LRS": 0.975,
+                "LRSComp": 1.0,
+                "LRSProd": 0.9629629629629629
+            }
+        ],
+        "distanceMap": "freiburg_patienten_alle_12_hg-distMap.nii"
+    },
+    {
+        "paradigm": "FB_FB",
+        "patientId": "13_LH",
+        "age": 58.0,
+        "sex": "m",
+        "handedness": [],
+        "onset": "17.03.2008",
+        "lesion": "freiburg_patienten_alle_13_lh.nii",
+        "experiments": [
+            {
+                "name1": "acu",
+                "name2": "Ex1",
+                "has": 1.0,
+                "timepoint": "1",
+                "fileBeta": "acu_FB_FB_13_LH_1_con_0011.nii",
+                "LRS": 0.9160714285714285,
+                "LRSComp": 0.9411764705882353,
+                "LRSProd": 0.9185185185185185
+            },
+            {
+                "name1": "sub",
+                "name2": "Ex2",
+                "has": 1.0,
+                "timepoint": "8",
+                "fileBeta": "sub_FB_FB_13_LH_8_con_0023.nii",
+                "LRS": 0.9660714285714286,
+                "LRSComp": 1.0,
+                "LRSProd": 0.9481481481481482
+            },
+            {
+                "name1": "chr",
+                "name2": "Ex3",
+                "has": 1.0,
+                "timepoint": "122",
+                "fileBeta": "chr_FB_FB_13_LH_122_con_0029.nii",
+                "LRS": 0.9857142857142858,
+                "LRSComp": 1.0,
+                "LRSProd": 0.9740740740740741
+            }
+        ],
+        "distanceMap": "freiburg_patienten_alle_13_lh-distMap.nii"
+    },
+    {
+        "paradigm": "FB_FB",
+        "patientId": "13_MK",
+        "age": 71.0,
+        "sex": "m",
+        "handedness": [],
+        "onset": "03.09.2008",
+        "lesion": "diaschisis_patienten_alle_13_mk.nii",
+        "experiments": [
+            {
+                "name1": "acu",
+                "name2": "Ex1",
+                "has": 0.0,
+                "timepoint": [],
+                "fileBeta": [],
+                "LRS": NaN,
+                "LRSComp": NaN,
+                "LRSProd": NaN
+            },
+            {
+                "name1": "sub",
+                "name2": "Ex2",
+                "has": 1.0,
+                "timepoint": "7",
+                "fileBeta": "sub_FB_FB_13_MK_7_con_0016.nii",
+                "LRS": 0.14285714285714285,
+                "LRSComp": 0.3352941176470588,
+                "LRSProd": 0.07777777777777778
+            },
+            {
+                "name1": "chr",
+                "name2": "Ex3",
+                "has": 1.0,
+                "timepoint": "104",
+                "fileBeta": "chr_FB_FB_13_MK_104_con_0028.nii",
+                "LRS": 0.4928571428571429,
+                "LRSComp": 0.6294117647058823,
+                "LRSProd": 0.43703703703703706
+            }
+        ],
+        "distanceMap": "diaschisis_patienten_alle_13_mk-distMap.nii"
+    },
+    {
+        "paradigm": "FB_FB",
+        "patientId": "14_URK",
+        "age": 62.0,
+        "sex": "f",
+        "handedness": [],
+        "onset": "28.09.2008",
+        "lesion": "diaschisis_patienten_alle_14_urk.nii",
+        "experiments": [
+            {
+                "name1": "acu",
+                "name2": "Ex1",
+                "has": 0.0,
+                "timepoint": [],
+                "fileBeta": [],
+                "LRS": NaN,
+                "LRSComp": NaN,
+                "LRSProd": NaN
+            },
+            {
+                "name1": "sub",
+                "name2": "Ex2",
+                "has": 1.0,
+                "timepoint": "11",
+                "fileBeta": "sub_FB_FB_14_URK_11_con_0014.nii",
+                "LRS": 0.6482142857142857,
+                "LRSComp": 0.6941176470588235,
+                "LRSProd": 0.6777777777777778
+            },
+            {
+                "name1": "chr",
+                "name2": "Ex3",
+                "has": 1.0,
+                "timepoint": "332",
+                "fileBeta": "chr_FB_FB_14_URK_332_con_0020.nii",
+                "LRS": 0.9446428571428571,
+                "LRSComp": 0.9058823529411765,
+                "LRSProd": 0.9666666666666667
+            }
+        ],
+        "distanceMap": "diaschisis_patienten_alle_14_urk-distMap.nii"
+    },
+    {
+        "paradigm": "FB_FB",
+        "patientId": "15_FW",
+        "age": 59.0,
+        "sex": "m",
+        "handedness": [],
+        "onset": "01.04.2008",
+        "lesion": "freiburg_patienten_alle_15_fw.nii",
+        "experiments": [
+            {
+                "name1": "acu",
+                "name2": "Ex1",
+                "has": 1.0,
+                "timepoint": "1",
+                "fileBeta": "acu_FB_FB_15_FW_1_con_0011.nii",
+                "LRS": 0.7732142857142857,
+                "LRSComp": 0.7294117647058823,
+                "LRSProd": 0.825925925925926
+            },
+            {
+                "name1": "sub",
+                "name2": "Ex2",
+                "has": 1.0,
+                "timepoint": "8",
+                "fileBeta": "sub_FB_FB_15_FW_8_con_0023.nii",
+                "LRS": 0.9053571428571429,
+                "LRSComp": 0.888235294117647,
+                "LRSProd": 0.9259259259259259
+            },
+            {
+                "name1": "chr",
+                "name2": "Ex3",
+                "has": 1.0,
+                "timepoint": "121",
+                "fileBeta": "chr_FB_FB_15_FW_121_con_0029.nii",
+                "LRS": 0.925,
+                "LRSComp": 0.9176470588235294,
+                "LRSProd": 0.9259259259259259
+            }
+        ],
+        "distanceMap": "freiburg_patienten_alle_15_fw-distMap.nii"
+    },
+    {
+        "paradigm": "FB_FB",
+        "patientId": "16_RD",
+        "age": 31.0,
+        "sex": "m",
+        "handedness": [],
+        "onset": "14.04.2008",
+        "lesion": "freiburg_patienten_alle_16_rd.nii",
+        "experiments": [
+            {
+                "name1": "acu",
+                "name2": "Ex1",
+                "has": 1.0,
+                "timepoint": "1",
+                "fileBeta": "acu_FB_FB_16_RD_1_con_0010.nii",
+                "LRS": 0.8696428571428572,
+                "LRSComp": 0.8294117647058824,
+                "LRSProd": 0.8777777777777778
+            },
+            {
+                "name1": "sub",
+                "name2": "Ex2",
+                "has": 1.0,
+                "timepoint": "8",
+                "fileBeta": "sub_FB_FB_16_RD_8_con_0016.nii",
+                "LRS": 0.9357142857142857,
+                "LRSComp": 0.9235294117647059,
+                "LRSProd": 0.9407407407407408
+            },
+            {
+                "name1": "chr",
+                "name2": "Ex3",
+                "has": 1.0,
+                "timepoint": "122",
+                "fileBeta": "chr_FB_FB_16_RD_122_con_0022.nii",
+                "LRS": 0.9821428571428571,
+                "LRSComp": 0.9823529411764705,
+                "LRSProd": 0.9814814814814815
+            }
+        ],
+        "distanceMap": "freiburg_patienten_alle_16_rd-distMap.nii"
+    },
+    {
+        "paradigm": "FB_FB",
+        "patientId": "17_KB",
+        "age": 65.0,
+        "sex": "m",
+        "handedness": [],
+        "onset": "11.04.2008",
+        "lesion": "freiburg_patienten_alle_17_kb.nii",
+        "experiments": [
+            {
+                "name1": "acu",
+                "name2": "Ex1",
+                "has": 0.0,
+                "timepoint": [],
+                "fileBeta": [],
+                "LRS": NaN,
+                "LRSComp": NaN,
+                "LRSProd": NaN
+            },
+            {
+                "name1": "sub",
+                "name2": "Ex2",
+                "has": 1.0,
+                "timepoint": "12",
+                "fileBeta": "sub_FB_FB_17_KB_12_con_0013.nii",
+                "LRS": 0.033928571428571426,
+                "LRSComp": 0.1,
+                "LRSProd": 0.0
+            },
+            {
+                "name1": "chr",
+                "name2": "Ex3",
+                "has": 0.0,
+                "timepoint": [],
+                "fileBeta": [],
+                "LRS": NaN,
+                "LRSComp": NaN,
+                "LRSProd": NaN
+            }
+        ],
+        "distanceMap": "freiburg_patienten_alle_17_kb-distMap.nii"
+    },
+    {
+        "paradigm": "FB_FB",
+        "patientId": "18_EZ",
+        "age": 80.0,
+        "sex": "f",
+        "handedness": [],
+        "onset": "17.04.2008",
+        "lesion": "freiburg_patienten_alle_18_ez.nii",
+        "experiments": [
+            {
+                "name1": "acu",
+                "name2": "Ex1",
+                "has": 0.0,
+                "timepoint": [],
+                "fileBeta": [],
+                "LRS": NaN,
+                "LRSComp": NaN,
+                "LRSProd": NaN
+            },
+            {
+                "name1": "sub",
+                "name2": "Ex2",
+                "has": 1.0,
+                "timepoint": "6",
+                "fileBeta": "sub_FB_FB_18_EZ_6_con_0006.nii",
+                "LRS": 0.017857142857142856,
+                "LRSComp": 0.058823529411764705,
+                "LRSProd": 0.0
+            },
+            {
+                "name1": "chr",
+                "name2": "Ex3",
+                "has": 0.0,
+                "timepoint": [],
+                "fileBeta": [],
+                "LRS": NaN,
+                "LRSComp": NaN,
+                "LRSProd": NaN
+            }
+        ],
+        "distanceMap": "freiburg_patienten_alle_18_ez-distMap.nii"
+    },
+    {
+        "paradigm": "FB_FB",
+        "patientId": "18_NB",
+        "age": 61.0,
+        "sex": "m",
+        "handedness": [],
+        "onset": "11.11.2008",
+        "lesion": "diaschisis_patienten_alle_18_nb.nii",
+        "experiments": [
+            {
+                "name1": "acu",
+                "name2": "Ex1",
+                "has": 1.0,
+                "timepoint": "2",
+                "fileBeta": "acu_FB_FB_18_NB_2_con_0011.nii",
+                "LRS": 0.007142857142857143,
+                "LRSComp": 0.023529411764705882,
+                "LRSProd": 0.0
+            },
+            {
+                "name1": "sub",
+                "name2": "Ex2",
+                "has": 1.0,
+                "timepoint": "10",
+                "fileBeta": "sub_FB_FB_18_NB_10_con_0023.nii",
+                "LRS": 0.5714285714285714,
+                "LRSComp": 0.4235294117647059,
+                "LRSProd": 0.7518518518518519
+            },
+            {
+                "name1": "chr",
+                "name2": "Ex3",
+                "has": 1.0,
+                "timepoint": "104",
+                "fileBeta": "chr_FB_FB_18_NB_104_con_0029.nii",
+                "LRS": 0.8875,
+                "LRSComp": 0.9294117647058824,
+                "LRSProd": 0.8851851851851852
+            }
+        ],
+        "distanceMap": "diaschisis_patienten_alle_18_nb-distMap.nii"
+    },
+    {
+        "paradigm": "FB_FB",
+        "patientId": "19_HH",
+        "age": 69.0,
+        "sex": "f",
+        "handedness": [],
+        "onset": NaN,
+        "lesion": "freiburg_patienten_alle_19_hh.nii",
+        "experiments": [
+            {
+                "name1": "acu",
+                "name2": "Ex1",
+                "has": 1.0,
+                "timepoint": "3",
+                "fileBeta": "acu_FB_FB_19_HH_3_con_0007.nii",
+                "LRS": 0.6857142857142857,
+                "LRSComp": 0.7411764705882353,
+                "LRSProd": 0.6777777777777778
+            },
+            {
+                "name1": "sub",
+                "name2": "Ex2",
+                "has": 1.0,
+                "timepoint": "16",
+                "fileBeta": "sub_FB_FB_19_HH_16_con_0013.nii",
+                "LRS": 0.8017857142857143,
+                "LRSComp": 0.8470588235294118,
+                "LRSProd": 0.7777777777777778
+            },
+            {
+                "name1": "chr",
+                "name2": "Ex3",
+                "has": 0.0,
+                "timepoint": [],
+                "fileBeta": [],
+                "LRS": NaN,
+                "LRSComp": NaN,
+                "LRSProd": NaN
+            }
+        ],
+        "distanceMap": "freiburg_patienten_alle_19_hh-distMap.nii"
+    },
+    {
+        "paradigm": "FB_FB",
+        "patientId": "20_PM",
+        "age": 49.0,
+        "sex": "f",
+        "handedness": [],
+        "onset": "09.06.2008",
+        "lesion": "freiburg_patienten_alle_20_pm.nii",
+        "experiments": [
+            {
+                "name1": "acu",
+                "name2": "Ex1",
+                "has": 1.0,
+                "timepoint": "3",
+                "fileBeta": "acu_FB_FB_20_PM_3_con_0006.nii",
+                "LRS": 0.24107142857142858,
+                "LRSComp": 0.3,
+                "LRSProd": 0.2740740740740741
+            },
+            {
+                "name1": "sub",
+                "name2": "Ex2",
+                "has": 0.0,
+                "timepoint": [],
+                "fileBeta": [],
+                "LRS": NaN,
+                "LRSComp": NaN,
+                "LRSProd": NaN
+            },
+            {
+                "name1": "chr",
+                "name2": "Ex3",
+                "has": 0.0,
+                "timepoint": [],
+                "fileBeta": [],
+                "LRS": NaN,
+                "LRSComp": NaN,
+                "LRSProd": NaN
+            }
+        ],
+        "distanceMap": "freiburg_patienten_alle_20_pm-distMap.nii"
+    },
+    {
+        "paradigm": "FB_FB",
+        "patientId": "20_WB",
+        "age": 68.0,
+        "sex": "f",
+        "handedness": [],
+        "onset": "14.07.2008",
+        "lesion": "freiburg_patienten_alle_20_wb.nii",
+        "experiments": [
+            {
+                "name1": "acu",
+                "name2": "Ex1",
+                "has": 1.0,
+                "timepoint": "1",
+                "fileBeta": "acu_FB_FB_20_WB_1_con_0011.nii",
+                "LRS": 0.4785714285714286,
+                "LRSComp": 0.3411764705882353,
+                "LRSProd": 0.6074074074074074
+            },
+            {
+                "name1": "sub",
+                "name2": "Ex2",
+                "has": 1.0,
+                "timepoint": "9",
+                "fileBeta": "sub_FB_FB_20_WB_9_con_0023.nii",
+                "LRS": 0.6017857142857143,
+                "LRSComp": 0.3941176470588235,
+                "LRSProd": 0.7148148148148148
+            },
+            {
+                "name1": "chr",
+                "name2": "Ex3",
+                "has": 1.0,
+                "timepoint": "119",
+                "fileBeta": "chr_FB_FB_20_WB_119_con_0029.nii",
+                "LRS": 0.7339285714285714,
+                "LRSComp": 0.5529411764705883,
+                "LRSProd": 0.8148148148148148
+            }
+        ],
+        "distanceMap": "freiburg_patienten_alle_20_wb-distMap.nii"
+    },
+    {
+        "paradigm": "FB_FB",
+        "patientId": "21_KK",
+        "age": 57.0,
+        "sex": "m",
+        "handedness": [],
+        "onset": "14.08.2008",
+        "lesion": "freiburg_patienten_alle_21_kk.nii",
+        "experiments": [
+            {
+                "name1": "acu",
+                "name2": "Ex1",
+                "has": 0.0,
+                "timepoint": [],
+                "fileBeta": [],
+                "LRS": NaN,
+                "LRSComp": NaN,
+                "LRSProd": NaN
+            },
+            {
+                "name1": "sub",
+                "name2": "Ex2",
+                "has": 1.0,
+                "timepoint": "12",
+                "fileBeta": "sub_FB_FB_21_KK_12_con_0014.nii",
+                "LRS": 0.7357142857142858,
+                "LRSComp": 0.6235294117647059,
+                "LRSProd": 0.9259259259259259
+            },
+            {
+                "name1": "chr",
+                "name2": "Ex3",
+                "has": 1.0,
+                "timepoint": "696",
+                "fileBeta": "chr_FB_FB_21_KK_696_con_0020.nii",
+                "LRS": 0.9339285714285714,
+                "LRSComp": 0.8823529411764706,
+                "LRSProd": 0.9703703703703703
+            }
+        ],
+        "distanceMap": "freiburg_patienten_alle_21_kk-distMap.nii"
+    },
+    {
+        "paradigm": "FB_FB",
+        "patientId": "22_EB",
+        "age": 80.0,
+        "sex": "m",
+        "handedness": [],
+        "onset": "09.10.2008",
+        "lesion": "freiburg_patienten_alle_22_eb.nii",
+        "experiments": [
+            {
+                "name1": "acu",
+                "name2": "Ex1",
+                "has": 1.0,
+                "timepoint": "2",
+                "fileBeta": "acu_FB_FB_22_EB_2_con_0007.nii",
+                "LRS": 0.4517857142857143,
+                "LRSComp": 0.3588235294117647,
+                "LRSProd": 0.5185185185185185
+            },
+            {
+                "name1": "sub",
+                "name2": "Ex2",
+                "has": 1.0,
+                "timepoint": "12",
+                "fileBeta": "sub_FB_FB_22_EB_12_con_0013.nii",
+                "LRS": 0.5535714285714286,
+                "LRSComp": 0.5058823529411764,
+                "LRSProd": 0.5555555555555556
+            },
+            {
+                "name1": "chr",
+                "name2": "Ex3",
+                "has": 0.0,
+                "timepoint": [],
+                "fileBeta": [],
+                "LRS": NaN,
+                "LRSComp": NaN,
+                "LRSProd": NaN
+            }
+        ],
+        "distanceMap": "freiburg_patienten_alle_22_eb-distMap.nii"
+    },
+    {
+        "paradigm": "FB_FB",
+        "patientId": "23_LP",
+        "age": 58.0,
+        "sex": "m",
+        "handedness": [],
+        "onset": "10.10.2008",
+        "lesion": "freiburg_patienten_alle_23_lp.nii",
+        "experiments": [
+            {
+                "name1": "acu",
+                "name2": "Ex1",
+                "has": 1.0,
+                "timepoint": "3",
+                "fileBeta": "acu_FB_FB_23_LP_3_con_0007.nii",
+                "LRS": 0.48928571428571427,
+                "LRSComp": 0.3235294117647059,
+                "LRSProd": 0.5185185185185185
+            },
+            {
+                "name1": "sub",
+                "name2": "Ex2",
+                "has": 1.0,
+                "timepoint": "12",
+                "fileBeta": "sub_FB_FB_23_LP_12_con_0013.nii",
+                "LRS": 0.7357142857142858,
+                "LRSComp": 0.7941176470588235,
+                "LRSProd": 0.674074074074074
+            },
+            {
+                "name1": "chr",
+                "name2": "Ex3",
+                "has": 0.0,
+                "timepoint": [],
+                "fileBeta": [],
+                "LRS": NaN,
+                "LRSComp": NaN,
+                "LRSProd": NaN
+            }
+        ],
+        "distanceMap": "freiburg_patienten_alle_23_lp-distMap.nii"
+    },
+    {
+        "paradigm": "FB_FB",
+        "patientId": "24_HT",
+        "age": 51.0,
+        "sex": "m",
+        "handedness": [],
+        "onset": "23.10.2008",
+        "lesion": "freiburg_patienten_alle_24_ht.nii",
+        "experiments": [
+            {
+                "name1": "acu",
+                "name2": "Ex1",
+                "has": 1.0,
+                "timepoint": "1",
+                "fileBeta": "acu_FB_FB_24_HT_1_con_0011.nii",
+                "LRS": 0.48214285714285715,
+                "LRSComp": 0.4294117647058823,
+                "LRSProd": 0.5111111111111111
+            },
+            {
+                "name1": "sub",
+                "name2": "Ex2",
+                "has": 1.0,
+                "timepoint": "12",
+                "fileBeta": "sub_FB_FB_24_HT_12_con_0023.nii",
+                "LRS": 0.7732142857142857,
+                "LRSComp": 0.6823529411764706,
+                "LRSProd": 0.7777777777777778
+            },
+            {
+                "name1": "chr",
+                "name2": "Ex3",
+                "has": 1.0,
+                "timepoint": "110",
+                "fileBeta": "chr_FB_FB_24_HT_110_con_0029.nii",
+                "LRS": 0.9214285714285714,
+                "LRSComp": 0.8764705882352941,
+                "LRSProd": 0.937037037037037
+            }
+        ],
+        "distanceMap": "freiburg_patienten_alle_24_ht-distMap.nii"
+    },
+    {
+        "paradigm": "FB_FB",
+        "patientId": "25_AF",
+        "age": 38.0,
+        "sex": "m",
+        "handedness": [],
+        "onset": "03.11.2008",
+        "lesion": "freiburg_patienten_alle_25_af.nii",
+        "experiments": [
+            {
+                "name1": "acu",
+                "name2": "Ex1",
+                "has": 1.0,
+                "timepoint": "2",
+                "fileBeta": "acu_FB_FB_25_AF_2_con_0009.nii",
+                "LRS": 0.9303571428571429,
+                "LRSComp": 0.9235294117647059,
+                "LRSProd": 0.937037037037037
+            },
+            {
+                "name1": "sub",
+                "name2": "Ex2",
+                "has": 1.0,
+                "timepoint": "10",
+                "fileBeta": "sub_FB_FB_25_AF_10_con_0021.nii",
+                "LRS": 0.9785714285714285,
+                "LRSComp": 0.9823529411764705,
+                "LRSProd": 0.9814814814814815
+            },
+            {
+                "name1": "chr",
+                "name2": "Ex3",
+                "has": 1.0,
+                "timepoint": "128",
+                "fileBeta": "chr_FB_FB_25_AF_128_con_0027.nii",
+                "LRS": 0.9821428571428571,
+                "LRSComp": 0.9823529411764705,
+                "LRSProd": 0.9814814814814815
+            }
+        ],
+        "distanceMap": "freiburg_patienten_alle_25_af-distMap.nii"
+    },
+    {
+        "paradigm": "FB_FB",
+        "patientId": "26_HH",
+        "age": 69.0,
+        "sex": "m",
+        "handedness": [],
+        "onset": "06.03.2009",
+        "lesion": "freiburg_patienten_alle_26_hh.nii",
+        "experiments": [
+            {
+                "name1": "acu",
+                "name2": "Ex1",
+                "has": 1.0,
+                "timepoint": "2",
+                "fileBeta": "acu_FB_FB_26_HH_2_con_0011.nii",
+                "LRS": 0.19285714285714287,
+                "LRSComp": 0.3411764705882353,
+                "LRSProd": 0.1037037037037037
+            },
+            {
+                "name1": "sub",
+                "name2": "Ex2",
+                "has": 1.0,
+                "timepoint": "12",
+                "fileBeta": "sub_FB_FB_26_HH_12_con_0023.nii",
+                "LRS": 0.6964285714285714,
+                "LRSComp": 0.6588235294117647,
+                "LRSProd": 0.7703703703703704
+            },
+            {
+                "name1": "chr",
+                "name2": "Ex3",
+                "has": 1.0,
+                "timepoint": "90",
+                "fileBeta": "chr_FB_FB_26_HH_90_con_0029.nii",
+                "LRS": 0.9160714285714285,
+                "LRSComp": 0.9411764705882353,
+                "LRSProd": 0.9259259259259259
+            }
+        ],
+        "distanceMap": "freiburg_patienten_alle_26_hh-distMap.nii"
+    },
+    {
+        "paradigm": "FB_FB",
+        "patientId": "27_SK",
+        "age": 55.0,
+        "sex": "f",
+        "handedness": [],
+        "onset": "11.04.2009",
+        "lesion": "freiburg_patienten_alle_27_sk.nii",
+        "experiments": [
+            {
+                "name1": "acu",
+                "name2": "Ex1",
+                "has": 0.0,
+                "timepoint": [],
+                "fileBeta": [],
+                "LRS": NaN,
+                "LRSComp": NaN,
+                "LRSProd": NaN
+            },
+            {
+                "name1": "sub",
+                "name2": "Ex2",
+                "has": 1.0,
+                "timepoint": "11",
+                "fileBeta": "sub_FB_FB_27_SK_11_con_0013.nii",
+                "LRS": 0.8660714285714286,
+                "LRSComp": 0.7411764705882353,
+                "LRSProd": 0.9259259259259259
+            },
+            {
+                "name1": "chr",
+                "name2": "Ex3",
+                "has": 0.0,
+                "timepoint": [],
+                "fileBeta": [],
+                "LRS": NaN,
+                "LRSComp": NaN,
+                "LRSProd": NaN
+            }
+        ],
+        "distanceMap": "freiburg_patienten_alle_27_sk-distMap.nii"
+    },
+    {
+        "paradigm": "FB_FB",
+        "patientId": "28_ES",
+        "age": 72.0,
+        "sex": "m",
+        "handedness": [],
+        "onset": "22.01.2009",
+        "lesion": "freiburg_patienten_alle_28_es.nii",
+        "experiments": [
+            {
+                "name1": "acu",
+                "name2": "Ex1",
+                "has": 1.0,
+                "timepoint": "1",
+                "fileBeta": "acu_FB_FB_28_ES_1_con_0008.nii",
+                "LRS": 0.48035714285714287,
+                "LRSComp": 0.4235294117647059,
+                "LRSProd": 0.6111111111111112
+            },
+            {
+                "name1": "sub",
+                "name2": "Ex2",
+                "has": 1.0,
+                "timepoint": "14",
+                "fileBeta": "sub_FB_FB_28_ES_14_con_0020.nii",
+                "LRS": 0.6625,
+                "LRSComp": 0.5764705882352941,
+                "LRSProd": 0.8
+            },
+            {
+                "name1": "chr",
+                "name2": "Ex3",
+                "has": 0.0,
+                "timepoint": [],
+                "fileBeta": [],
+                "LRS": NaN,
+                "LRSComp": NaN,
+                "LRSProd": NaN
+            }
+        ],
+        "distanceMap": "freiburg_patienten_alle_28_es-distMap.nii"
+    },
+    {
+        "paradigm": "FB_FB",
+        "patientId": "29_SH",
+        "age": 56.0,
+        "sex": "m",
+        "handedness": [],
+        "onset": "12.05.2009",
+        "lesion": "freiburg_patienten_alle_29_sh.nii",
+        "experiments": [
+            {
+                "name1": "acu",
+                "name2": "Ex1",
+                "has": 1.0,
+                "timepoint": "3",
+                "fileBeta": "acu_FB_FB_29_SH_3_con_0011.nii",
+                "LRS": 0.0035714285714285713,
+                "LRSComp": 0.011764705882352941,
+                "LRSProd": 0.0
+            },
+            {
+                "name1": "sub",
+                "name2": "Ex2",
+                "has": 1.0,
+                "timepoint": "8",
+                "fileBeta": "sub_FB_FB_29_SH_8_con_0017.nii",
+                "LRS": 0.0035714285714285713,
+                "LRSComp": 0.011764705882352941,
+                "LRSProd": 0.0
+            },
+            {
+                "name1": "chr",
+                "name2": "Ex3",
+                "has": 1.0,
+                "timepoint": "99",
+                "fileBeta": "chr_FB_FB_29_SH_99_con_0029.nii",
+                "LRS": 0.21607142857142858,
+                "LRSComp": 0.49411764705882355,
+                "LRSProd": 0.0
+            }
+        ],
+        "distanceMap": "freiburg_patienten_alle_29_sh-distMap.nii"
+    },
+    {
+        "paradigm": "FB_FB",
+        "patientId": "30_MK",
+        "age": 63.0,
+        "sex": "m",
+        "handedness": [],
+        "onset": "17.05.2009",
+        "lesion": "freiburg_patienten_alle_30_mk.nii",
+        "experiments": [
+            {
+                "name1": "acu",
+                "name2": "Ex1",
+                "has": 1.0,
+                "timepoint": "3",
+                "fileBeta": "acu_FB_FB_30_MK_3_con_0008.nii",
+                "LRS": 0.007142857142857143,
+                "LRSComp": 0.023529411764705882,
+                "LRSProd": 0.0
+            },
+            {
+                "name1": "sub",
+                "name2": "Ex2",
+                "has": 1.0,
+                "timepoint": "12",
+                "fileBeta": "sub_FB_FB_30_MK_12_con_0014.nii",
+                "LRS": 0.030357142857142857,
+                "LRSComp": 0.1,
+                "LRSProd": 0.0
+            },
+            {
+                "name1": "chr",
+                "name2": "Ex3",
+                "has": 0.0,
+                "timepoint": [],
+                "fileBeta": [],
+                "LRS": NaN,
+                "LRSComp": NaN,
+                "LRSProd": NaN
+            }
+        ],
+        "distanceMap": "freiburg_patienten_alle_30_mk-distMap.nii"
+    },
+    {
+        "paradigm": "FB_FB",
+        "patientId": "31_HM",
+        "age": 49.0,
+        "sex": "m",
+        "handedness": [],
+        "onset": "16.01.2009",
+        "lesion": "freiburg_patienten_alle_31_hm.nii",
+        "experiments": [
+            {
+                "name1": "acu",
+                "name2": "Ex1",
+                "has": 1.0,
+                "timepoint": "3",
+                "fileBeta": "acu_FB_FB_31_HM_3_con_0009.nii",
+                "LRS": 0.14642857142857144,
+                "LRSComp": 0.4176470588235294,
+                "LRSProd": 0.0
+            },
+            {
+                "name1": "sub",
+                "name2": "Ex2",
+                "has": 1.0,
+                "timepoint": "11",
+                "fileBeta": "sub_FB_FB_31_HM_11_con_0015.nii",
+                "LRS": 0.1982142857142857,
+                "LRSComp": 0.5529411764705883,
+                "LRSProd": 0.014814814814814815
+            },
+            {
+                "name1": "chr",
+                "name2": "Ex3",
+                "has": 1.0,
+                "timepoint": "141",
+                "fileBeta": "chr_FB_FB_31_HM_141_con_0021.nii",
+                "LRS": NaN,
+                "LRSComp": NaN,
+                "LRSProd": NaN
+            }
+        ],
+        "distanceMap": "freiburg_patienten_alle_31_hm-distMap.nii"
+    },
+    {
+        "paradigm": "FB_FB",
+        "patientId": "33_BS",
+        "age": 68.0,
+        "sex": "f",
+        "handedness": [],
+        "onset": "01.09.2009",
+        "lesion": "freiburg_patienten_alle_33_bs.nii",
+        "experiments": [
+            {
+                "name1": "acu",
+                "name2": "Ex1",
+                "has": 1.0,
+                "timepoint": "2",
+                "fileBeta": "acu_FB_FB_33_BS_2_con_0009.nii",
+                "LRS": NaN,
+                "LRSComp": NaN,
+                "LRSProd": NaN
+            },
+            {
+                "name1": "sub",
+                "name2": "Ex2",
+                "has": 1.0,
+                "timepoint": "11",
+                "fileBeta": "sub_FB_FB_33_BS_11_con_0021.nii",
+                "LRS": NaN,
+                "LRSComp": NaN,
+                "LRSProd": NaN
+            },
+            {
+                "name1": "chr",
+                "name2": "Ex3",
+                "has": 1.0,
+                "timepoint": "245",
+                "fileBeta": "chr_FB_FB_33_BS_245_con_0027.nii",
+                "LRS": NaN,
+                "LRSComp": NaN,
+                "LRSProd": NaN
+            }
+        ],
+        "distanceMap": "freiburg_patienten_alle_33_bs-distMap.nii"
+    },
+    {
+        "paradigm": "FB_FB",
+        "patientId": "34_KB",
+        "age": 41.0,
+        "sex": "m",
+        "handedness": [],
+        "onset": "22.09.2009",
+        "lesion": "freiburg_patienten_alle_34_kb.nii",
+        "experiments": [
+            {
+                "name1": "acu",
+                "name2": "Ex1",
+                "has": 1.0,
+                "timepoint": "2",
+                "fileBeta": "acu_FB_FB_34_KB_2_con_0009.nii",
+                "LRS": 0.35892857142857143,
+                "LRSComp": 0.5117647058823529,
+                "LRSProd": 0.2851851851851852
+            },
+            {
+                "name1": "sub",
+                "name2": "Ex2",
+                "has": 1.0,
+                "timepoint": "6",
+                "fileBeta": "sub_FB_FB_34_KB_6_con_0015.nii",
+                "LRS": NaN,
+                "LRSComp": NaN,
+                "LRSProd": NaN
+            },
+            {
+                "name1": "chr",
+                "name2": "Ex3",
+                "has": 1.0,
+                "timepoint": "292",
+                "fileBeta": "chr_FB_FB_34_KB_292_con_0027.nii",
+                "LRS": NaN,
+                "LRSComp": NaN,
+                "LRSProd": NaN
+            }
+        ],
+        "distanceMap": "freiburg_patienten_alle_34_kb-distMap.nii"
+    },
+    {
+        "paradigm": "FB_HH",
+        "patientId": "16_FM",
+        "age": 76.0,
+        "sex": "m",
+        "handedness": [],
+        "onset": NaN,
+        "lesion": "hamburg_patienten_alle_16_FM.nii",
+        "experiments": [
+            {
+                "name1": "acu",
+                "name2": "Ex1",
+                "has": 1.0,
+                "timepoint": "2",
+                "fileBeta": "acu_FB_HH_16_FM_2_con_0018.nii",
+                "LRS": 0.4982142857142857,
+                "LRSComp": 0.37058823529411766,
+                "LRSProd": 0.6814814814814815
+            },
+            {
+                "name1": "sub",
+                "name2": "Ex2",
+                "has": 1.0,
+                "timepoint": "12",
+                "fileBeta": "sub_FB_HH_16_FM_12_con_0042.nii",
+                "LRS": 0.7178571428571429,
+                "LRSComp": 0.5588235294117647,
+                "LRSProd": 0.8444444444444444
+            },
+            {
+                "name1": "chr",
+                "name2": "Ex3",
+                "has": 1.0,
+                "timepoint": "100",
+                "fileBeta": "chr_FB_HH_16_FM_100_con_0054.nii",
+                "LRS": 0.8071428571428572,
+                "LRSComp": 0.7470588235294118,
+                "LRSProd": 0.8666666666666667
+            }
+        ],
+        "distanceMap": "hamburg_patienten_alle_16_FM-distMap.nii"
+    },
+    {
+        "paradigm": "FB_HH",
+        "patientId": "17_SB",
+        "age": 55.0,
+        "sex": "m",
+        "handedness": [],
+        "onset": "15.10.2006",
+        "lesion": "hamburg_patienten_alle_17_SB.nii",
+        "experiments": [
+            {
+                "name1": "acu",
+                "name2": "Ex1",
+                "has": 1.0,
+                "timepoint": "2",
+                "fileBeta": "acu_FB_HH_17_SB_2_con_0015.nii",
+                "LRS": 0.32142857142857145,
+                "LRSComp": 0.3941176470588235,
+                "LRSProd": 0.32222222222222224
+            },
+            {
+                "name1": "sub",
+                "name2": "Ex2",
+                "has": 1.0,
+                "timepoint": "8",
+                "fileBeta": "sub_FB_HH_17_SB_8_con_0027.nii",
+                "LRS": 0.44107142857142856,
+                "LRSComp": 0.4647058823529412,
+                "LRSProd": 0.4777777777777778
+            },
+            {
+                "name1": "chr",
+                "name2": "Ex3",
+                "has": 1.0,
+                "timepoint": "95",
+                "fileBeta": "chr_FB_HH_17_SB_95_con_0039.nii",
+                "LRS": 0.6160714285714286,
+                "LRSComp": 0.6588235294117647,
+                "LRSProd": 0.6222222222222222
+            }
+        ],
+        "distanceMap": "hamburg_patienten_alle_17_SB-distMap.nii"
+    },
+    {
+        "paradigm": "FB_HH",
+        "patientId": "18_FK",
+        "age": 69.0,
+        "sex": "m",
+        "handedness": [],
+        "onset": NaN,
+        "lesion": "hamburg_patienten_alle_18_FK.nii",
+        "experiments": [
+            {
+                "name1": "acu",
+                "name2": "Ex1",
+                "has": 0.0,
+                "timepoint": [],
+                "fileBeta": [],
+                "LRS": NaN,
+                "LRSComp": NaN,
+                "LRSProd": NaN
+            },
+            {
+                "name1": "sub",
+                "name2": "Ex2",
+                "has": 1.0,
+                "timepoint": "9",
+                "fileBeta": "sub_FB_HH_18_FK_9_con_0013.nii",
+                "LRS": 0.36964285714285716,
+                "LRSComp": 0.32941176470588235,
+                "LRSProd": 0.3851851851851852
+            },
+            {
+                "name1": "chr",
+                "name2": "Ex3",
+                "has": 0.0,
+                "timepoint": [],
+                "fileBeta": [],
+                "LRS": NaN,
+                "LRSComp": NaN,
+                "LRSProd": NaN
+            }
+        ],
+        "distanceMap": "hamburg_patienten_alle_18_FK-distMap.nii"
+    },
+    {
+        "paradigm": "FB_HH",
+        "patientId": "19_RC",
+        "age": 64.0,
+        "sex": "m",
+        "handedness": [],
+        "onset": "07.01.2006",
+        "lesion": "hamburg_patienten_alle_19_RC.nii",
+        "experiments": [
+            {
+                "name1": "acu",
+                "name2": "Ex1",
+                "has": 1.0,
+                "timepoint": "2",
+                "fileBeta": "acu_FB_HH_19_RC_2_con_0015.nii",
+                "LRS": 0.8696428571428572,
+                "LRSComp": 0.9117647058823529,
+                "LRSProd": 0.8555555555555555
+            },
+            {
+                "name1": "sub",
+                "name2": "Ex2",
+                "has": 1.0,
+                "timepoint": "8",
+                "fileBeta": "sub_FB_HH_19_RC_8_con_0027.nii",
+                "LRS": 0.9464285714285714,
+                "LRSComp": 0.9705882352941176,
+                "LRSProd": 0.9259259259259259
+            },
+            {
+                "name1": "chr",
+                "name2": "Ex3",
+                "has": 1.0,
+                "timepoint": "270",
+                "fileBeta": "chr_FB_HH_19_RC_270_con_0039.nii",
+                "LRS": 0.9428571428571428,
+                "LRSComp": 0.9764705882352941,
+                "LRSProd": 0.9333333333333333
+            }
+        ],
+        "distanceMap": "hamburg_patienten_alle_19_RC-distMap.nii"
+    },
+    {
+        "paradigm": "FB_HH",
+        "patientId": "20_AL",
+        "age": 73.0,
+        "sex": "f",
+        "handedness": [],
+        "onset": NaN,
+        "lesion": "hamburg_patienten_alle_20_AL.nii",
+        "experiments": [
+            {
+                "name1": "acu",
+                "name2": "Ex1",
+                "has": 0.0,
+                "timepoint": [],
+                "fileBeta": [],
+                "LRS": NaN,
+                "LRSComp": NaN,
+                "LRSProd": NaN
+            },
+            {
+                "name1": "sub",
+                "name2": "Ex2",
+                "has": 1.0,
+                "timepoint": "14",
+                "fileBeta": "sub_FB_HH_20_AL_14_con_0029.nii",
+                "LRS": 0.18214285714285713,
+                "LRSComp": 0.03529411764705882,
+                "LRSProd": 0.2814814814814815
+            },
+            {
+                "name1": "chr",
+                "name2": "Ex3",
+                "has": 1.0,
+                "timepoint": "100",
+                "fileBeta": "chr_FB_HH_20_AL_100_con_0041.nii",
+                "LRS": 0.5767857142857142,
+                "LRSComp": 0.48823529411764705,
+                "LRSProd": 0.7
+            }
+        ],
+        "distanceMap": "hamburg_patienten_alle_20_AL-distMap.nii"
+    },
+    {
+        "paradigm": "FB_HH",
+        "patientId": "21_JS",
+        "age": 61.0,
+        "sex": "m",
+        "handedness": [],
+        "onset": "22.01.2007",
+        "lesion": "hamburg_patienten_alle_21_JS.nii",
+        "experiments": [
+            {
+                "name1": "acu",
+                "name2": "Ex1",
+                "has": 1.0,
+                "timepoint": "1",
+                "fileBeta": "acu_FB_HH_21_JS_1_con_0017.nii",
+                "LRS": 0.15714285714285714,
+                "LRSComp": 0.12941176470588237,
+                "LRSProd": 0.16296296296296298
+            },
+            {
+                "name1": "sub",
+                "name2": "Ex2",
+                "has": 1.0,
+                "timepoint": "10",
+                "fileBeta": "sub_FB_HH_21_JS_10_con_0041.nii",
+                "LRS": 0.7214285714285714,
+                "LRSComp": 0.5882352941176471,
+                "LRSProd": 0.7555555555555555
+            },
+            {
+                "name1": "chr",
+                "name2": "Ex3",
+                "has": 1.0,
+                "timepoint": "91",
+                "fileBeta": "chr_FB_HH_21_JS_91_con_0053.nii",
+                "LRS": 0.8678571428571429,
+                "LRSComp": 0.8176470588235294,
+                "LRSProd": 0.8703703703703703
+            }
+        ],
+        "distanceMap": "hamburg_patienten_alle_21_JS-distMap.nii"
+    },
+    {
+        "paradigm": "FB_HH",
+        "patientId": "22_AS",
+        "age": 38.0,
+        "sex": "f",
+        "handedness": [],
+        "onset": "25.02.2007",
+        "lesion": "hamburg_patienten_alle_22_AS.nii",
+        "experiments": [
+            {
+                "name1": "acu",
+                "name2": "Ex1",
+                "has": 1.0,
+                "timepoint": "2",
+                "fileBeta": "acu_FB_HH_22_AS_2_con_0015.nii",
+                "LRS": 0.8821428571428571,
+                "LRSComp": 0.8352941176470589,
+                "LRSProd": 0.9074074074074074
+            },
+            {
+                "name1": "sub",
+                "name2": "Ex2",
+                "has": 1.0,
+                "timepoint": "4",
+                "fileBeta": "sub_FB_HH_22_AS_4_con_0027.nii",
+                "LRS": 0.9625,
+                "LRSComp": 0.9529411764705882,
+                "LRSProd": 0.9740740740740741
+            },
+            {
+                "name1": "chr",
+                "name2": "Ex3",
+                "has": 1.0,
+                "timepoint": "236",
+                "fileBeta": "chr_FB_HH_22_AS_236_con_0039.nii",
+                "LRS": 0.9928571428571429,
+                "LRSComp": 0.9882352941176471,
+                "LRSProd": 0.9925925925925926
+            }
+        ],
+        "distanceMap": "hamburg_patienten_alle_22_AS-distMap.nii"
+    },
+    {
+        "paradigm": "FB_HH",
+        "patientId": "23_MT",
+        "age": 44.0,
+        "sex": "m",
+        "handedness": [],
+        "onset": "01.06.2007",
+        "lesion": "hamburg_patienten_alle_23_MT.nii",
+        "experiments": [
+            {
+                "name1": "acu",
+                "name2": "Ex1",
+                "has": 1.0,
+                "timepoint": "3",
+                "fileBeta": "acu_FB_HH_23_MT_3_con_0015.nii",
+                "LRS": 0.07857142857142857,
+                "LRSComp": 0.0,
+                "LRSProd": 0.10740740740740741
+            },
+            {
+                "name1": "sub",
+                "name2": "Ex2",
+                "has": 1.0,
+                "timepoint": "10",
+                "fileBeta": "sub_FB_HH_23_MT_10_con_0027.nii",
+                "LRS": 0.15,
+                "LRSComp": 0.15294117647058825,
+                "LRSProd": 0.15185185185185185
+            },
+            {
+                "name1": "chr",
+                "name2": "Ex3",
+                "has": 0.0,
+                "timepoint": [],
+                "fileBeta": [],
+                "LRS": NaN,
+                "LRSComp": NaN,
+                "LRSProd": NaN
+            }
+        ],
+        "distanceMap": "hamburg_patienten_alle_23_MT-distMap.nii"
+    },
+    {
+        "paradigm": "FB_HH",
+        "patientId": "24_CH",
+        "age": 73.0,
+        "sex": "f",
+        "handedness": [],
+        "onset": "07.07.2007",
+        "lesion": "hamburg_patienten_alle_24_CH.nii",
+        "experiments": [
+            {
+                "name1": "acu",
+                "name2": "Ex1",
+                "has": 0.0,
+                "timepoint": [],
+                "fileBeta": [],
+                "LRS": NaN,
+                "LRSComp": NaN,
+                "LRSProd": NaN
+            },
+            {
+                "name1": "sub",
+                "name2": "Ex2",
+                "has": 1.0,
+                "timepoint": "12",
+                "fileBeta": "sub_FB_HH_24_CH_12_con_0026.nii",
+                "LRS": 0.7321428571428571,
+                "LRSComp": 0.7235294117647059,
+                "LRSProd": 0.7592592592592593
+            },
+            {
+                "name1": "chr",
+                "name2": "Ex3",
+                "has": 0.0,
+                "timepoint": [],
+                "fileBeta": [],
+                "LRS": NaN,
+                "LRSComp": NaN,
+                "LRSProd": NaN
+            }
+        ],
+        "distanceMap": "hamburg_patienten_alle_24_CH-distMap.nii"
+    },
+    {
+        "paradigm": "FB_HH",
+        "patientId": "25_CO",
+        "age": 44.0,
+        "sex": "f",
+        "handedness": [],
+        "onset": "05.08.2007",
+        "lesion": "hamburg_patienten_alle_25_CO.nii",
+        "experiments": [
+            {
+                "name1": "acu",
+                "name2": "Ex1",
+                "has": 1.0,
+                "timepoint": "1",
+                "fileBeta": "acu_FB_HH_25_CO_1_con_0015.nii",
+                "LRS": 0.8053571428571429,
+                "LRSComp": 0.8,
+                "LRSProd": 0.8333333333333334
+            },
+            {
+                "name1": "sub",
+                "name2": "Ex2",
+                "has": 1.0,
+                "timepoint": "9",
+                "fileBeta": "sub_FB_HH_25_CO_9_con_0027.nii",
+                "LRS": 0.9464285714285714,
+                "LRSComp": 0.9705882352941176,
+                "LRSProd": 0.9888888888888889
+            },
+            {
+                "name1": "chr",
+                "name2": "Ex3",
+                "has": 1.0,
+                "timepoint": "219",
+                "fileBeta": "chr_FB_HH_25_CO_219_con_0039.nii",
+                "LRS": 0.9464285714285714,
+                "LRSComp": 0.9823529411764705,
+                "LRSProd": 0.937037037037037
+            }
+        ],
+        "distanceMap": "hamburg_patienten_alle_25_CO-distMap.nii"
+    },
+    {
+        "paradigm": "FB_HH",
+        "patientId": "26_AR",
+        "age": 68.0,
+        "sex": "m",
+        "handedness": [],
+        "onset": "08.10.2007",
+        "lesion": "hamburg_patienten_alle_26_AR.nii",
+        "experiments": [
+            {
+                "name1": "acu",
+                "name2": "Ex1",
+                "has": 1.0,
+                "timepoint": "0",
+                "fileBeta": "acu_FB_HH_26_AR_0_con_0020.nii",
+                "LRS": 0.18214285714285713,
+                "LRSComp": 0.6,
+                "LRSProd": 0.0
+            },
+            {
+                "name1": "sub",
+                "name2": "Ex2",
+                "has": 1.0,
+                "timepoint": "10",
+                "fileBeta": "sub_FB_HH_26_AR_10_con_0056.nii",
+                "LRS": 0.7160714285714286,
+                "LRSComp": 0.788235294117647,
+                "LRSProd": 0.7148148148148148
+            },
+            {
+                "name1": "chr",
+                "name2": "Ex3",
+                "has": 1.0,
+                "timepoint": "92",
+                "fileBeta": "chr_FB_HH_26_AR_92_con_0068.nii",
+                "LRS": 0.8375,
+                "LRSComp": 0.8529411764705882,
+                "LRSProd": 0.8444444444444444
+            }
+        ],
+        "distanceMap": "hamburg_patienten_alle_26_AR-distMap.nii"
+    },
+    {
+        "paradigm": "HH",
+        "patientId": "01_HA",
+        "age": 65.0,
+        "sex": "m",
+        "handedness": [],
+        "onset": "13.05.2003",
+        "lesion": "hamburg_patienten_alle_01_HA.nii",
+        "experiments": [
+            {
+                "name1": "acu",
+                "name2": "Ex1",
+                "has": 1.0,
+                "timepoint": "2",
+                "fileBeta": "acu_HH_01_HA_2_con_0016.nii",
+                "LRS": 0.6178571428571429,
+                "LRSComp": 0.4,
+                "LRSProd": 0.7333333333333333
+            },
+            {
+                "name1": "sub",
+                "name2": "Ex2",
+                "has": 1.0,
+                "timepoint": "15",
+                "fileBeta": "sub_HH_01_HA_15_con_0028.nii",
+                "LRS": 0.6785714285714286,
+                "LRSComp": 0.4470588235294118,
+                "LRSProd": 0.8074074074074075
+            },
+            {
+                "name1": "chr",
+                "name2": "Ex3",
+                "has": 1.0,
+                "timepoint": "220",
+                "fileBeta": "chr_HH_01_HA_220_con_0040.nii",
+                "LRS": 0.9142857142857143,
+                "LRSComp": 0.8941176470588236,
+                "LRSProd": 0.937037037037037
+            }
+        ],
+        "distanceMap": "hamburg_patienten_alle_01_HA-distMap.nii"
+    },
+    {
+        "paradigm": "HH",
+        "patientId": "02_RD",
+        "age": 58.0,
+        "sex": "f",
+        "handedness": [],
+        "onset": "07.07.2003",
+        "lesion": "hamburg_patienten_alle_02_RD.nii",
+        "experiments": [
+            {
+                "name1": "acu",
+                "name2": "Ex1",
+                "has": 1.0,
+                "timepoint": "1",
+                "fileBeta": "acu_HH_02_RD_1_con_0016.nii",
+                "LRS": 0.5642857142857143,
+                "LRSComp": 0.4470588235294118,
+                "LRSProd": 0.7074074074074074
+            },
+            {
+                "name1": "sub",
+                "name2": "Ex2",
+                "has": 1.0,
+                "timepoint": "15",
+                "fileBeta": "sub_HH_02_RD_15_con_0028.nii",
+                "LRS": 0.8017857142857143,
+                "LRSComp": 0.7647058823529411,
+                "LRSProd": 0.9
+            },
+            {
+                "name1": "chr",
+                "name2": "Ex3",
+                "has": 1.0,
+                "timepoint": "182",
+                "fileBeta": "chr_HH_02_RD_182_con_0040.nii",
+                "LRS": 0.9535714285714286,
+                "LRSComp": 0.9176470588235294,
+                "LRSProd": 0.9777777777777777
+            }
+        ],
+        "distanceMap": "hamburg_patienten_alle_02_RD-distMap.nii"
+    },
+    {
+        "paradigm": "HH",
+        "patientId": "03_RL",
+        "age": 55.0,
+        "sex": "m",
+        "handedness": [],
+        "onset": "12.07.2003",
+        "lesion": "hamburg_patienten_alle_03_RL.nii",
+        "experiments": [
+            {
+                "name1": "acu",
+                "name2": "Ex1",
+                "has": 1.0,
+                "timepoint": "2",
+                "fileBeta": "acu_HH_03_RL_2_con_0016.nii",
+                "LRS": 0.4142857142857143,
+                "LRSComp": 0.14705882352941177,
+                "LRSProd": 0.4925925925925926
+            },
+            {
+                "name1": "sub",
+                "name2": "Ex2",
+                "has": 1.0,
+                "timepoint": "12",
+                "fileBeta": "sub_HH_03_RL_12_con_0028.nii",
+                "LRS": 0.6321428571428571,
+                "LRSComp": 0.4,
+                "LRSProd": 0.7777777777777778
+            },
+            {
+                "name1": "chr",
+                "name2": "Ex3",
+                "has": 1.0,
+                "timepoint": "174",
+                "fileBeta": "chr_HH_03_RL_174_con_0040.nii",
+                "LRS": 0.8946428571428572,
+                "LRSComp": 0.7588235294117647,
+                "LRSProd": 0.9629629629629629
+            }
+        ],
+        "distanceMap": "hamburg_patienten_alle_03_RL-distMap.nii"
+    },
+    {
+        "paradigm": "HH",
+        "patientId": "04_KF",
+        "age": 66.0,
+        "sex": "m",
+        "handedness": [],
+        "onset": "18.07.2003",
+        "lesion": "hamburg_patienten_alle_04_KF.nii",
+        "experiments": [
+            {
+                "name1": "acu",
+                "name2": "Ex1",
+                "has": 1.0,
+                "timepoint": "3",
+                "fileBeta": "acu_HH_04_KF_3_con_0014.nii",
+                "LRS": 0.48035714285714287,
+                "LRSComp": 0.3352941176470588,
+                "LRSProd": 0.46296296296296297
+            },
+            {
+                "name1": "sub",
+                "name2": "Ex2",
+                "has": 1.0,
+                "timepoint": "13",
+                "fileBeta": "sub_HH_04_KF_13_con_0026.nii",
+                "LRS": 0.5910714285714286,
+                "LRSComp": 0.5058823529411764,
+                "LRSProd": 0.5444444444444444
+            },
+            {
+                "name1": "chr",
+                "name2": "Ex3",
+                "has": 0.0,
+                "timepoint": [],
+                "fileBeta": [],
+                "LRS": NaN,
+                "LRSComp": NaN,
+                "LRSProd": NaN
+            }
+        ],
+        "distanceMap": "hamburg_patienten_alle_04_KF-distMap.nii"
+    },
+    {
+        "paradigm": "HH",
+        "patientId": "06_PW",
+        "age": 65.0,
+        "sex": "m",
+        "handedness": [],
+        "onset": "27.01.2004",
+        "lesion": "hamburg_patienten_alle_06_PW.nii",
+        "experiments": [
+            {
+                "name1": "acu",
+                "name2": "Ex1",
+                "has": 1.0,
+                "timepoint": "1",
+                "fileBeta": "acu_HH_06_PW_1_con_0017.nii",
+                "LRS": 0.44285714285714284,
+                "LRSComp": 0.4647058823529412,
+                "LRSProd": 0.4444444444444444
+            },
+            {
+                "name1": "sub",
+                "name2": "Ex2",
+                "has": 1.0,
+                "timepoint": "13",
+                "fileBeta": "sub_HH_06_PW_13_con_0041.nii",
+                "LRS": 0.8696428571428572,
+                "LRSComp": 0.9117647058823529,
+                "LRSProd": 0.8592592592592593
+            },
+            {
+                "name1": "chr",
+                "name2": "Ex3",
+                "has": 1.0,
+                "timepoint": "174",
+                "fileBeta": "chr_HH_06_PW_174_con_0053.nii",
+                "LRS": 0.95,
+                "LRSComp": 0.9588235294117647,
+                "LRSProd": 0.9407407407407408
+            }
+        ],
+        "distanceMap": "hamburg_patienten_alle_06_PW-distMap.nii"
+    },
+    {
+        "paradigm": "HH",
+        "patientId": "07_HS",
+        "age": 55.0,
+        "sex": "m",
+        "handedness": [],
+        "onset": "15.02.2004",
+        "lesion": "hamburg_patienten_alle_07_HS.nii",
+        "experiments": [
+            {
+                "name1": "acu",
+                "name2": "Ex1",
+                "has": 1.0,
+                "timepoint": "1",
+                "fileBeta": "acu_HH_07_HS_1_con_0018.nii",
+                "LRS": 0.5642857142857143,
+                "LRSComp": 0.5176470588235295,
+                "LRSProd": 0.6296296296296297
+            },
+            {
+                "name1": "sub",
+                "name2": "Ex2",
+                "has": 1.0,
+                "timepoint": "8",
+                "fileBeta": "sub_HH_07_HS_8_con_0030.nii",
+                "LRS": 0.7160714285714286,
+                "LRSComp": 0.6470588235294118,
+                "LRSProd": 0.7222222222222222
+            },
+            {
+                "name1": "chr",
+                "name2": "Ex3",
+                "has": 1.0,
+                "timepoint": "92",
+                "fileBeta": "chr_HH_07_HS_92_con_0054.nii",
+                "LRS": 0.8875,
+                "LRSComp": 0.9,
+                "LRSProd": 0.8888888888888888
+            }
+        ],
+        "distanceMap": "hamburg_patienten_alle_07_HS-distMap.nii"
+    },
+    {
+        "paradigm": "HH",
+        "patientId": "08_MM",
+        "age": 37.0,
+        "sex": "m",
+        "handedness": [],
+        "onset": "13.04.2004",
+        "lesion": "hamburg_patienten_alle_08_MM.nii",
+        "experiments": [
+            {
+                "name1": "acu",
+                "name2": "Ex1",
+                "has": 1.0,
+                "timepoint": "2",
+                "fileBeta": "acu_HH_08_MM_2_con_0016.nii",
+                "LRS": 0.5803571428571429,
+                "LRSComp": 0.7588235294117647,
+                "LRSProd": 0.5111111111111111
+            },
+            {
+                "name1": "sub",
+                "name2": "Ex2",
+                "has": 1.0,
+                "timepoint": "10",
+                "fileBeta": "sub_HH_08_MM_10_con_0028.nii",
+                "LRS": 0.8839285714285714,
+                "LRSComp": 0.9176470588235294,
+                "LRSProd": 0.9037037037037037
+            },
+            {
+                "name1": "chr",
+                "name2": "Ex3",
+                "has": 1.0,
+                "timepoint": "96",
+                "fileBeta": "chr_HH_08_MM_96_con_0040.nii",
+                "LRS": 0.9303571428571429,
+                "LRSComp": 0.9647058823529412,
+                "LRSProd": 0.9444444444444444
+            }
+        ],
+        "distanceMap": "hamburg_patienten_alle_08_MM-distMap.nii"
+    },
+    {
+        "paradigm": "HH",
+        "patientId": "09_AK",
+        "age": 57.0,
+        "sex": "m",
+        "handedness": [],
+        "onset": "08.06.2004",
+        "lesion": "hamburg_patienten_alle_09_AK.nii",
+        "experiments": [
+            {
+                "name1": "acu",
+                "name2": "Ex1",
+                "has": 1.0,
+                "timepoint": "1",
+                "fileBeta": "acu_HH_09_AK_1_con_0016.nii",
+                "LRS": 0.8517857142857143,
+                "LRSComp": 0.8647058823529412,
+                "LRSProd": 0.8703703703703703
+            },
+            {
+                "name1": "sub",
+                "name2": "Ex2",
+                "has": 1.0,
+                "timepoint": "10",
+                "fileBeta": "sub_HH_09_AK_10_con_0040.nii",
+                "LRS": 0.9178571428571428,
+                "LRSComp": 0.9294117647058824,
+                "LRSProd": 0.9333333333333333
+            },
+            {
+                "name1": "chr",
+                "name2": "Ex3",
+                "has": 1.0,
+                "timepoint": "188",
+                "fileBeta": "chr_HH_09_AK_188_con_0052.nii",
+                "LRS": 0.9392857142857143,
+                "LRSComp": 0.9588235294117647,
+                "LRSProd": 0.937037037037037
+            }
+        ],
+        "distanceMap": "hamburg_patienten_alle_09_AK-distMap.nii"
+    },
+    {
+        "paradigm": "HH",
+        "patientId": "10_TW",
+        "age": 16.0,
+        "sex": "m",
+        "handedness": [],
+        "onset": "21.06.2004",
+        "lesion": "hamburg_patienten_alle_10_TW.nii",
+        "experiments": [
+            {
+                "name1": "acu",
+                "name2": "Ex1",
+                "has": 1.0,
+                "timepoint": "1",
+                "fileBeta": "acu_HH_10_TW_1_con_0017.nii",
+                "LRS": 0.6196428571428572,
+                "LRSComp": 0.4235294117647059,
+                "LRSProd": 0.7407407407407407
+            },
+            {
+                "name1": "sub",
+                "name2": "Ex2",
+                "has": 1.0,
+                "timepoint": "11",
+                "fileBeta": "sub_HH_10_TW_11_con_0041.nii",
+                "LRS": 0.9214285714285714,
+                "LRSComp": 0.8705882352941177,
+                "LRSProd": 0.9481481481481482
+            },
+            {
+                "name1": "chr",
+                "name2": "Ex3",
+                "has": 1.0,
+                "timepoint": "84",
+                "fileBeta": "chr_HH_10_TW_84_con_0053.nii",
+                "LRS": 0.9964285714285714,
+                "LRSComp": 0.9941176470588236,
+                "LRSProd": 1.0
+            }
+        ],
+        "distanceMap": "hamburg_patienten_alle_10_TW-distMap.nii"
+    },
+    {
+        "paradigm": "HH",
+        "patientId": "11_KO",
+        "age": 43.0,
+        "sex": "m",
+        "handedness": [],
+        "onset": "27.07.2004",
+        "lesion": "hamburg_patienten_alle_11_KO.nii",
+        "experiments": [
+            {
+                "name1": "acu",
+                "name2": "Ex1",
+                "has": 1.0,
+                "timepoint": "1",
+                "fileBeta": "acu_HH_11_KO_1_con_0020.nii",
+                "LRS": 0.005357142857142857,
+                "LRSComp": 0.0,
+                "LRSProd": 0.0
+            },
+            {
+                "name1": "sub",
+                "name2": "Ex2",
+                "has": 1.0,
+                "timepoint": "9",
+                "fileBeta": "sub_HH_11_KO_9_con_0044.nii",
+                "LRS": 0.14464285714285716,
+                "LRSComp": 0.4,
+                "LRSProd": 0.018518518518518517
+            },
+            {
+                "name1": "chr",
+                "name2": "Ex3",
+                "has": 1.0,
+                "timepoint": "111",
+                "fileBeta": "chr_HH_11_KO_111_con_0080.nii",
+                "LRS": 0.6892857142857143,
+                "LRSComp": 0.8352941176470589,
+                "LRSProd": 0.6518518518518519
+            }
+        ],
+        "distanceMap": "hamburg_patienten_alle_11_KO-distMap.nii"
+    },
+    {
+        "paradigm": "HH",
+        "patientId": "12_BN",
+        "age": 39.0,
+        "sex": "f",
+        "handedness": [],
+        "onset": "27.09.2004",
+        "lesion": "hamburg_patienten_alle_12_BN.nii",
+        "experiments": [
+            {
+                "name1": "acu",
+                "name2": "Ex1",
+                "has": 0.0,
+                "timepoint": [],
+                "fileBeta": [],
+                "LRS": NaN,
+                "LRSComp": NaN,
+                "LRSProd": NaN
+            },
+            {
+                "name1": "sub",
+                "name2": "Ex2",
+                "has": 1.0,
+                "timepoint": "9",
+                "fileBeta": "sub_HH_12_BN_9_con_0029.nii",
+                "LRS": 0.125,
+                "LRSComp": 0.36470588235294116,
+                "LRSProd": 0.022222222222222223
+            },
+            {
+                "name1": "chr",
+                "name2": "Ex3",
+                "has": 1.0,
+                "timepoint": "253",
+                "fileBeta": "chr_HH_12_BN_253_con_0065.nii",
+                "LRS": 0.48035714285714287,
+                "LRSComp": 0.5176470588235295,
+                "LRSProd": 0.5444444444444444
+            }
+        ],
+        "distanceMap": "hamburg_patienten_alle_12_BN-distMap.nii"
+    },
+    {
+        "paradigm": "HH",
+        "patientId": "13_DR",
+        "age": 64.0,
+        "sex": "f",
+        "handedness": [],
+        "onset": "13.11.2004",
+        "lesion": "hamburg_patienten_alle_13_DR.nii",
+        "experiments": [
+            {
+                "name1": "acu",
+                "name2": "Ex1",
+                "has": 1.0,
+                "timepoint": "2",
+                "fileBeta": "acu_HH_13_DR_2_con_0016.nii",
+                "LRS": 0.49464285714285716,
+                "LRSComp": 0.3,
+                "LRSProd": 0.6888888888888889
+            },
+            {
+                "name1": "sub",
+                "name2": "Ex2",
+                "has": 1.0,
+                "timepoint": "13",
+                "fileBeta": "sub_HH_13_DR_13_con_0040.nii",
+                "LRS": 0.5785714285714286,
+                "LRSComp": 0.3352941176470588,
+                "LRSProd": 0.7185185185185186
+            },
+            {
+                "name1": "chr",
+                "name2": "Ex3",
+                "has": 1.0,
+                "timepoint": "137",
+                "fileBeta": "chr_HH_13_DR_137_con_0052.nii",
+                "LRS": 0.7928571428571428,
+                "LRSComp": 0.5647058823529412,
+                "LRSProd": 0.9185185185185185
+            }
+        ],
+        "distanceMap": "hamburg_patienten_alle_13_DR-distMap.nii"
+    },
+    {
+        "paradigm": "HH",
+        "patientId": "14_PK",
+        "age": 68.0,
+        "sex": "m",
+        "handedness": [],
+        "onset": "26.11.2004",
+        "lesion": "hamburg_patienten_alle_14_PK.nii",
+        "experiments": [
+            {
+                "name1": "acu",
+                "name2": "Ex1",
+                "has": 1.0,
+                "timepoint": "0",
+                "fileBeta": "acu_HH_14_PK_0_con_0016.nii",
+                "LRS": 0.6053571428571428,
+                "LRSComp": 0.4647058823529412,
+                "LRSProd": 0.662962962962963
+            },
+            {
+                "name1": "sub",
+                "name2": "Ex2",
+                "has": 1.0,
+                "timepoint": "10",
+                "fileBeta": "sub_HH_14_PK_10_con_0040.nii",
+                "LRS": 0.7910714285714285,
+                "LRSComp": 0.6,
+                "LRSProd": 0.9
+            },
+            {
+                "name1": "chr",
+                "name2": "Ex3",
+                "has": 1.0,
+                "timepoint": "104",
+                "fileBeta": "chr_HH_14_PK_104_con_0052.nii",
+                "LRS": 0.8589285714285714,
+                "LRSComp": 0.6529411764705882,
+                "LRSProd": 0.9592592592592593
+            }
+        ],
+        "distanceMap": "hamburg_patienten_alle_14_PK-distMap.nii"
+    },
+    {
+        "paradigm": "LE",
+        "patientId": "29_ST",
+        "age": 26.0,
+        "sex": "f",
+        "handedness": [],
+        "onset": "02.03.2012",
+        "lesion": "leipzig_patienten_alle_29_ST.nii",
+        "experiments": [
+            {
+                "name1": "acu",
+                "name2": "Ex1",
+                "has": 0.0,
+                "timepoint": [],
+                "fileBeta": [],
+                "LRS": NaN,
+                "LRSComp": NaN,
+                "LRSProd": NaN
+            },
+            {
+                "name1": "sub",
+                "name2": "Ex2",
+                "has": 1.0,
+                "timepoint": "11",
+                "fileBeta": "sub_LE_29_ST_11_con_0028.nii",
+                "LRS": 0.8053571428571429,
+                "LRSComp": 0.6529411764705882,
+                "LRSProd": 0.8851851851851852
+            },
+            {
+                "name1": "chr",
+                "name2": "Ex3",
+                "has": 1.0,
+                "timepoint": "89",
+                "fileBeta": "chr_LE_29_ST_89_con_0040.nii",
+                "LRS": 0.9767857142857143,
+                "LRSComp": 0.9823529411764705,
+                "LRSProd": 0.9851851851851852
+            }
+        ],
+        "distanceMap": "leipzig_patienten_alle_29_ST-distMap.nii"
+    },
+    {
+        "paradigm": "LE",
+        "patientId": "31_AK",
+        "age": 29.0,
+        "sex": "m",
+        "handedness": [],
+        "onset": "17.11.2012",
+        "lesion": "leipzig_patienten_alle_31_AK.nii",
+        "experiments": [
+            {
+                "name1": "acu",
+                "name2": "Ex1",
+                "has": 1.0,
+                "timepoint": "3",
+                "fileBeta": "acu_LE_31_AK_3_con_0016.nii",
+                "LRS": 0.8892857142857142,
+                "LRSComp": 0.9058823529411765,
+                "LRSProd": 0.9111111111111111
+            },
+            {
+                "name1": "sub",
+                "name2": "Ex2",
+                "has": 1.0,
+                "timepoint": "10",
+                "fileBeta": "sub_LE_31_AK_10_con_0028.nii",
+                "LRS": 0.9178571428571428,
+                "LRSComp": 0.9294117647058824,
+                "LRSProd": 0.9333333333333333
+            },
+            {
+                "name1": "chr",
+                "name2": "Ex3",
+                "has": 1.0,
+                "timepoint": "122",
+                "fileBeta": "chr_LE_31_AK_122_con_0040.nii",
+                "LRS": 0.9392857142857143,
+                "LRSComp": 0.9588235294117647,
+                "LRSProd": 0.937037037037037
+            }
+        ],
+        "distanceMap": "leipzig_patienten_alle_31_AK-distMap.nii"
+    },
+    {
+        "paradigm": "LE",
+        "patientId": "32_AS",
+        "age": 52.0,
+        "sex": "m",
+        "handedness": [],
+        "onset": "02.01.2013",
+        "lesion": "leipzig_patienten_alle_32_AS.nii",
+        "experiments": [
+            {
+                "name1": "acu",
+                "name2": "Ex1",
+                "has": 0.0,
+                "timepoint": [],
+                "fileBeta": [],
+                "LRS": NaN,
+                "LRSComp": NaN,
+                "LRSProd": NaN
+            },
+            {
+                "name1": "sub",
+                "name2": "Ex2",
+                "has": 1.0,
+                "timepoint": "12",
+                "fileBeta": "sub_LE_32_AS_12_con_0028.nii",
+                "LRS": 0.9267857142857143,
+                "LRSComp": 0.8588235294117647,
+                "LRSProd": 0.9629629629629629
+            },
+            {
+                "name1": "chr",
+                "name2": "Ex3",
+                "has": 1.0,
+                "timepoint": "98",
+                "fileBeta": "chr_LE_32_AS_98_con_0040.nii",
+                "LRS": 0.9678571428571429,
+                "LRSComp": 0.9470588235294117,
+                "LRSProd": 0.9888888888888889
+            }
+        ],
+        "distanceMap": "leipzig_patienten_alle_32_AS-distMap.nii"
+    },
+    {
+        "paradigm": "LE",
+        "patientId": "33_MG",
+        "age": 40.0,
+        "sex": "f",
+        "handedness": [],
+        "onset": "17.03.2013",
+        "lesion": "leipzig_patienten_alle_33_MG.nii",
+        "experiments": [
+            {
+                "name1": "acu",
+                "name2": "Ex1",
+                "has": 1.0,
+                "timepoint": "2",
+                "fileBeta": "acu_LE_33_MG_2_con_0016.nii",
+                "LRS": 0.8535714285714285,
+                "LRSComp": 0.8058823529411765,
+                "LRSProd": 0.8814814814814815
+            },
+            {
+                "name1": "sub",
+                "name2": "Ex2",
+                "has": 1.0,
+                "timepoint": "10",
+                "fileBeta": "sub_LE_33_MG_10_con_0028.nii",
+                "LRS": 0.9392857142857143,
+                "LRSComp": 0.8352941176470589,
+                "LRSProd": 0.9925925925925926
+            },
+            {
+                "name1": "chr",
+                "name2": "Ex3",
+                "has": 1.0,
+                "timepoint": "101",
+                "fileBeta": "chr_LE_33_MG_101_con_0040.nii",
+                "LRS": 0.9535714285714286,
+                "LRSComp": 0.9058823529411765,
+                "LRSProd": 0.9777777777777777
+            }
+        ],
+        "distanceMap": "leipzig_patienten_alle_33_MG-distMap.nii"
+    },
+    {
+        "paradigm": "LE",
+        "patientId": "35_KE",
+        "age": 50.0,
+        "sex": "f",
+        "handedness": [],
+        "onset": "21.03.2013",
+        "lesion": "leipzig_patienten_alle_35_KE.nii",
+        "experiments": [
+            {
+                "name1": "acu",
+                "name2": "Ex1",
+                "has": 0.0,
+                "timepoint": [],
+                "fileBeta": [],
+                "LRS": NaN,
+                "LRSComp": NaN,
+                "LRSProd": NaN
+            },
+            {
+                "name1": "sub",
+                "name2": "Ex2",
+                "has": 1.0,
+                "timepoint": "13",
+                "fileBeta": "sub_LE_35_KE_13_con_0029.nii",
+                "LRS": 0.20357142857142857,
+                "LRSComp": 0.47058823529411764,
+                "LRSProd": 0.09259259259259259
+            },
+            {
+                "name1": "chr",
+                "name2": "Ex3",
+                "has": 1.0,
+                "timepoint": "111",
+                "fileBeta": "chr_LE_35_KE_111_con_0041.nii",
+                "LRS": 0.6946428571428571,
+                "LRSComp": 0.7176470588235294,
+                "LRSProd": 0.762962962962963
+            }
+        ],
+        "distanceMap": "leipzig_patienten_alle_35_KE-distMap.nii"
+    },
+    {
+        "paradigm": "LE",
+        "patientId": "37_CMJ",
+        "age": 49.0,
+        "sex": "m",
+        "handedness": [],
+        "onset": "24.04.2013",
+        "lesion": "leipzig_patienten_alle_37_CMJ.nii",
+        "experiments": [
+            {
+                "name1": "acu",
+                "name2": "Ex1",
+                "has": 1.0,
+                "timepoint": "2",
+                "fileBeta": "acu_LE_37_CMJ_2_con_0016.nii",
+                "LRS": 0.5875,
+                "LRSComp": 0.5823529411764706,
+                "LRSProd": 0.5666666666666667
+            },
+            {
+                "name1": "sub",
+                "name2": "Ex2",
+                "has": 1.0,
+                "timepoint": "13",
+                "fileBeta": "sub_LE_37_CMJ_13_con_0028.nii",
+                "LRS": 0.6892857142857143,
+                "LRSComp": 0.6235294117647059,
+                "LRSProd": 0.7
+            },
+            {
+                "name1": "chr",
+                "name2": "Ex3",
+                "has": 1.0,
+                "timepoint": "91",
+                "fileBeta": "chr_LE_37_CMJ_91_con_0040.nii",
+                "LRS": 0.8928571428571429,
+                "LRSComp": 0.8294117647058824,
+                "LRSProd": 0.9333333333333333
+            }
+        ],
+        "distanceMap": "leipzig_patienten_alle_37_CMJ-distMap.nii"
+    },
+    {
+        "paradigm": "LE",
+        "patientId": "39_PM",
+        "age": 61.0,
+        "sex": "m",
+        "handedness": [],
+        "onset": "10.09.2013",
+        "lesion": "leipzig_patienten_alle_39_PM.nii",
+        "experiments": [
+            {
+                "name1": "acu",
+                "name2": "Ex1",
+                "has": 1.0,
+                "timepoint": "1",
+                "fileBeta": "acu_LE_39_PM_1_con_0016.nii",
+                "LRS": 0.7267857142857143,
+                "LRSComp": 0.6,
+                "LRSProd": 0.7888888888888889
+            },
+            {
+                "name1": "sub",
+                "name2": "Ex2",
+                "has": 1.0,
+                "timepoint": "10",
+                "fileBeta": "sub_LE_39_PM_10_con_0028.nii",
+                "LRS": 0.8517857142857143,
+                "LRSComp": 0.711764705882353,
+                "LRSProd": 0.9222222222222223
+            },
+            {
+                "name1": "chr",
+                "name2": "Ex3",
+                "has": 1.0,
+                "timepoint": "96",
+                "fileBeta": "chr_LE_39_PM_96_con_0040.nii",
+                "LRS": 0.8232142857142857,
+                "LRSComp": 0.7058823529411765,
+                "LRSProd": 0.8629629629629629
+            }
+        ],
+        "distanceMap": "leipzig_patienten_alle_39_PM-distMap.nii"
+    }
+]

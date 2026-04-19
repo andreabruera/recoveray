@@ -1,0 +1,4 @@
+func_neuro_pred	func_neuro_pred_avg	func_neuro_pred_std	trad_pred	trad_pred_avg	trad_pred_std	raw_p	
+connectivity T2	0.213	0.0493	lesions	0.2949	0.0485	0.222	
+activations T1	0.2716	0.051	T2	0.307	0.0533	0.628	
+activations T1	0.3911	0.0479	T1	0.2189	0.052	0.014	

@@ -1,0 +1,7 @@
+target	predictor	ablation_impact (percent)	ablation_rho	weight	FDR_p	raw_p
+improvements T3-T2	activations T3 w/o L_SMA_T3	0.8	0.275	-0.00522	0.32886	0.2648
+improvements T3-T2	activations T3 w/o L_DLPFC_T3	0.7	0.275	0.00616	0.11704	0.076
+improvements T3-T2	activations T3 w/o L_IFGorb_T3	7.8	0.295	-0.00553	0.35765	0.3104
+improvements T3-T2	activations T3 w/o L_PTL_T3	-0.8	0.271	0.01062	0.00103	0.0004
+improvements T3-T2	activations T3 w/o R_DLPFC_T3	-4.3	0.261	0.02397	0.00055	0.0002
+improvements T3-T2	activations T3 w/o R_IFGorb_T3	0.3	0.274	0.0298	0.00055	0.0002

@@ -276,13 +276,13 @@ confounds = [
 assert len(confounds) == 2
 
 n_folds = 50
-iter_null_hyp = 5000
+iter_null_hyp = 1000
 test_items = int(n_subjects*0.2)
 pred_model = 'ridge'
 
 collector = dict()
 for name, targets in [
-                      ('abilities', abilities),
+                      #('abilities', abilities),
                       ('improvements', abilities[1:]),
                       ('late improvements', ['T3']),
                       ]:
@@ -300,6 +300,7 @@ for name, targets in [
     else:
         print('\n\nlanguage ability\n\n')
 
+    '''
     ### both
     last_key = 'both'
     for t in targets:
@@ -378,6 +379,7 @@ for name, targets in [
             del results_container
             del weights_container
             del confounds_names
+    '''
 
     ### removing families of predictors
     for pr in predictors:
@@ -407,6 +409,7 @@ for name, targets in [
                 print('\n')
                 print('predictors: {}'.format(weights_names))
                 print('confounds: {}'.format(confounds_names))
+                import pdb; pdb.set_trace()
 
                 it_predictors = numpy.array([full_data[k] for k in weights_names]).T
                 it_confounds = numpy.array([full_data[k] for k in confounds_names]).T

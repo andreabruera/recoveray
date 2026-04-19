@@ -511,6 +511,22 @@ possibilities = [
                  ('connectivity', 'T2', 'improvements', 'T2-T1'),
                  ('connectivity', 'T3', 'improvements', 'T3-T1'),
                  ('connectivity', 'T3', 'improvements', 'T3-T2'),
+                 ###
+                 ('connectivity', 'T1', 'abilities', 'T2'),
+                 ('activations', 'T2', 'abilities', 'T3'),
+                 ('activations', 'T3', 'abilities', 'T3'),
+                 ('connectivity', 'T3', 'abilities', 'T3'),
+                 ('activations', 'T1', 'improvements', 'T2-T1'),
+                 ('connectivity', 'T1', 'improvements', 'T2-T1'),
+                 ('connectivity', 'T1', 'improvements', 'T3-T2'),
+                 ('connectivity', 'T1', 'improvements', 'T3-T1'),
+                 ('activations', 'T3', 'improvements', 'T3-T1'),
+                 ('activations', 'T1', 'improvements', 'T3-T2'),
+                 ('activations', 'T2', 'improvements', 'T3-T2'),
+                 ('activations', 'T3', 'improvements', 'T3-T2'),
+                 ('connectivity', 'T2', 'improvements', 'T2-T1'),
+                 ('connectivity', 'T3', 'improvements', 'T3-T1'),
+                 ('connectivity', 'T3', 'improvements', 'T3-T2'),
                  ]
 
 ### correcting p values
