@@ -53,19 +53,19 @@ def plot_corr_mtrx(data, dimensions):
 
     ax.spines[['left', 'right', 'bottom', 'top']].set_visible(False)
     pyplot.savefig(
-                   'check_correlations_activity.jpg',
+                   os.path.join('plots', 'check_correlations_activity.jpg'),
                    pad_inches=0,
     )
 
 ### reading data
-base_folder = '47'
+base_folder = 'dataset'
 
 data = numpy.zeros(shape=(47, 57))
 dimensions = ['age', 'sex', 'acute_dps', 'subacute_dps', 'early-chronic_dps', 'acute_score', 'subacute_score', 'early-chronic_score']
 
-behavioural_f = 'selected_subjects_closest-phase-mixed_corrected.tsv'
+behavioural_f = os.path.join(base_folder, 'demo_behavioural', 'selected_subjects_closest-phase-mixed_corrected.tsv')
 sub_check = list()
-with open(os.path.join(base_folder, behavioural_f)) as i:
+with open(behavioural_f) as i:
     for l_i, l in enumerate(i):
         line = l.strip().split('\t')
         if l_i == 0:
@@ -93,9 +93,9 @@ with open(os.path.join(base_folder, behavioural_f)) as i:
 for _ in range(1, 48):
     assert _ in sub_check
 
-lesion_f = 'aphasia_recovery_47-lesion-affection.tsv'
+lesion_f = os.path.join(base_folder, 'lesions', 'aphasia_recovery_47-lesion-affection.tsv')
 sub_check = list()
-with open(os.path.join(base_folder, lesion_f)) as i:
+with open(lesion_f) as i:
     for l_i, l in enumerate(i):
         line = l.strip().split('\t')
         if l_i == 0:
@@ -119,11 +119,9 @@ for _ in range(1, 48):
 
 #activity_f = 'aphasia_recovery_47-trimmed20mean-activity-allregressors.tsv'
 activity_f = 'aphasia_recovery_47-mean-activity-allregressors.tsv'
-#activity_f = 'aphasia_recovery_47-mean-activity.tsv'
-#activity_f = 'aphasia_recovery_47-top10-activity.tsv'
 #activity_f = 'aphasia_recovery_47-top10-activity-allregressors.tsv'
 sub_check = list()
-with open(os.path.join(base_folder, activity_f)) as i:
+with open(os.path.join(base_folder, 'functional', activity_f)) as i:
     for l_i, l in enumerate(i):
         line = l.strip().split('\t')
         if l_i == 0:
@@ -152,7 +150,7 @@ for _ in range(1, 48):
 
 connectivity_f = 'DCM_connectivity-b_formodel.tsv'
 sub_check = list()
-with open(os.path.join(base_folder, connectivity_f)) as i:
+with open(os.path.join(base_folder, 'functional', connectivity_f)) as i:
     for l_i, l in enumerate(i):
         line = l.strip().split('\t')
         assert len(line) == 28
@@ -188,44 +186,27 @@ proportion = 0.2
 test_size = int(47*proportion)
 
 ### using the exact same splits in all cases
-random.seed(12)
+seed = 138
+random.seed(seed)
 test_sets = list()
 train_sets = list()
 sets = {
         'train' : list(),
         'test' : list(),
         }
-for _ in range(iterations):
-    sets['train'].append([])
-    sets['test'].append([])
-    for __ in range(folds):
-        iter_items = list(set(random.choices(range(n_subjects), k=n_subjects)))
-        #iter_items = list(set(random.choices(range(n_subjects), k=n_subjects)))
-        #iter_items = random.sample(range(n_subjects), k=30)
-        #assert len(iter_items) < n_subjects
-        iter_items = list(range(n_subjects))
-        iter_test_size = int(len(iter_items)*proportion)
-        #assert iter_test_size > 0 and iter_test_size < test_size
-        #test_items = random.sample(range(n_subjects), k=test_size)
-        test_items = random.sample(iter_items, k=iter_test_size)
-        #assert len(test_items) > 0 and len(test_items) < test_size
-        iter_test_items = test_items + random.choices(test_items, k=test_size-iter_test_size)
-        train_items = [k for k in iter_items if k not in test_items]
-        iter_train_items = train_items + random.choices(train_items, k=47-test_size-len(train_items))
-        for sub in iter_test_items:
-            assert sub not in iter_train_items
-        #iter_test_items = random.sample(range(iter_items), k=test_size)
-        #iter_test_items = random.choices(test_items, k=len(test_items))
-        #train_items = [k for k in range(n_subjects) if k not in test_items]
-        #train_items = [k for k in iter_items if k not in test_items]
-        #iter_train_items = random.choices(train_items, k=len(train_items))
-        sets['train'][-1].append(iter_train_items)
-        sets['test'][-1].append(iter_test_items)
+for __ in range(folds):
+    iter_items = list(range(n_subjects))
+    iter_test_size = int(n_subjects*proportion)
+    test_items = random.sample(iter_items, k=iter_test_size)
+    iter_test_items = test_items + random.choices(test_items, k=test_size-iter_test_size)
+    train_items = [k for k in iter_items if k not in test_items]
+    iter_train_items = train_items + random.choices(train_items, k=47-test_size-len(train_items))
+    for sub in iter_test_items:
+        assert sub not in iter_train_items
+    sets['train'].append(iter_train_items)
+    sets['test'].append(iter_test_items)
 for k, v in sets.items():
-    assert len(v) == iterations
-
-#confounds = ['age', 'sex'] + [h for h in dimensions if 'lesion' in h]
-#assert len(confounds) == 9
+    assert len(v) == folds
 
 case_targets = {
            'ability':  ['acute', 'subacute', 'early-chronic'],
@@ -375,15 +356,15 @@ for analysis_type in [
                     print(['confounds: ', sorted(curr_confounds)])
                     print('\n')
                     assert len(predictors) in [1, 2, 4, 6, 8, 9]
-                    if mode not in weights.keys():
+                    if mode not in weights[case].keys():
                         weights[case][mode] = numpy.zeros(shape=(3, len(povs), len(predictors), iterations, folds))
-                        weights_names[case][mode] = numpy.empty(shape=(3, len(povs), len(predictors)), dtype=numpy.str_)
+                        weights_names[case][mode] = numpy.empty(shape=(3, len(povs), len(predictors)), dtype=numpy.dtypes.StringDType)
                     weights_names[case][mode][targ_idx, pov_idx, :] = predictors
                     for iteration in tqdm(range(iterations)):
                         for fold in range(folds):
-                            train_items = sets['train'][iteration][fold]
+                            train_items = sets['train'][fold]
                             assert len(train_items) == 47-test_size
-                            test_items = sets['test'][iteration][fold]
+                            test_items = sets['test'][fold]
                             assert len(test_items) == test_size
                             ### inputs
                             train_inputs = data[train_items, :][:, [dimensions.index(p) for p in predictors]]
@@ -401,12 +382,12 @@ for analysis_type in [
                             assert test_confounds.shape[1] in [2, 5, 6, 7, 8, 9, 10, 11, 12, 14, 15, 16, 17, 18, 19, 20, 21]
                             ### targets
                             train_targets = data[train_items, :][:, dimensions.index(targ_key)]
-                            ### randomizing?
+                            ### randomizing? for iterations>0
                             if iteration > 0:
                                 train_targets = numpy.array(random.sample(train_targets.tolist(), k=len(train_targets)))
                             assert train_targets.shape == (47-test_size,)
                             test_targets = data[test_items, :][:, dimensions.index(targ_key)]
-                            ### randomizing?
+                            ### randomizing? for iterations>0
                             if iteration > 0:
                                 test_targets = numpy.array(random.sample(test_targets.tolist(), k=len(test_targets)))
                             assert test_targets.shape == (test_size,)
@@ -433,6 +414,7 @@ for analysis_type in [
                             weights[case][mode][targ_idx, pov_idx, :, iteration, fold] = model.coef_
                             results[case][mode][targ_idx, pov_idx, iteration, fold] = corr
                         #results[case][mode][targ_idx, pov_idx, iteration] = scipy.stats.trim_mean(iter_scores, 0.2, nan_policy='omit')
+                    ### scores
                     avg = numpy.nanmean(results[case][mode][targ_idx, pov_idx, 0, :])
                     #p = (1+sum([1 for _ in results[case][mode][targ_idx, pov_idx, :] if _<0.]))/(iterations+1)
                     perm_avgs = numpy.nanmean(results[case][mode][targ_idx, pov_idx, 1:, :], axis=1)
@@ -455,7 +437,9 @@ for analysis_type in [
     all_results[analysis_type]['weights_names'] = weights_names
     all_results[analysis_type]['ps'] = ps
 
-with open('full_results_19-04-2026.pkl', 'wb') as o:
+os.makedirs('pkls', exist_ok=True)
+
+with open(os.path.join('pkls', 'full_results.pkl'), 'wb') as o:
     pickle.dump(all_results, o)
 
 ### variable by variable
@@ -474,7 +458,7 @@ for analysis_type in [
     ### results for targets (always 3)
     ### max dimensionality is 9 (connectivity)
     removal_results = {m : {k : numpy.zeros(shape=(3, len(povs), 9, folds)) for k in modalities} for m in ['ability', 'improvement']}
-    removal_predictors = {m : {k : numpy.empty(shape=(3, len(povs), 9), dtype=numpy.str_) for k in modalities} for m in ['ability', 'improvement']}
+    removal_predictors = {m : {k : numpy.empty(shape=(3, len(povs), 9), dtype=numpy.dtypes.StringDType) for k in modalities} for m in ['ability', 'improvement']}
 
     for case in results.keys():
         targets = case_targets[case]
@@ -573,9 +557,9 @@ for analysis_type in [
                     ### here we switch iterations by predictors
                     for curr_pred_i, curr_pred in enumerate(predictors):
                         for fold in range(folds):
-                            train_items = sets['train'][iteration][fold]
+                            train_items = sets['train'][fold]
                             assert len(train_items) == 47-test_size
-                            test_items = sets['test'][iteration][fold]
+                            test_items = sets['test'][fold]
                             assert len(test_items) == test_size
                             ### inputs
                             train_inputs = data[train_items, :][:, [dimensions.index(p) for p in predictors if p!=curr_pred]]
@@ -621,12 +605,35 @@ for analysis_type in [
                             ### evaluation
                             corr = scipy.stats.spearmanr(test_targets_resid, preds).statistic
                             removal_results[case][mode][targ_idx, pov_idx, curr_pred_i, fold] = corr
+                        ### scores
                         avg = numpy.nanmean(removal_results[case][mode][targ_idx, pov_idx, curr_pred_i, :])
                         full_avg = numpy.nanmean(all_results[analysis_type]['results'][case][mode][targ_idx, pov_idx, 0, :])
-                        print('removed predictor: {}, average: {}, decrease in performance: {}\n'.format(curr_pred, round(avg, 3), round(avg-full_avg, 3)))
+                        ### weights
+                        w_names_full = all_results[analysis_type]['weights_names'][case][mode][targ_idx, pov_idx].tolist()
+                        assert curr_pred in w_names_full
+                        w_names_idx = w_names_full.index(curr_pred)
+                        avg_w = numpy.nanmean(all_results[analysis_type]['weights'][case][mode][targ_idx, pov_idx, w_names_idx, 0, :])
+                        perm_avg_w = numpy.nanmean(all_results[analysis_type]['weights'][case][mode][targ_idx, pov_idx, w_names_idx, 1:, :], axis=-1)
+                        assert perm_avg_w.shape == (iterations-1, )
+                        ### two-tailed p
+                        p = min(1, ((sum([1 for _ in perm_avg_w if abs(_)>abs(avg_w)])+1)/iterations)*2)
+                        print('removed predictor: {}, average: {}, decrease in performance: {}, raw p: {}\n'.format(curr_pred, round(avg, 3), round(avg-full_avg, 3), round(p, 3)))
+                        raw_ps.append((case, mode, targ_idx, pov_idx, curr_pred_i, p))
+    raw_ps = list()
 
     var_by_var_results[analysis_type]['results'] = removal_results
     var_by_var_results[analysis_type]['predictors'] = removal_predictors
 
-with open('var-by-var_results_19-04-2026.pkl', 'wb') as o:
+    ### 0-> raw p, 1->fdr p
+    ### correcting p-values for both ability and improvement at the same time
+    ps = {m : {k : numpy.zeros(shape=(3, len(povs), 9, 2)) for k in modalities} for m in ['ability', 'improvement']}
+    fdr_ps = scipy.stats.false_discovery_control([v[-1] for v in raw_ps])
+    print(fdr_ps)
+    for _ in range(len(raw_ps)):
+        case, mode, targ_idx, pov_idx, curr_pred_i, raw_p = raw_ps[_]
+        fdr_p = fdr_ps[_]
+        ps[case][mode][targ_idx, pov_idx, curr_pred_i, :] = [raw_p, fdr_p]
+    var_by_var_results[analysis_type]['ps'] = ps
+
+with open(os.path.join('pkls', 'var-by-var_results.pkl'), 'wb') as o:
     pickle.dump(var_by_var_results, o)

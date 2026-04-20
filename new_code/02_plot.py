@@ -8,7 +8,7 @@ import matplotlib
 from matplotlib import font_manager, pyplot
 
 # Using Helvetica as a font
-font_folder = '../fonts/'
+font_folder = os.path.join('..', '..', 'fonts')
 if os.path.exists(font_folder):
     font_dirs = [font_folder, ]
     font_files = font_manager.findSystemFonts(fontpaths=font_dirs)
@@ -16,18 +16,33 @@ if os.path.exists(font_folder):
         font_manager.fontManager.addfont(p)
     matplotlib.rcParams['font.family'] = 'Helvetica LT Std'
 
-with open('full_results_19-04-2026.pkl', 'rb') as o:
+n_subjects = 47
+iterations = 1001
+folds = 50
+proportion = 0.2
+test_size = int(47*proportion)
+
+### main plots
+with open(os.path.join('pkls', 'full_results.pkl'), 'rb') as o:
     full_results = pickle.load(o)
+
+out = os.path.join('plots', 'main_text')
+os.makedirs(out, exist_ok=True)
+
+case_targets = {
+           'ability':  ['acute', 'subacute', 'early-chronic'],
+           'improvement':  ['acute2subacute', 'acute2early-chronic', 'subacute2early-chronic'],
+          }
 
 for analysis_type in [
                       'functional',
                       'traditional',
                       ]:
-    results = full_results[analysis_type]['full_results']
+    results = full_results[analysis_type]['results']
     ps = full_results[analysis_type]['ps']
-    modalities = full_results[analysis_type]['details'][analysis_type]['modalities']
-    confounds = full_results[analysis_type]['details'][analysis_type]['confounds']
-    povs = full_results[analysis_type]['details'][analysis_type]['povs']
+    modalities = full_results[analysis_type]['details']['modalities']
+    confounds = full_results[analysis_type]['details']['confounds']
+    povs = full_results[analysis_type]['details']['povs']
     ### full model
     ### results for targets (always 3)
     colors = {
@@ -73,7 +88,7 @@ for analysis_type in [
                       }
     for case, case_results in results.items():
         fig, ax = pyplot.subplots(
-                                  figsize=(20, 10),
+                                  figsize=(15, 10),
                                   tight_layout=True,
                                  )
         labels = list()
@@ -198,7 +213,7 @@ for analysis_type in [
                     ax.scatter(
                              x=[targ_idx+mode_corr+gen_corr+povs_mapper[case][targ_idx][x_mapper_idx]+(0.00125*random.randrange(-10, 10)) for _ in range(iterations-1)],
                               y=perm_avgs,
-                              alpha=0.1,
+                              alpha=0.01,
                               s=100,
                               color=chosen_color,
                               linewidth=1,
@@ -207,8 +222,25 @@ for analysis_type in [
                               )
                     #xs.append('target: {}\npov: {}\n'.format(targ, pov))
                     p = ps[case][mode][targ_idx, pov_idx, 1]
-                    if p<=0.05:
-                        print(p)
+                    if p<0.005:
+                        #print(p)
+                        ax.scatter(
+                                   x=targ_idx+mode_corr+povs_mapper[case][targ_idx][x_mapper_idx]-0.015,
+                                   y=-.05,
+                                   marker='*',
+                                   color='black',
+                                   s=100,
+                                   zorder=3,
+                                   )
+                        ax.scatter(
+                                   x=targ_idx+mode_corr+povs_mapper[case][targ_idx][x_mapper_idx]+0.015,
+                                   y=-.05,
+                                   marker='*',
+                                   color='black',
+                                   s=100,
+                                   zorder=3,
+                                   )
+                    elif p<0.05:
                         ax.scatter(
                                    x=targ_idx+mode_corr+povs_mapper[case][targ_idx][x_mapper_idx],
                                    y=-.05,
@@ -220,14 +252,14 @@ for analysis_type in [
                     start += 1
         ax.legend(fontsize=22.5, ncols=ncols,
                   #loc=1,
-                  loc=(.2, 1.),
+                  loc=(0.025, 1.),
                   borderpad=0.1,
                   labelspacing=0.5,
                   handletextpad=0.4,
                   borderaxespad=0.25,
                   columnspacing=1.,
                   )
-        ax.set_ylim(bottom=-.3, top=.52)
+        ax.set_ylim(bottom=-.2, top=.52)
         ax.spines[['right', 'bottom', 'top']].set_visible(False)
         #pyplot.xticks(ticks=range(start), labels=xs)
         xticks_mapper = {
@@ -247,7 +279,7 @@ for analysis_type in [
         pyplot.yticks(fontsize=20)
         ax.text(
                 x=1,
-                y=-.25,
+                y=.45,
                 s='Language {}'.format(case),
                 fontsize=35,
                 fontweight='bold',
@@ -262,7 +294,7 @@ for analysis_type in [
                   zorder=1.
                   )
         ax.hlines(
-                  y=[y*0.1 for y in range(-3, 6) if y!=0],
+                  y=[y*0.1 for y in range(-1, 6) if y!=0],
                   xmin=-.2,
                   xmax=end,
                   color='silver',
@@ -272,7 +304,9 @@ for analysis_type in [
                   )
         pyplot.ylabel('Spearman correlation', fontsize=25)
         pyplot.savefig(
-                       '{}_{}_raw.jpg'.format(analysis_type, case),
+                       os.path.join(out, '{}_{}_raw.jpg'.format(analysis_type, case)),
                        pad_inches=0.,
                        dpi=300,
                        )
+        pyplot.clf()
+        pyplot.close()
