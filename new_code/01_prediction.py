@@ -222,16 +222,14 @@ alphas=(
 
 details = {
           'traditional' : {
-                           'modalities' : ['age',
-                                          #'sex',
+                           'modalities' : [
                                           'lesion',
+                                          'age',
                                           'acute_score',
                                           'subacute_score',
                                           'early-chronic_score',
                                           ],
-                           #'confounds' :  [h for h in dimensions if 'activity' in h] + [h for h in dimensions if 'lesion' in h] + ['age', 'sex'],
                            'confounds' : [h for h in dimensions if 'connectivity' in h] + [h for h in dimensions if 'activity' in h] + [h for h in dimensions if 'lesion' in h] + ['age']
-                            # + ['{}_score'.format(t) for t in case_targets['ability']]
                             ,
                            'povs' : ['all'],
                           },
@@ -240,7 +238,6 @@ details = {
                                           'activity',
                                           'connectivity',
                                           ],
-                           #'confounds' :  ['age', 'sex'] + [h for h in dimensions if 'lesion' in h],
                            'confounds' :  ['age'] + [h for h in dimensions if 'lesion' in h],
                            'povs' : ['acute', 'subacute', 'early-chronic'],
                           },

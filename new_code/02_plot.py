@@ -334,9 +334,9 @@ var_colours = {
            'plum',
            'cornflowerblue',
            'mediumblue',
-           'slategrey',
            'yellowgreen',
            'mediumseagreen',
+           'slategrey',
            ],
         'lesion' : [
             'mediumpurple',
@@ -395,12 +395,6 @@ for analysis_type in [
     print(fdr_ps)
     for case, case_results in results.items():
         for mode in modalities:
-            if analysis_type == 'functional':
-                out = os.path.join('plots', 'main_text', 'var_by_var', mode, case)
-                os.makedirs(out, exist_ok=True)
-            else:
-                out = os.path.join('plots', 'SI', 'var_by_var', mode, case)
-                os.makedirs(out, exist_ok=True)
             if mode == 'activity':
                 shape = (11, 10)
                 p_y=10
@@ -443,6 +437,12 @@ for analysis_type in [
                         curr_chosen = sorted(all_chosen, key=lambda item : chosen[item][4])
                     xticks = list()
                     assert len(curr_chosen) in [4, 6, 9]
+                    if analysis_type == 'functional':
+                        out = os.path.join('plots', 'main_text', 'var_by_var', mode, case)
+                        os.makedirs(out, exist_ok=True)
+                    else:
+                        out = os.path.join('plots', 'SI', 'var_by_var', mode, case)
+                        os.makedirs(out, exist_ok=True)
                     fig, ax = pyplot.subplots(
                                               figsize=shape,
                                               tight_layout=True,
@@ -500,7 +500,7 @@ for analysis_type in [
                                        )
                     ax.set_ylim(bottom=17.5, top=-100)
                     #ax.legend(ncols=3)
-                    ax.set_title('{} from {}'.format(targ, curr_pred.split('_')[:-1]), fontsize=20)
+                    ax.set_title('{} {} from {}'.format(case, targ, curr_pred.split('_')[:-1]), fontsize=20)
                     ax.spines[['right', 'bottom', 'top']].set_visible(False)
                     ax.hlines(
                               y=0,
@@ -532,4 +532,118 @@ for analysis_type in [
                                    )
                     pyplot.clf()
                     pyplot.close()
+
+### lines
+t_results = dict()
+for analysis_type in [
+                      'functional',
+                      'traditional',
+                      ]:
+    results = full_results[analysis_type]['results']
+    ps = full_results[analysis_type]['ps']
+    modalities = full_results[analysis_type]['details']['modalities']
+    confounds = full_results[analysis_type]['details']['confounds']
+    povs = full_results[analysis_type]['details']['povs']
+    for case, case_results in results.items():
+        if case not in t_results.keys():
+            t_results[case] = {analysis_type : dict()}
+        if analysis_type not in t_results[case].keys():
+            t_results[case][analysis_type] = dict()
+
+        for mode in modalities:
+            for targ_idx, targ in enumerate(case_targets[case]):
+                if targ not in t_results[case][analysis_type].keys():
+                    t_results[case][analysis_type][targ] = list()
+                for pov_idx, pov in enumerate(povs):
+
+                    ### not interested in predicting the past from the future...
+                    if case == 'ability':
+                        if pov_idx > targ_idx:
+                            continue
+                    elif case == 'improvement':
+                        ### slightly more complicated
+                        check_idx = case_targets['ability'].index(targ.split('2')[1])
+                        if pov_idx > check_idx:
+                            continue
+                    real_avg=numpy.nanmean(case_results[mode][targ_idx, pov_idx, 0, :])
+                    t_results[case][analysis_type][targ].append(real_avg)
+out = os.path.join('plots', 'main_text', 'lines')
+os.makedirs(out, exist_ok=True)
+colors = {
+          'traditional' : [235, 97, 35],
+          'functional' : [81, 40, 136],
+         }
+for case, case_res in t_results.items():
+    fig, ax = pyplot.subplots(
+                          tight_layout=True,
+                          figsize=(20, 10),
+                         )
+    for analysis_type, an_res in case_res.items():
+        if case == 'ability':
+            chosen_color = tuple([min(255, rgb+80)/255 for rgb in colors[analysis_type]])
+        else:
+            chosen_color = tuple([min(255, rgb)/255 for rgb in colors[analysis_type]])
+        line = list()
+        for targ_idx, targ in enumerate(case_targets[case]):
+            #y = max(an_res[targ])
+            y = numpy.average(an_res[targ])
+            std  = numpy.nanstd(an_res[targ])
+            line.append((targ_idx, y, std))
+        ax.plot(
+                [x[0] for x in line],
+                [y[1] for y in line],
+                label='{} predictors'.format(analysis_type).capitalize(),
+                linewidth=15,
+                color=chosen_color,
+                )
+        ax.fill_between(
+                        [x[0] for x in line],
+                        [y[1]-y[2] for y in line],
+                        [y[1]+y[2] for y in line],
+                        alpha=0.1,
+                        color=chosen_color,
+                        )
+        ax.scatter(
+                [x[0] for x in line],
+                [y[1] for y in line],
+                   s=1000,
+                   marker='D',
+                   edgecolors='white',
+                   linewidth=5.,
+                   zorder=3,
+                   alpha=0.8,
+                    color=chosen_color,
+                   )
+    for targ_idx, targ in enumerate(case_targets[case]):
+        one = list()
+        for analysis_type, an_res in case_res.items():
+            y = numpy.average(an_res[targ])
+            if len(one) == 0:
+                one = an_res[targ]
+            else:
+                two = an_res[targ]
+        ### 1000 iterations, 2-tailed one-sample permutations
+        real = abs(numpy.nanmean(one)-numpy.nanmean(two))
+        fakes = 1
+        for _ in range(1000):
+            fake = random.sample(one+two, k=len(one)+len(two))
+            fake_one = fake[:len(one)]
+            fake_two = fake[len(one):]
+            fake_diff = abs(numpy.nanmean(fake_one)-numpy.nanmean(fake_two))
+            if fake_diff > real:
+                fakes += 1
+        p_val = fakes/1001
+        if p_val < 0.05:
+            ax.scatter(targ_idx, .12, s=1000, marker='*', color='black')
+
+    ax.legend(fontsize=35, ncols=2)
+    ax.hlines(y=[_*0.1 for _ in range(-3, 8)], xmin=-.5, xmax=2.5, linestyle='--',color='gray', alpha=0.2)
+    ax.hlines(y=0., xmin=-.5, xmax=2.5, color='gray')
+    ax.set_ylim(bottom=-.11, top=0.39)
+    pyplot.ylabel('Average Spearman correlation', fontsize=37, fontweight='bold')
+    pyplot.xticks(ticks=[0, 1, 2], labels=[xticks_mapper[c] for c in case_targets[case]], fontsize=45, fontweight='bold')
+    pyplot.yticks(fontsize=32)
+    ax.spines[['right', 'bottom', 'top']].set_visible(False)
+    pyplot.savefig(os.path.join(out, '{}_lines.jpg'.format(case)))
+
 
