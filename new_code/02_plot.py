@@ -26,8 +26,6 @@ test_size = int(47*proportion)
 with open(os.path.join('pkls', 'full_results.pkl'), 'rb') as o:
     full_results = pickle.load(o)
 
-out = os.path.join('plots', 'main_text')
-os.makedirs(out, exist_ok=True)
 
 case_targets = {
            'ability':  ['acute', 'subacute', 'early-chronic'],
@@ -38,6 +36,12 @@ for analysis_type in [
                       'functional',
                       'traditional',
                       ]:
+    if analysis_type == 'functional':
+        out = os.path.join('plots', 'main_text', 'all_variables')
+        os.makedirs(out, exist_ok=True)
+    else:
+        out = os.path.join('plots', 'SI', 'all_variables')
+        os.makedirs(out, exist_ok=True)
     results = full_results[analysis_type]['results']
     ps = full_results[analysis_type]['ps']
     modalities = full_results[analysis_type]['details']['modalities']
@@ -391,6 +395,12 @@ for analysis_type in [
     print(fdr_ps)
     for case, case_results in results.items():
         for mode in modalities:
+            if analysis_type == 'functional':
+                out = os.path.join('plots', 'main_text', 'var_by_var', mode, case)
+                os.makedirs(out, exist_ok=True)
+            else:
+                out = os.path.join('plots', 'SI', 'var_by_var', mode, case)
+                os.makedirs(out, exist_ok=True)
             if mode == 'activity':
                 shape = (11, 10)
                 p_y=10
