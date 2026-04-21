@@ -264,6 +264,7 @@ for analysis_type in [
     weights = {m : dict() for m in ['ability', 'improvement']}
     weights_names = {m : dict() for m in ['ability', 'improvement']}
     raw_ps = list()
+    t_maxes = list()
 
     for case in results.keys():
         targets = case_targets[case]
@@ -418,10 +419,18 @@ for analysis_type in [
                     avg = numpy.nanmean(results[case][mode][targ_idx, pov_idx, 0, :])
                     #p = (1+sum([1 for _ in results[case][mode][targ_idx, pov_idx, :] if _<0.]))/(iterations+1)
                     perm_avgs = numpy.nanmean(results[case][mode][targ_idx, pov_idx, 1:, :], axis=1)
+                    t_maxes.append(perm_avgs.tolist())
                     assert perm_avgs.shape == (iterations-1, )
                     p = (sum([1 for v in perm_avgs if v>avg])+1)/iterations
                     print('average: {}, p-value (raw): {}\n'.format(round(avg, 3), round(p, 3)))
                     raw_ps.append((case, mode, targ_idx, pov_idx, p))
+
+    ### one-tailed t max
+    t_maxes = numpy.array(t_maxes)
+    assert t_maxes.shape[1] == (iterations-1)
+    t_maxes = numpy.max(t_maxes, axis=0)
+    assert t_maxes.shape == (iterations-1,)
+    print('t-max: {}'.format(round(numpy.percentile(t_maxes, 95), 4)))
 
     ### 0-> raw p, 1->fdr p
     ### correcting p-values for both ability and improvement at the same time
@@ -436,6 +445,7 @@ for analysis_type in [
     all_results[analysis_type]['weights'] = weights
     all_results[analysis_type]['weights_names'] = weights_names
     all_results[analysis_type]['ps'] = ps
+    all_results[analysis_type]['t-max'] = t_maxes
 
 os.makedirs('pkls', exist_ok=True)
 
@@ -577,14 +587,8 @@ for analysis_type in [
                             assert test_confounds.shape[1] in [2, 5, 6, 7, 8, 9, 10, 11, 12, 14, 15, 16, 17, 18, 19, 20, 21]
                             ### targets
                             train_targets = data[train_items, :][:, dimensions.index(targ_key)]
-                            ### randomizing?
-                            if iteration > 0:
-                                train_targets = numpy.array(random.sample(train_targets.tolist(), k=len(train_targets)))
                             assert train_targets.shape == (47-test_size,)
                             test_targets = data[test_items, :][:, dimensions.index(targ_key)]
-                            ### randomizing?
-                            if iteration > 0:
-                                test_targets = numpy.array(random.sample(test_targets.tolist(), k=len(test_targets)))
                             assert test_targets.shape == (test_size,)
                             ### residualization
                             model = linear_model.LinearRegression()
@@ -618,11 +622,13 @@ for analysis_type in [
                         ### two-tailed p
                         p = min(1, ((sum([1 for _ in perm_avg_w if abs(_)>abs(avg_w)])+1)/iterations)*2)
                         print('removed predictor: {}, average: {}, decrease in performance: {}, raw p: {}\n'.format(curr_pred, round(avg, 3), round(avg-full_avg, 3), round(p, 3)))
-                        raw_ps.append((case, mode, targ_idx, pov_idx, curr_pred_i, p))
-    raw_ps = list()
 
     var_by_var_results[analysis_type]['results'] = removal_results
     var_by_var_results[analysis_type]['predictors'] = removal_predictors
+    '''
+                        raw_ps.append((case, mode, targ_idx, pov_idx, curr_pred_i, p))
+    raw_ps = list()
+
 
     ### 0-> raw p, 1->fdr p
     ### correcting p-values for both ability and improvement at the same time
@@ -634,6 +640,7 @@ for analysis_type in [
         fdr_p = fdr_ps[_]
         ps[case][mode][targ_idx, pov_idx, curr_pred_i, :] = [raw_p, fdr_p]
     var_by_var_results[analysis_type]['ps'] = ps
+    '''
 
 with open(os.path.join('pkls', 'var-by-var_results.pkl'), 'wb') as o:
     pickle.dump(var_by_var_results, o)

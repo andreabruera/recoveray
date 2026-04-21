@@ -310,3 +310,216 @@ for analysis_type in [
                        )
         pyplot.clf()
         pyplot.close()
+
+### variable by variable plots
+with open(os.path.join('pkls', 'var-by-var_results.pkl'), 'rb') as o:
+    var_by_var_results = pickle.load(o)
+var_colours = {
+        'activity' : [
+            'mediumvioletred',
+            'lightpink',
+            'paleturquoise',
+            'steelblue',
+            'darkseagreen',
+            'darkgreen',
+           ],
+    'connectivity' : [
+           'palevioletred',
+           'mediumorchid',
+           'hotpink',
+           'plum',
+           'cornflowerblue',
+           'mediumblue',
+           'slategrey',
+           'yellowgreen',
+           'mediumseagreen',
+           ],
+        'lesion' : [
+            'mediumpurple',
+            'aquamarine',
+            'mediumaquamarine',
+            'thistle',
+            ],
+           }
+
+for analysis_type in [
+                      'functional',
+                      'traditional',
+                      ]:
+    chosen = list()
+    results = var_by_var_results[analysis_type]['results']
+    ps = full_results[analysis_type]['ps']
+    modalities = full_results[analysis_type]['details']['modalities']
+    confounds = full_results[analysis_type]['details']['confounds']
+    povs = full_results[analysis_type]['details']['povs']
+    removal_results = var_by_var_results[analysis_type]['results']
+    removal_predictors = var_by_var_results[analysis_type]['predictors']
+    for case, case_results in results.items():
+        fig, ax = pyplot.subplots(
+                                  figsize=(10, 10),
+                                  tight_layout=True,
+                                 )
+        for mode in modalities:
+            for targ_idx, targ in enumerate(case_targets[case]):
+                for pov_idx, pov in enumerate(povs):
+                    p = ps[case][mode][targ_idx, pov_idx, 1]
+                    full_avg = numpy.nanmean(full_results[analysis_type]['results'][case][mode][targ_idx, pov_idx, 0, :])
+                    #if full_avg > 0.11:
+                    if p<0.05:
+                        full_avg = numpy.nanmean(full_results[analysis_type]['results'][case][mode][targ_idx, pov_idx, 0, :])
+                        norm_full_avg = (full_avg+1)/2
+                        curr_preds = [p for p in removal_predictors[case][mode][targ_idx, pov_idx].tolist() if p!='']
+                        for curr_pred_i, curr_pred in enumerate(curr_preds):
+                            ### weights
+                            avg = numpy.nanmean(removal_results[case][mode][targ_idx, pov_idx, curr_pred_i, :])
+                            norm_avg = (avg+1)/2
+                            #assert norm_avg<norm_full_avg
+                            decrease = -(100-((avg/full_avg)*100))
+                            #if avg > full_avg:
+                            #    decrease = -decrease+100
+                            print('full: {} removed: {} percent: {}'.format(full_avg, avg, decrease))
+                            w_names_full = full_results[analysis_type]['weights_names'][case][mode][targ_idx, pov_idx].tolist()
+                            assert curr_pred in w_names_full
+                            w_names_idx = w_names_full.index(curr_pred)
+                            perm_avg_w = numpy.nanmean(full_results[analysis_type]['weights'][case][mode][targ_idx, pov_idx, w_names_idx, 1:, :], axis=-1)
+                            avg_w = numpy.nanmean(full_results[analysis_type]['weights'][case][mode][targ_idx, pov_idx, w_names_idx, 0, :])
+                            p = min(1, ((sum([1 for _ in perm_avg_w if abs(_)>abs(avg_w)])+1)/iterations)*2)
+                            chosen.append((case, mode, targ, pov, curr_pred, decrease, avg_w, p))
+    ### 0-> raw p, 1->fdr p
+    ### correcting p-values for both ability and improvement at the same time
+    fdr_ps = scipy.stats.false_discovery_control([v[-1] for v in chosen])
+    print(fdr_ps)
+    for case, case_results in results.items():
+        for mode in modalities:
+            if mode == 'activity':
+                shape = (11, 10)
+                p_y=10
+            elif mode == 'connectivity':
+                shape = (15, 10)
+                p_y = 7.5
+            elif mode == 'lesion':
+                shape = (7.5, 10)
+                p_y = 10
+            for targ_idx, targ in enumerate(case_targets[case]):
+                for pov_idx, pov in enumerate(povs):
+                    k = (case, mode, targ, pov)
+                    if k not in [tuple(v[:4]) for v in chosen]:
+                        continue
+                    ### sorting
+                    if mode == 'connectivity':
+                        ### dmn
+                        dmn_chosen = [v_i for v_i, v in enumerate(chosen) if k==tuple(v[:4]) and ('left-DLPFC2' in v[4] or 'left-SMA2' in v[4])]
+                        sort_dmn = sorted(dmn_chosen, key=lambda item : chosen[item][4])
+                        ### language
+                        lang_chosen = [v_i for v_i, v in enumerate(chosen) if k==tuple(v[:4]) and ('left-IFGorb2' in v[4] or 'left-PTL2' in v[4])]
+                        sort_lang = sorted(lang_chosen, key=lambda item : chosen[item][4])
+                        ### right
+                        right_chosen = [v_i for v_i, v in enumerate(chosen) if k==tuple(v[:4]) and ('right-IFGorb2' in v[4] or 'right-DLPFC2' in v[4])]
+                        sort_right = sorted(right_chosen, key=lambda item : chosen[item][4])
+                        curr_chosen = sort_dmn+sort_lang+sort_right
+                    elif mode == 'activity':
+                        ### dmn
+                        dmn_chosen = [v_i for v_i, v in enumerate(chosen) if k==tuple(v[:4]) and ('left-DLPFC' in v[4] or 'left-SMA' in v[4])]
+                        sort_dmn = sorted(dmn_chosen, key=lambda item : chosen[item][4])
+                        ### language
+                        lang_chosen = [v_i for v_i, v in enumerate(chosen) if k==tuple(v[:4]) and ('left-IFGorb' in v[4] or 'left-PTL' in v[4])]
+                        sort_lang = sorted(lang_chosen, key=lambda item : chosen[item][4])
+                        ### right
+                        right_chosen = [v_i for v_i, v in enumerate(chosen) if k==tuple(v[:4]) and ('right-IFGorb' in v[4] or 'right-DLPFC' in v[4])]
+                        sort_right = sorted(right_chosen, key=lambda item : chosen[item][4])
+                        curr_chosen = sort_dmn+sort_lang+sort_right
+                    else:
+                        all_chosen = [v_i for v_i, v in enumerate(chosen) if k==tuple(v[:4])]
+                        curr_chosen = sorted(all_chosen, key=lambda item : chosen[item][4])
+                    xticks = list()
+                    assert len(curr_chosen) in [4, 6, 9]
+                    fig, ax = pyplot.subplots(
+                                              figsize=shape,
+                                              tight_layout=True,
+                                             )
+                    start = 0
+                    corrs = {'activity' : {0:.15, 1:-.15, 2:.15, 3:-.15, 4:.15, 5:-.1}, 'connectivity':{0:.2, 1:.1, 2:-.1, 3:-.2, 4:.2, 5:-.2, 6:.2, 7:0., 8:-.2}, 'lesion':{0:0, 1:0, 2:0, 3:0}}
+                    for idx in curr_chosen:
+                        curr_case, curr_mode, curr_targ, curr_pov, curr_pred, decrease, avg_w, p = chosen[idx]
+                        fdr_p = fdr_ps[idx]
+                        color = var_colours[mode][start]
+                        ax.bar(x=start+corrs[mode][start], height=max(-99, min(decrease, 7.5)), label=curr_pred, width=0.4, color=color)
+                        if decrease>7.5:
+                            ax.text(x=start+corrs[mode][start], y=7.5, s='/', fontsize=30, zorder=3, ha='center', va='center')
+                        elif decrease<-99:
+                            ax.text(x=start+corrs[mode][start], y=-99, s='/', fontsize=30, zorder=3,ha='center', va='center')
+                        corrected_label = curr_pred.split('_')[-1].replace('2', '\nto\n').replace('right-', 'R ').replace('left-', 'L ')
+                        xticks.append((start, corrected_label))
+                        start += 1
+                        ### significance only for cases where a decrease was triggered
+                        if decrease > 0:
+                            continue
+                        ### directionality
+                        if avg_w < 0:
+                            marker = ('v', '1')
+                            color='blue'
+                            ys=(15, 12.5)
+                        else:
+                            marker = ('^', '2')
+                            color='red'
+                            ys=(12.5, 15)
+                        ax.scatter(
+                                   x=start-1+.375+corrs[mode][start-1],
+                                   y=ys[0],
+                                   marker=marker[0],
+                                   color=color,
+                                   s=100,
+                                   zorder=3,
+                                   )
+                        ax.scatter(
+                                   x=start-1+.375+corrs[mode][start-1],
+                                   y=ys[1],
+                                   marker='|',
+                                   color=color,
+                                   s=300,
+                                   zorder=3,
+                                   )
+                        if fdr_p<0.05:
+                            ax.scatter(
+                                       x=start-1+corrs[mode][start-1],
+                                       y=p_y,
+                                       marker='*',
+                                       color='black',
+                                       s=100,
+                                       zorder=3,
+                                       )
+                    ax.set_ylim(bottom=17.5, top=-100)
+                    #ax.legend(ncols=3)
+                    ax.set_title('{} from {}'.format(targ, curr_pred.split('_')[:-1]), fontsize=20)
+                    ax.spines[['right', 'bottom', 'top']].set_visible(False)
+                    ax.hlines(
+                              y=0,
+                              xmin=-.2,
+                              xmax=len(xticks)-.8,
+                              color='black',
+                              zorder=1.
+                              )
+                    ax.hlines(
+                              y=[-y for y in range(10, 110, 10)],
+                              xmin=-.2,
+                              xmax=len(xticks)-.8,
+                              color='silver',
+                              linestyle='dashed',
+                              zorder=1,
+                              alpha=0.6
+                              )
+                    pyplot.xticks(ticks=[])
+                    #pyplot.xticks(ticks=range(len(xticks)), labels=xticks, fontweight='bold', fontsize=20)
+                    for curr_start, tick in xticks:
+                        color='black'
+                        ax.text(curr_start+corrs[mode][curr_start], y=15, s=tick, fontweight='bold', fontsize=16, va='center', ha='center', color=color)
+                    pyplot.ylabel('Impact of individual predictor removal \non Spearman correlation (percentage points)', fontsize=20, fontweight='bold')
+                    pyplot.yticks(fontsize=15)
+                    pyplot.savefig(
+                                   os.path.join(out, '{}_{}_{}_targ-{}_pov-{}.jpg'.format(analysis_type, case, mode, targ, pov)),
+                                   pad_inches=0.,
+                                   dpi=300,
+                                   )
+                    pyplot.clf()
+                    pyplot.close()
+
